@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main class="container">
+    <h1 class="text-center">Merchant</h1>
+    <hr class="hr-3"/>
+    <table class="table bg-blur">
+        <thead>
+        <tr>
+            <th scope="col" class="font-weight-bold">Name</th>
+            <th scope="col">Slot</th>
+            <th scope="col">Stamina</th>
+            <th scope="col">Strength</th>
+            <th scope="col">Attack</th>
+            <th scope="col">Defence</th>
+        </tr>
+        </thead>
+        <th:block th:each="item : ${session.items}">
+        <tbody>
+        <tr>
+            <td><span th:text="${item.getName()}"></span></td>
+            <td><span th:text="${item.getSlot()}"></span></td>
+            <td><span th:text="${item.getStamina()}"></span></td>
+            <td><span th:text="${item.getStrength()}"></span></td>
+            <td><span th:text="${item.getAttack()}"></span></td>
+            <td><span th:text="${item.getDefence()}"></span></td>
+            <td>
+                <form th:action="@{'/items/merchant/' + ${item.getName()}}" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+        </th:block>
+    </table>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>
