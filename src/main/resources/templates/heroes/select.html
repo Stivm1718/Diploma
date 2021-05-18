@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <th:block th:if="${session.countHeroes == 0}">
+        <hr class="my-3"/>
+        <div class="container">
+            <div class="text-center">
+                <h2>User, you don't have a hero. Click below and create one.</h2>
+                <a href="/heroes/create" class="btn btn-secondary">Create hero</a>
+            </div>
+        </div>
+    </th:block>
+    <th:block th:unless="${session.countHeroes == 0}">
+        <hr class="my-3"/>
+        <div class="container">
+            <div class="text-center">
+                <h2>Героите, с които разполагаш.</h2>
+            </div>
+        </div>
+        <hr class="my-3"/>
+        <div class="container">
+            <div class="row flex-md-row">
+                <th:block th:each="hero : ${session.heroes}">
+                    <div class="col text-center">
+                        <a href="/heroes/fight">
+                            <img th:src="@{'/img/' + ${hero.getGender().name().toLowerCase()} + '.jpg'}" width="150"></a>
+<!--                        <img th:src="@{'/img/' + ${hero.getGender().name().toLowerCase()} + '.jpg'}" width="150">-->
+                        <h2 class="text-white"><span th:text="${hero.getName()}"></span></h2>
+<!--                        <a class="btn btn-secondary" th:href="@{'/heroes/fight/' + ${hero.getName()}}">Fight</a>-->
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </th:block>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

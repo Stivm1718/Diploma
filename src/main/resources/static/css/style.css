@@ -3,8 +3,8 @@
 }
 
 .bg-blur {
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
     color: white;
     font-weight: bold;
     border: 3px solid #f1f1f1;
@@ -15,19 +15,19 @@
 }
 
 body {
-      background-image: url('../../img/arena.jpg');
-      background-position: center;
-      background-attachment: fixed;
-      background-size: cover;
-  }
+    background-image: url('../../img/arena.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
 
 textarea {
     resize: none;
 }
 
 footer {
-    position:fixed;
-    bottom:0;
+    position: fixed;
+    bottom: 0;
     width: 100%;
 }
 

@@ -5,7 +5,6 @@ import com.project.diploma.data.models.User;
 import com.project.diploma.data.repository.RoleRepository;
 import com.project.diploma.data.repository.UserRepository;
 import com.project.diploma.service.models.LoginUserServiceModel;
-import com.project.diploma.service.models.ProfileServiceModel;
 import com.project.diploma.service.models.RegisterUserServiceModel;
 import com.project.diploma.service.services.HashingService;
 import com.project.diploma.service.services.RoleService;
@@ -62,9 +61,6 @@ public class UserServiceImpl implements UserService {
         User user = this.mapper.map(model, User.class);
         user.setPassword(hashingService.hashPassword(user.getPassword()));
         user.setGold(Point.GOLD.getValue());
-        user.setLevel(Point.LEVEL.getValue());
-        user.setCurrentPoints(Point.MAX_POINTS.getValue());
-        user.setMaxPoints(Point.MAX_POINTS.getValue());
 
         if (userRepository.count() == 0) {
             roleService.seedRolesInDb();
@@ -87,14 +83,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoggedUserFilterModel findLogUser(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findUserByUsername(username);
 
         return mapper.map(user, LoggedUserFilterModel.class);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findUserByUsername(username);
 
         Set<GrantedAuthority> authorities = new HashSet<>(user.getAuthorities());
         return new org.springframework.security.core.userdetails.User(

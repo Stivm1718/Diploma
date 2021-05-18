@@ -25,6 +25,12 @@ public class Hero extends BaseEntity {
     @Column(name = "level", nullable = false)
     private Integer level;
 
+    @Column(name = "current_points")
+    private Integer currentPoints;
+
+    @Column(name = "max_points")
+    private Integer maxPoints;
+
     @Column(name = "stamina", nullable = false)
     private Integer stamina;
 
@@ -37,8 +43,8 @@ public class Hero extends BaseEntity {
     @Column(name = "defence", nullable = false)
     private Integer defence;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     @ManyToMany(mappedBy = "heroes")

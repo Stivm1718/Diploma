@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,17 +29,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "gold")
     private Integer gold;
 
-    @Column(name = "level")
-    private Integer level;
-
-    @Column(name = "current_points")
-    private Integer currentPoints;
-
-    @Column(name = "max_points")
-    private Integer maxPoints;
-
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Hero hero;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Hero> heroes;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

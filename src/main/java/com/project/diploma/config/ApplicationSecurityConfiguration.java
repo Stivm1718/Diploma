@@ -5,12 +5,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+//    @Autowired
+//    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -18,12 +20,13 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/users/register", "/users/login").permitAll()
-                .antMatchers("/js/*", "/css/*").permitAll()
+                .antMatchers("/js/*", "/css/*", "/img/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/users/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
+                //.successHandler(authenticationSuccessHandler)
                 .defaultSuccessUrl("/home", true)
                 .failureForwardUrl("/users/login?error=true")
                 .and()

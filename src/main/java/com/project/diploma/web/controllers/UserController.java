@@ -1,11 +1,8 @@
 package com.project.diploma.web.controllers;
 
-import com.project.diploma.service.models.LoginServiceModel;
-import com.project.diploma.service.models.ProfileServiceModel;
 import com.project.diploma.service.models.RegisterUserServiceModel;
 import com.project.diploma.service.services.UserService;
 import com.project.diploma.web.models.LoginUserModel;
-import com.project.diploma.web.models.ProfileModel;
 import com.project.diploma.web.models.RegisterUserModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,10 +4,13 @@ import com.project.diploma.data.models.Hero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface HeroRepository extends JpaRepository<Hero, Long> {
 
-    Optional<Hero> findByName(String name);
+    Hero findHeroByName(String name);
+
+    @Override
+    List<Hero> findAll();
 }

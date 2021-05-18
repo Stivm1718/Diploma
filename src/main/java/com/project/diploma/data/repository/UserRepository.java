@@ -1,20 +1,21 @@
 package com.project.diploma.data.repository;
 
+import com.project.diploma.data.models.Hero;
 import com.project.diploma.data.models.User;
-import com.project.diploma.service.models.LoginServiceModel;
+import com.project.diploma.service.models.LoginUserServiceModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByUsername(String username);
 
-    LoginServiceModel findByUsernameAndPassword(String username, String password);
+    LoginUserServiceModel findByUsernameAndPassword(String username, String password);
 
-    User findByUsername(String name);
+    User findUserByUsername(String name);
 
     boolean existsByEmail(String name);
 
