@@ -3,10 +3,11 @@ package com.project.diploma.web.controllers;
 import com.project.diploma.data.models.Gender;
 import com.project.diploma.data.models.Hero;
 import com.project.diploma.service.models.CreateHeroServiceModel;
+import com.project.diploma.service.models.DetailsHeroModel;
 import com.project.diploma.service.services.AuthenticatedUserService;
 import com.project.diploma.service.services.HeroService;
 import com.project.diploma.web.models.CreateHeroModel;
-import com.project.diploma.web.models.LoginUserModel;
+import com.project.diploma.web.models.HeroModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/heroes")
@@ -73,27 +73,26 @@ public class HeroController {
     }
 
     @GetMapping("/opponent/{name}")
-    public String selectOpponent(@PathVariable String name, ModelAndView model, HttpSession session){
+    public String selectOpponent(@PathVariable String name, HttpSession session){
         String username = authenticatedUserService.getUsername();
-//todo 
-        return null;
+        HeroModel opponent = heroService.selectOpponent(username, name);
+        session.setAttribute("opponent", opponent);
+        if (opponent == null){
+            return "heroes/opponent";
+        }
+
+        HeroModel model = heroService.getHero(name);
+        session.setAttribute("myHero", model);
+        return "heroes/fight";
     }
 
-//    @GetMapping("/create-hero")
-//    public String heroName(HttpSession session){
-//        String username = authenticatedUserService.getUsername();
-//        DetailsHeroServiceModel hero = heroService.getByUsername(username);
-//        session.setAttribute("name", hero.getName());
-//        return "hero/create-hero";
-//    }
-
-//    @GetMapping("/details/{name}")
-//    public ModelAndView details(@PathVariable String name, ModelAndView model){
-//        DetailsHeroServiceModel details = heroService.findHero(name);
-//        model.addObject("details", details);
-//        model.setViewName("/hero/hero-details");
-//        return model;
-//    }
+    @GetMapping("/details/{name}")
+    public ModelAndView details(@PathVariable String name, ModelAndView model){
+        DetailsHeroModel details = heroService.detailsHero(name);
+        model.addObject("details", details);
+        model.setViewName("/heroes/details");
+        return model;
+    }
 
 //    @GetMapping("/fight/{name}")
 //    public ModelAndView fight(@PathVariable String name, ModelAndView model, HttpSession session){

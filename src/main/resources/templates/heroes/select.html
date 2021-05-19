@@ -26,11 +26,10 @@
             <div class="row flex-md-row">
                 <th:block th:each="hero : ${session.heroes}">
                     <div class="col text-center">
-                        <a href="/heroes/fight">
-                            <img th:src="@{'/img/' + ${hero.getGender().name().toLowerCase()} + '.jpg'}" width="150"></a>
-<!--                        <img th:src="@{'/img/' + ${hero.getGender().name().toLowerCase()} + '.jpg'}" width="150">-->
+                        <img th:src="@{'/img/' + ${hero.getGender().name().toLowerCase()} + '.jpg'}" width="150">
                         <h2 class="text-white"><span th:text="${hero.getName()}"></span></h2>
-<!--                        <a class="btn btn-secondary" th:href="@{'/heroes/fight/' + ${hero.getName()}}">Fight</a>-->
+                        <a class="btn btn-secondary" th:href="@{'/heroes/opponent/' + ${hero.getName()}}">Fight</a>
+                        <a class="btn btn-secondary" th:href="@{'/heroes/details/' + ${hero.getName()}}">Details</a>
                     </div>
                 </th:block>
             </div>

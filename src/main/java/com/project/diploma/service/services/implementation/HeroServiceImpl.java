@@ -2,10 +2,13 @@ package com.project.diploma.service.services.implementation;
 
 import com.project.diploma.data.models.*;
 import com.project.diploma.data.repository.HeroRepository;
+import com.project.diploma.data.repository.ItemRepository;
 import com.project.diploma.data.repository.UserRepository;
 import com.project.diploma.error.HeroNotFoundException;
 import com.project.diploma.service.models.CreateHeroServiceModel;
+import com.project.diploma.service.models.DetailsHeroModel;
 import com.project.diploma.service.services.HeroService;
+import com.project.diploma.web.models.HeroModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +23,14 @@ public class HeroServiceImpl implements HeroService {
 
     private final HeroRepository heroRepository;
     private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
     private final ModelMapper mapper;
 
     @Autowired
-    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ModelMapper mapper) {
+    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ItemRepository itemRepository, ModelMapper mapper) {
         this.heroRepository = heroRepository;
         this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
         this.mapper = mapper;
     }
 
@@ -33,7 +38,7 @@ public class HeroServiceImpl implements HeroService {
     public void createHero(CreateHeroServiceModel model, String name) throws Exception {
         User user = userRepository.findUserByUsername(name);
 
-        if (user == null){
+        if (user == null) {
             throw new Exception("User does not exists");
         }
 
@@ -66,49 +71,71 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public Hero selectOpponent(String username, String heroName) {
+    public HeroModel selectOpponent(String username, String heroName) {
         List<Hero> heroes = heroRepository.findAll().stream()
-                .filter(e -> !e.getUser().getUsername().equals(username)).collect(Collectors.toList());
+                .filter(e -> !e.getUser().getUsername().equals(username))
+                .collect(Collectors.toList());
 
         Hero hero = heroRepository.findHeroByName(heroName);
         Hero opponent = null;
         int level = Integer.MAX_VALUE;
         int currentPoints = Integer.MAX_VALUE;
-        for(Hero h : heroes){
+        for (Hero h : heroes) {
             int diffLevelWithCurrentHero = Math.abs(hero.getLevel() - h.getLevel());
             int diffLevelWithOpponentHero = Math.min(diffLevelWithCurrentHero, level);
-            if (diffLevelWithOpponentHero < level){
+            if (diffLevelWithOpponentHero < level) {
                 level = diffLevelWithCurrentHero;
                 opponent = h;
-            } else if (diffLevelWithCurrentHero == level){
+            } else if (diffLevelWithCurrentHero == level) {
                 int diffCurrentPointsCurrentHero = Math.abs(hero.getCurrentPoints() - h.getCurrentPoints());
                 int diffCurrentPointsOpponentHero = Math.min(diffCurrentPointsCurrentHero, currentPoints);
-                if (diffCurrentPointsOpponentHero < currentPoints){
+                if (diffCurrentPointsOpponentHero < currentPoints) {
                     currentPoints = diffCurrentPointsOpponentHero;
                     opponent = h;
                 }
             }
         }
-        return opponent;
+        return opponent == null ? null : mapper.map(opponent, HeroModel.class);
     }
 
-//    @Override
-//    public DetailsHeroServiceModel findHero(String heroName) {
-//        Hero hero = heroRepository.findHeroByName(heroName).orElseThrow(() -> new HeroNotFoundException("No such found"));
-//
-//        if (hero == null) {
-//            throw new HeroNotFoundException("No such found");
-//        }
-//
-//        DetailsHeroServiceModel detail = this.mapper.map(hero, DetailsHeroServiceModel.class);
-//        detail.setGauntlets(getItemBySlot(hero.getItems(), Slot.GAUNTLETS));
-//        detail.setHelmet(getItemBySlot(hero.getItems(), Slot.HELMET));
-//        detail.setPads(getItemBySlot(hero.getItems(), Slot.PADS));
-//        detail.setWeapon(getItemBySlot(hero.getItems(), Slot.WEAPON));
-//        detail.setPauldron(getItemBySlot(hero.getItems(), Slot.PAULDRON));
-//
-//        return detail;
-//    }
+    @Override
+    public HeroModel getHero(String name) {
+        Hero hero = heroRepository.findHeroByName(name);
+
+        return mapper.map(hero, HeroModel.class);
+    }
+
+    public DetailsHeroModel detailsHero(String heroName) {
+        Hero hero = heroRepository.findHeroByName(heroName);
+
+        if (hero == null) {
+            throw new HeroNotFoundException("No such found");
+        }
+
+        DetailsHeroModel detail = this.mapper.map(hero, DetailsHeroModel.class);
+        List<Item> items = hero.getItems();
+        for (Item i : items) {
+            Slot slot = i.getSlot();
+            switch (slot) {
+                case GAUNTLETS:
+                    detail.getGauntlets().add(i);
+                    break;
+                case HELMET:
+                    detail.getHelmets().add(i);
+                    break;
+                case PADS:
+                    detail.getPads().add(i);
+                    break;
+                case PAULDRON:
+                    detail.getPauldrons().add(i);
+                    break;
+                case WEAPON:
+                    detail.getWeapons().add(i);
+                    break;
+            }
+        }
+        return detail;
+    }
 
 //    private Item getItemBySlot(List<Item> items, Slot weapon) {
 //        return items.stream().filter(a -> a.getSlot().name().equals(weapon.name())).findFirst().orElse(null);

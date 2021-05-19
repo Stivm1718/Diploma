@@ -2,6 +2,8 @@ package com.project.diploma.service.services;
 
 import com.project.diploma.data.models.Hero;
 import com.project.diploma.service.models.CreateHeroServiceModel;
+import com.project.diploma.service.models.DetailsHeroModel;
+import com.project.diploma.web.models.HeroModel;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ public interface HeroService {
 
     void createHero(CreateHeroServiceModel model, String name) throws Exception;
 
-    //DetailsHeroServiceModel findHero(String heroName);
+    DetailsHeroModel detailsHero(String heroName);
 
     //List<DetailsHeroServiceModel> getAllWithoutCurrent(String heroName);
 
@@ -25,5 +27,7 @@ public interface HeroService {
 
     List<Hero> getAllUserHeroes(String username);
 
-    Hero selectOpponent(String username, String heroName);
+    HeroModel selectOpponent(String username, String heroName);
+
+    HeroModel getHero(String name);
 }
