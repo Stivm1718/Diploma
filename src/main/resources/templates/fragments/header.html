@@ -125,11 +125,13 @@
                 <th:block th:unless="${session.username == null}">
                     <th:block th:if="${session.authorities.getAuthorities().size() == 2}">
                         <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/heroes/create">admin</a>
+                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
                         </li>
-
+                        <li class="nav-item mr-2">
+                            <a class="nav-link text-white active h5" href="/items/create">Create Item</a>
+                        </li>
 <!--                        <li class="nav-item mr-2">-->
-<!--                            <a class="nav-link text-white active h5" href="/items/create">Create Item</a>-->
+<!--                            <a class="nav-link text-white active h5" href="/items/merchant">Merchant</a>-->
 <!--                        </li>-->
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/logout">Logout</a>
@@ -139,15 +141,13 @@
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/items/merchant">user</a>
                         </li>
-<!--                        <li class="nav-item mr-2">-->
-<!--                            <a class="nav-link text-white active h5" href="/items/create">Create Item</a>-->
-<!--                        </li>-->
-<!--                        <li class="nav-item mr-2">-->
-<!--                            <a class="nav-link text-white active h5" th:href="@{'/heroes/details/' + ${session.user.heroName}}">Hero</a>-->
-<!--                        </li>-->
-<!--                        <li class="nav-item mr-2">-->
-<!--                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>-->
-<!--                        </li>-->
+                        <!--
+                                             <li class="nav-item mr-2">-->
+                        <!--                            <a class="nav-link text-white active h5" th:href="@{'/heroes/details/' + ${session.user.heroName}}">Hero</a>-->
+                        <!--                        </li>-->
+                        <li class="nav-item mr-2">
+                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
+                        </li>
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/logout">Logout</a>
                         </li>

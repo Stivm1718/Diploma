@@ -10,4 +10,6 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Item findByName(String name);
+
+    boolean existsItemByName(String name);
 }

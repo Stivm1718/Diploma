@@ -26,13 +26,11 @@ public class HeroController {
 
     private final HeroService heroService;
     private final ModelMapper mapper;
-    private final AuthenticatedUserService authenticatedUserService;
 
     @Autowired
-    public HeroController(HeroService heroService, ModelMapper mapper, AuthenticatedUserService authenticatedUserService) {
+    public HeroController(HeroService heroService, ModelMapper mapper) {
         this.heroService = heroService;
         this.mapper = mapper;
-        this.authenticatedUserService = authenticatedUserService;
     }
 
     @ModelAttribute("hero")
@@ -46,8 +44,8 @@ public class HeroController {
     }
 
     @PostMapping("/create")
-    public String createHero(@Valid @ModelAttribute("hero") CreateHeroModel model, BindingResult result,
-                             Principal principal, HttpSession session) throws Exception {
+    public String createHero(@Valid @ModelAttribute("hero") CreateHeroModel model,
+                             BindingResult result, Principal principal) throws Exception {
         if (result.hasErrors()){
             return "heroes/create";
         }
@@ -56,13 +54,16 @@ public class HeroController {
 
         CreateHeroServiceModel hero = mapper.map(model, CreateHeroServiceModel.class);
         hero.setGender(Gender.valueOf(model.getGender().toUpperCase()));
-        heroService.createHero(hero, username);
-        return "redirect:/home";
+        if(heroService.createHero(hero, username)){
+            return "redirect:/home";
+        } else{
+            return "redirect:/heroes/create";
+        }
     }
 
     @GetMapping("/select")
-    public String selectHero(HttpSession session){
-        String username = authenticatedUserService.getUsername();
+    public String selectHero(HttpSession session, Principal principal){
+        String username = principal.getName();
         long count = heroService.getCountOfHeroes(username);
         session.setAttribute("countHeroes", count);
         if(count != 0){
@@ -73,8 +74,9 @@ public class HeroController {
     }
 
     @GetMapping("/opponent/{name}")
-    public String selectOpponent(@PathVariable String name, HttpSession session){
-        String username = authenticatedUserService.getUsername();
+    public String selectOpponent(@PathVariable String name, HttpSession session,
+                                 Principal principal){
+        String username = principal.getName();
         HeroModel opponent = heroService.selectOpponent(username, name);
         session.setAttribute("opponent", opponent);
         if (opponent == null){

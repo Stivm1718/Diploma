@@ -3,15 +3,18 @@ package com.project.diploma.web.controllers;
 import com.project.diploma.service.models.RegisterUserServiceModel;
 import com.project.diploma.service.services.UserService;
 import com.project.diploma.web.models.LoginUserModel;
+import com.project.diploma.web.models.ProfileUserModel;
 import com.project.diploma.web.models.RegisterUserModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
@@ -25,15 +28,6 @@ public class UserController {
         this.mapper = mapper;
         this.userService = userService;
     }
-
-//    @GetMapping("profile")
-//    public String profile(@ModelAttribute ProfileModel model,  HttpSession session) throws Exception {
-//        LoginServiceModel user = (LoginServiceModel) session.getAttribute("user");
-//        ProfileServiceModel profile = userService.profile(user.getUsername());
-//
-//        session.setAttribute("profile", profile);
-//        return "user/profile";
-//    }
 
     @ModelAttribute("register")
     public RegisterUserModel reg() {
@@ -84,5 +78,14 @@ public class UserController {
                 !model.getUsername().equals("") ? "Incorrect username or password." : "");
 
         return "redirect:/users/login";
+    }
+
+    @GetMapping("profile")
+    public ModelAndView profile(ModelAndView modelAndView, Principal principal) {
+        String username = principal.getName();
+        ProfileUserModel user = userService.getDetailsForUser(username);
+            modelAndView.addObject("profile", user);
+        modelAndView.setViewName("/users/profile");
+        return modelAndView;
     }
 }

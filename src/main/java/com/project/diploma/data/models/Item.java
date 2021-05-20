@@ -34,6 +34,9 @@ public class Item extends BaseEntity {
     @Column(name = "defence", nullable = false)
     private Integer defence;
 
+    @Column(name = "price", nullable = false)
+    private Integer price;
+
     @ManyToMany
     @JoinTable(
             name = "items_heroes",

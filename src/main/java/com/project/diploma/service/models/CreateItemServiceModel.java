@@ -21,4 +21,6 @@ public class CreateItemServiceModel {
     private Integer attack;
 
     private Integer defence;
+
+    private Integer price;
 }

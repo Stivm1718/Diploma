@@ -114,6 +114,13 @@
                         <li th:each="error : ${#fields.errors('defence')}" th:text="${error}"></li>
                     </ul>
                 </div>
+                <div class="text-center">
+                    <label for="price" class="text-white">Price</label>
+                    <input type="number" th:field="*{price}" id="price" class="w-25" name="price"min="1">
+                    <ul th:if="${#fields.errors('price')}">
+                        <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="button-holder d-flex justify-content-center">

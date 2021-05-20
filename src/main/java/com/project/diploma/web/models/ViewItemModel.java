@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ItemModel {
+public class ViewItemModel {
 
     private String name;
 
@@ -21,4 +21,6 @@ public class ItemModel {
     private Integer attack;
 
     private Integer defence;
+
+    private Integer price;
 }

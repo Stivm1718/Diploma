@@ -3,6 +3,7 @@ package com.project.diploma.service.services;
 import com.project.diploma.service.models.LoginUserServiceModel;
 import com.project.diploma.service.models.RegisterUserServiceModel;
 import com.project.diploma.web.models.LoggedUserFilterModel;
+import com.project.diploma.web.models.ProfileUserModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
@@ -12,4 +13,6 @@ public interface UserService extends UserDetailsService {
     boolean login(LoginUserServiceModel user);
 
     LoggedUserFilterModel findLogUser(String username);
+
+    ProfileUserModel getDetailsForUser(String username);
 }

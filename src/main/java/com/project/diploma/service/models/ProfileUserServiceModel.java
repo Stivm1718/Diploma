@@ -8,16 +8,10 @@
 //@Getter
 //@Setter
 //@NoArgsConstructor
-//public class ProfileServiceModel {
+//public class ProfileUserServiceModel {
 //    private String username;
 //
 //    private String email;
 //
-//    private Hero hero;
-//
-//    public ProfileServiceModel(String username, String email, Hero hero) {
-//        this.username = username;
-//        this.email = email;
-//        this.hero = hero;
-//    }
+//    private Integer gold;
 //}

@@ -12,21 +12,26 @@
         <tr>
             <th scope="col" class="font-weight-bold">Name</th>
             <th scope="col">Slot</th>
+            <th scope="col">Picture</th>
             <th scope="col">Stamina</th>
             <th scope="col">Strength</th>
             <th scope="col">Attack</th>
             <th scope="col">Defence</th>
+<!--            <th scope="col">Price</th>-->
         </tr>
         </thead>
-        <th:block th:each="item : ${session.items}">
+        <th:block th:each="item : ${items}">
         <tbody>
         <tr>
             <td><span th:text="${item.getName()}"></span></td>
             <td><span th:text="${item.getSlot()}"></span></td>
+            <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}" width="150">
+            </td>
             <td><span th:text="${item.getStamina()}"></span></td>
             <td><span th:text="${item.getStrength()}"></span></td>
             <td><span th:text="${item.getAttack()}"></span></td>
             <td><span th:text="${item.getDefence()}"></span></td>
+<!--            <td><span th:text="${item.getPrice()}"></span></td>-->
             <td>
                 <form th:action="@{'/items/merchant/' + ${item.getName()}}" method="post">
                 <button class="btn btn-info">Buy</button>

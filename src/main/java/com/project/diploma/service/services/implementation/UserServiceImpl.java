@@ -11,6 +11,7 @@ import com.project.diploma.service.services.RoleService;
 import com.project.diploma.service.services.UserService;
 import com.project.diploma.service.services.ValidationService;
 import com.project.diploma.web.models.LoggedUserFilterModel;
+import com.project.diploma.web.models.ProfileUserModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(RegisterUserServiceModel model) {
-        if (!validationService.isValid(model)) {
+        if (!validationService.isValidUser(model)) {
             return false;
         }
 
@@ -87,6 +88,16 @@ public class UserServiceImpl implements UserService {
 
         return mapper.map(user, LoggedUserFilterModel.class);
     }
+
+    @Override
+    public ProfileUserModel getDetailsForUser(String username) {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null){
+            throw new RuntimeException("User does not exists");
+        }
+        return mapper.map(user, ProfileUserModel.class);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

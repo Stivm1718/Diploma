@@ -8,6 +8,7 @@ import com.project.diploma.error.HeroNotFoundException;
 import com.project.diploma.service.models.CreateHeroServiceModel;
 import com.project.diploma.service.models.DetailsHeroModel;
 import com.project.diploma.service.services.HeroService;
+import com.project.diploma.service.services.ValidationService;
 import com.project.diploma.web.models.HeroModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,26 @@ public class HeroServiceImpl implements HeroService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final ModelMapper mapper;
+    private final ValidationService validationService;
 
     @Autowired
-    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ItemRepository itemRepository, ModelMapper mapper) {
+    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ItemRepository itemRepository, ModelMapper mapper, ValidationService validationService) {
         this.heroRepository = heroRepository;
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
         this.mapper = mapper;
+        this.validationService = validationService;
     }
 
     @Override
-    public void createHero(CreateHeroServiceModel model, String name) throws Exception {
+    public boolean createHero(CreateHeroServiceModel model, String name) throws Exception {
         User user = userRepository.findUserByUsername(name);
 
         if (user == null) {
             throw new Exception("User does not exists");
+        }
+        if (validationService.isValidHeroName(model)){
+            return false;
         }
 
         Hero hero = this.mapper.map(model, Hero.class);
@@ -55,6 +61,7 @@ public class HeroServiceImpl implements HeroService {
         hero.setUser(user);
         user.getHeroes().add(hero);
         userRepository.saveAndFlush(user);
+        return true;
     }
 
     @Override

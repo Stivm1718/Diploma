@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface HeroService {
 
-    void createHero(CreateHeroServiceModel model, String name) throws Exception;
+    boolean createHero(CreateHeroServiceModel model, String name) throws Exception;
 
     DetailsHeroModel detailsHero(String heroName);
 

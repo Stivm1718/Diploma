@@ -14,4 +14,6 @@ public interface HeroRepository extends JpaRepository<Hero, Long> {
 
     @Override
     List<Hero> findAll();
+
+    boolean existsHeroByName(String name);
 }
