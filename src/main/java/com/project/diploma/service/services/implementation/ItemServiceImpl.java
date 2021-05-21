@@ -2,6 +2,7 @@ package com.project.diploma.service.services.implementation;
 
 import com.project.diploma.data.models.Hero;
 import com.project.diploma.data.models.Item;
+import com.project.diploma.data.models.User;
 import com.project.diploma.data.repository.HeroRepository;
 import com.project.diploma.data.repository.ItemRepository;
 import com.project.diploma.service.models.CreateItemServiceModel;
@@ -33,11 +34,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public boolean create(CreateItemServiceModel model) throws Exception {
-        if (model == null){
+        if (model == null) {
             throw new Exception("Model does not exists");
         }
 
-        if (validationService.isValidItemName(model)){
+        if (validationService.isValidItemName(model)) {
             return false;
         }
         itemRepository.saveAndFlush(this.mapper.map(model, Item.class));
@@ -49,18 +50,34 @@ public class ItemServiceImpl implements ItemService {
         return this.itemRepository.findAll()
                 .stream()
                 .filter(i -> !i.getHeroes().stream()
-                .map(Hero::getName)
-                .collect(Collectors.toList()).contains(heroName))
+                        .map(Hero::getName)
+                        .collect(Collectors.toList()).contains(heroName))
                 .map(u -> this.mapper.map(u, ViewItemModel.class))
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public void addItem(String heroName, String itemName) throws Exception {
-//        Optional<Hero> hero1 = heroRepository.findHeroByName(heroName);
+    @Override
+    public boolean addItemToHero(String heroName, String itemName) throws Exception {
+        Hero hero = heroRepository.findHeroByName(heroName);
+        User user = hero.getUser();
+        Item item = itemRepository.findByName(itemName);
+
+        if (user.getAuthorities().size() == 2){
+            insertItemAndHeroInDatabase(hero, item);
+            return true;
+        } else {
+            if (item.getPrice() <= user.getGold()){
+                insertItemAndHeroInDatabase(hero, item);
+                user.setGold(user.getGold() - item.getPrice());
+                return true;
+            } else {
+                return false;
+            }
+        }
+//        Hero hero1 = heroRepository.findHeroByName(heroName);
 //        Item item = itemRepository.findByName(itemName);
 //
-//        Hero hero = hero1.get();
+//        Hero hero = hero1;
 //        String slot = item.getSlot().name();
 //
 //
@@ -82,5 +99,12 @@ public class ItemServiceImpl implements ItemService {
 //            heroRepository.saveAndFlush(hero);
 //            itemRepository.saveAndFlush(item);
 //        }
-//    }
+    }
+
+    private void insertItemAndHeroInDatabase(Hero hero, Item item) {
+        hero.getItems().add(item);
+        item.getHeroes().add(hero);
+        heroRepository.saveAndFlush(hero);
+        itemRepository.saveAndFlush(item);
+    }
 }

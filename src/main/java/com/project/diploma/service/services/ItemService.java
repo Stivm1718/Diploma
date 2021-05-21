@@ -11,5 +11,5 @@ public interface ItemService {
 
     List<ViewItemModel> takeAllItemsThatAreNotThere(String heroName);
 
-    //void addItem(String heroName, String itemName) throws Exception;
+    boolean addItemToHero(String heroName, String itemName) throws Exception;
 }

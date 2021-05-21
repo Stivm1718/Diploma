@@ -4,6 +4,7 @@ import com.project.diploma.data.models.Slot;
 import com.project.diploma.service.models.CreateItemServiceModel;
 import com.project.diploma.service.services.ItemService;
 import com.project.diploma.web.models.CreateItemModel;
+import com.project.diploma.web.models.ItemNameModel;
 import com.project.diploma.web.models.ViewItemModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -54,18 +56,32 @@ public class ItemController {
         }
     }
 
+    @ModelAttribute("itemName")
+    public ItemNameModel modelName() {
+        return new ItemNameModel();
+    }
+
+
     @GetMapping("/merchant/{name}")
-    public ModelAndView merchant(@PathVariable String name, ModelAndView model) {
+    public ModelAndView merchant(@PathVariable String name,
+                                 ModelAndView model,
+                                 @ModelAttribute("itemName") ItemNameModel modelName) {
         List<ViewItemModel> items = itemService.takeAllItemsThatAreNotThere(name);
         model.addObject("items", items);
+        model.addObject("heroName", name);
         model.setViewName("/items/merchant");
         return model;
     }
-//
-//    @PostMapping("/merchant/{name}")
-//    public String merchantConfirm(@PathVariable String name, HttpSession session) throws Exception {
-//        LoginServiceModel user = (LoginServiceModel) session.getAttribute("user");
-//        itemService.addItem(user.getHeroName(), name);
-//        return "redirect:/items/merchant";
-//    }
+
+    @PostMapping("/merchant/{heroName}")
+    public String merchantConfirm(@PathVariable String heroName,
+                                        HttpSession session,
+                                        @Valid @ModelAttribute("itemName") ItemNameModel modelName) throws Exception {
+        //todo Да направя логиката и за потребителя
+        boolean isBuyItem = itemService.addItemToHero(heroName, modelName.getName());
+        if (!isBuyItem) {
+            session.setAttribute("shop", "You don't have enough gold. Go to the store and buy");
+        }
+        return "redirect:/items/merchant/" + heroName;
+    }
 }

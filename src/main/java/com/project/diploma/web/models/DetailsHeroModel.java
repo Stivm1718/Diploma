@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,13 +31,21 @@ public class DetailsHeroModel {
 
     //private Integer defence;
 
-    private List<Item> weapons;
+    private List<Item> weapons = new ArrayList<>();
 
-    private List<Item> helmets;
+    private List<Item> helmets = new ArrayList<>();
 
-    private List<Item> pauldrons;
+    private List<Item> pauldrons = new ArrayList<>();
 
-    private List<Item> pads;
+    private List<Item> pads = new ArrayList<>();
 
-    private List<Item> gauntlets;
+    private List<Item> gauntlets = new ArrayList<>();
+
+//    public DetailsHeroModel(){
+//        weapons = new ArrayList<>();
+//        helmets = new ArrayList<>();
+//        pads = new ArrayList<>();
+//        pauldrons = new ArrayList<>();
+//        gauntlets = new ArrayList<>();
+//    }
 }

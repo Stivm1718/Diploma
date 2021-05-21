@@ -125,19 +125,24 @@ public class HeroServiceImpl implements HeroService {
             Slot slot = i.getSlot();
             switch (slot) {
                 case GAUNTLETS:
-                    detail.getGauntlets().add(i);
+                    List<Item> gauntlets = detail.getGauntlets();
+                    gauntlets.add(i);
                     break;
                 case HELMET:
-                    detail.getHelmets().add(i);
+                    List<Item> helmets = detail.getHelmets();
+                    helmets.add(i);
                     break;
                 case PADS:
-                    detail.getPads().add(i);
+                    List<Item> pads = detail.getPads();
+                    pads.add(i);
                     break;
                 case PAULDRON:
-                    detail.getPauldrons().add(i);
+                    List<Item> pauldrons = detail.getPauldrons();
+                    pauldrons.add(i);
                     break;
                 case WEAPON:
-                    detail.getWeapons().add(i);
+                    List<Item> weapons = detail.getWeapons();
+                    weapons.add(i);
                     break;
             }
         }
