@@ -1,8 +1,8 @@
 package com.project.diploma.web.controllers;
 
 import com.project.diploma.data.models.Slot;
-import com.project.diploma.service.models.CreateItemServiceModel;
-import com.project.diploma.service.services.ItemService;
+import com.project.diploma.services.models.CreateItemServiceModel;
+import com.project.diploma.services.services.ItemService;
 import com.project.diploma.web.models.CreateItemModel;
 import com.project.diploma.web.models.ItemNameModel;
 import com.project.diploma.web.models.ViewItemModel;

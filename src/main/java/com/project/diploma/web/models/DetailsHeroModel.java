@@ -1,4 +1,4 @@
-package com.project.diploma.service.models;
+package com.project.diploma.web.models;
 
 import com.project.diploma.data.models.Gender;
 import com.project.diploma.data.models.Item;
@@ -23,13 +23,9 @@ public class DetailsHeroModel {
 
     private Integer maxPoints;
 
-    //private Integer stamina;
+    private Integer battles;
 
-    //private Integer strength;
-
-    //private Integer attack;
-
-    //private Integer defence;
+    private Integer wins;
 
     private List<Item> weapons = new ArrayList<>();
 
@@ -40,12 +36,4 @@ public class DetailsHeroModel {
     private List<Item> pads = new ArrayList<>();
 
     private List<Item> gauntlets = new ArrayList<>();
-
-//    public DetailsHeroModel(){
-//        weapons = new ArrayList<>();
-//        helmets = new ArrayList<>();
-//        pads = new ArrayList<>();
-//        pauldrons = new ArrayList<>();
-//        gauntlets = new ArrayList<>();
-//    }
 }

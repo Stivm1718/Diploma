@@ -1,7 +1,7 @@
 package com.project.diploma.web.filter;
 
-import com.project.diploma.service.services.AuthenticatedUserService;
-import com.project.diploma.service.services.UserService;
+import com.project.diploma.services.services.AuthenticatedUserService;
+import com.project.diploma.services.services.UserService;
 import com.project.diploma.web.models.LoggedUserFilterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

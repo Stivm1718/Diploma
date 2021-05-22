@@ -43,6 +43,12 @@ public class Hero extends BaseEntity {
     @Column(name = "defence", nullable = false)
     private Integer defence;
 
+    @Column(name = "battles")
+    private Integer battles;
+
+    @Column(name = "wins")
+    private Integer wins;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;

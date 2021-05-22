@@ -1,6 +1,6 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.validation.*;
+import com.project.diploma.validations.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.validation.UsernameAvailabilityValidation;
-import com.project.diploma.validation.UsernameValidation;
+import com.project.diploma.validations.UsernameAvailabilityValidation;
+import com.project.diploma.validations.UsernameValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

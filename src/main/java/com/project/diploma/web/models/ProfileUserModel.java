@@ -1,6 +1,5 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.data.models.Hero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,4 +14,8 @@ public class ProfileUserModel {
     private String email;
 
     private Integer gold;
+
+    private Integer totalWins;
+
+    private Integer totalBattles;
 }

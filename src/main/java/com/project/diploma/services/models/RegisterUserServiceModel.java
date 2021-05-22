@@ -1,18 +1,23 @@
-package com.project.diploma.web.models;
+package com.project.diploma.services.models;
 
-import com.project.diploma.services.models.RoleServiceModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-public class LoggedUserFilterModel {
+public class RegisterUserServiceModel {
 
     private String username;
+
+    private String email;
+
+    private String password;
+
+    private String confirmPassword;
 
     private Set<RoleServiceModel> authorities;
 }

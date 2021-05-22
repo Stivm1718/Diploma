@@ -1,7 +1,7 @@
 package com.project.diploma.web.controllers;
 
-import com.project.diploma.service.models.RegisterUserServiceModel;
-import com.project.diploma.service.services.UserService;
+import com.project.diploma.services.models.RegisterUserServiceModel;
+import com.project.diploma.services.services.UserService;
 import com.project.diploma.web.models.LoginUserModel;
 import com.project.diploma.web.models.ProfileUserModel;
 import com.project.diploma.web.models.RegisterUserModel;
@@ -84,7 +84,7 @@ public class UserController {
     public ModelAndView profile(ModelAndView modelAndView, Principal principal) {
         String username = principal.getName();
         ProfileUserModel user = userService.getDetailsForUser(username);
-            modelAndView.addObject("profile", user);
+        modelAndView.addObject("profile", user);
         modelAndView.setViewName("/users/profile");
         return modelAndView;
     }

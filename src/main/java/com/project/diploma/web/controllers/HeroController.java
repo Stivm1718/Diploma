@@ -2,10 +2,9 @@ package com.project.diploma.web.controllers;
 
 import com.project.diploma.data.models.Gender;
 import com.project.diploma.data.models.Hero;
-import com.project.diploma.service.models.CreateHeroServiceModel;
-import com.project.diploma.service.models.DetailsHeroModel;
-import com.project.diploma.service.services.AuthenticatedUserService;
-import com.project.diploma.service.services.HeroService;
+import com.project.diploma.services.models.CreateHeroServiceModel;
+import com.project.diploma.web.models.DetailsHeroModel;
+import com.project.diploma.services.services.HeroService;
 import com.project.diploma.web.models.CreateHeroModel;
 import com.project.diploma.web.models.HeroModel;
 import org.modelmapper.ModelMapper;
