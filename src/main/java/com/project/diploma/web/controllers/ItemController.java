@@ -1,11 +1,10 @@
 package com.project.diploma.web.controllers;
 
+import com.project.diploma.data.models.Buy;
 import com.project.diploma.data.models.Slot;
 import com.project.diploma.services.models.CreateItemServiceModel;
 import com.project.diploma.services.services.ItemService;
-import com.project.diploma.web.models.CreateItemModel;
-import com.project.diploma.web.models.ItemNameModel;
-import com.project.diploma.web.models.ViewItemModel;
+import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +47,8 @@ public class ItemController {
         }
         //todo: Да redirect-ва към същата страница
         CreateItemServiceModel item = this.mapper.map(model, CreateItemServiceModel.class);
-        item.setSlot(Slot.valueOf(model.getSlot()));
+        //item.setSlot(Slot.valueOf(model.getSlot()));
+        //item.setBuy(Buy.valueOf(model.getBuy()));
         if (itemService.create(item)) {
             return "redirect:/home";
         } else {
@@ -61,6 +61,10 @@ public class ItemController {
         return new ItemNameModel();
     }
 
+    @ModelAttribute("items")
+    public SelectItemsModel selectModel(){
+        return new SelectItemsModel();
+    }
 
     @GetMapping("/merchant/{name}")
     public ModelAndView merchant(@PathVariable String name,
@@ -83,5 +87,29 @@ public class ItemController {
             session.setAttribute("shop", "You don't have enough gold. Go to the store and buy");
         }
         return "redirect:/items/merchant/" + heroName;
+    }
+
+    @ModelAttribute("items")
+    public SelectItemsModel getItems(){
+        return new SelectItemsModel();
+    }
+
+    @GetMapping("/select/{name}")
+    public ModelAndView getSelectItems(@PathVariable String name,
+                                       ModelAndView modelAndView,
+                                       @ModelAttribute("items") SelectItemsModel model){
+
+        ShowItemsHero showItemsHero = itemService.getItemsOfHero(name);
+        modelAndView.addObject("select", showItemsHero);
+        modelAndView.setViewName("/items/select");
+        return modelAndView;
+        //todo да направя бек-енд-а
+    }
+
+    @PostMapping("/select")
+    public String selectedItems(@ModelAttribute("items") SelectItemsModel model,
+                                HttpSession session) throws Exception {
+        session.setAttribute("selectedItems", model);
+        return "redirect:/heroes/opponent/" + model.getName();
     }
 }

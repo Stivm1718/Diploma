@@ -9,8 +9,8 @@ public enum Point {
     DEFENCE(1),
     STAMINA(1),
     STRENGTH(1),
-    BATTLES(1),
-    WINS(1);
+    BATTLES(0),
+    WINS(0);
 
     private final int value;
 

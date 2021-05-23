@@ -22,6 +22,10 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Slot slot;
 
+    @Column(name = "buy", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Buy buy;
+
     @Column(name = "stamina", nullable = false)
     private Integer stamina;
 

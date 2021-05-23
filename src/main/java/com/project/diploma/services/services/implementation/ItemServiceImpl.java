@@ -1,13 +1,15 @@
 package com.project.diploma.services.services.implementation;
 
-import com.project.diploma.data.models.Hero;
-import com.project.diploma.data.models.Item;
-import com.project.diploma.data.models.User;
+import com.project.diploma.data.models.*;
 import com.project.diploma.data.repositories.HeroRepository;
 import com.project.diploma.data.repositories.ItemRepository;
+import com.project.diploma.errors.HeroNotFoundException;
 import com.project.diploma.services.models.CreateItemServiceModel;
+import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ItemService;
 import com.project.diploma.services.services.ValidationService;
+import com.project.diploma.web.models.DetailsHeroModel;
+import com.project.diploma.web.models.ShowItemsHero;
 import com.project.diploma.web.models.ViewItemModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,15 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final HeroRepository heroRepository;
     private final ValidationService validationService;
+    private final HeroService heroService;
 
     @Autowired
-    public ItemServiceImpl(ModelMapper mapper, ItemRepository itemRepository, HeroRepository heroRepository, ValidationService validationService) {
+    public ItemServiceImpl(ModelMapper mapper, ItemRepository itemRepository, HeroRepository heroRepository, ValidationService validationService, HeroService heroService) {
         this.mapper = mapper;
         this.itemRepository = itemRepository;
         this.heroRepository = heroRepository;
         this.validationService = validationService;
+        this.heroService = heroService;
     }
 
     @Override
@@ -41,7 +45,8 @@ public class ItemServiceImpl implements ItemService {
         if (validationService.isValidItemName(model)) {
             return false;
         }
-        itemRepository.saveAndFlush(this.mapper.map(model, Item.class));
+
+        itemRepository.saveAndFlush(mapper.map(model, Item.class));
         return true;
     }
 
@@ -74,6 +79,18 @@ public class ItemServiceImpl implements ItemService {
                 return false;
             }
         }
+    }
+
+    @Override
+    public ShowItemsHero getItemsOfHero(String heroName) {
+        Hero hero = heroRepository.findHeroByName(heroName);
+
+        if (hero == null) {
+            throw new HeroNotFoundException("No such found");
+        }
+
+        DetailsHeroModel details = heroService.detailsHero(heroName);
+        return mapper.map(details, ShowItemsHero.class);
     }
 
     private void insertItemAndHeroInDatabase(Hero hero, Item item) {

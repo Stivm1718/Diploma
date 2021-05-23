@@ -50,10 +50,10 @@ public class HeroServiceImpl implements HeroService {
         hero.setGender(model.getGender());
         hero.setAttack(Point.ATTACK.getValue());
         hero.setDefence(Point.DEFENCE.getValue());
-        hero.setLevel(Point.GOLD.getValue());
+        hero.setLevel(Point.LEVEL.getValue());
         hero.setStamina(Point.STAMINA.getValue());
         hero.setStrength(Point.STRENGTH.getValue());
-        hero.setCurrentPoints(Point.STRENGTH.getValue());
+        hero.setCurrentPoints(Point.CURRENT_POINTS.getValue());
         hero.setMaxPoints(Point.MAX_POINTS.getValue());
         hero.setBattles(Point.BATTLES.getValue());
         hero.setWins(Point.WINS.getValue());

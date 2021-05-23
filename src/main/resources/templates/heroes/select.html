@@ -28,9 +28,10 @@
                     <div class="col text-center">
                         <img th:src="@{'/img/' + ${hero.getGender().name().toLowerCase()} + '.jpg'}" width="150">
                         <h2 class="text-white"><span th:text="${hero.getName()}"></span></h2>
-                        <a class="btn btn-secondary" th:href="@{'/heroes/opponent/' + ${hero.getName()}}">Fight</a>
+<!--                        <a class="btn btn-secondary" th:href="@{'/heroes/opponent/' + ${hero.getName()}}">Fight</a>-->
                         <a class="btn btn-secondary" th:href="@{'/heroes/details/' + ${hero.getName()}}">Details</a>
                         <a class="btn btn-secondary" th:href="@{'/items/merchant/' + ${hero.getName()}}">Merchant</a>
+                        <a class="btn btn-secondary" th:href="@{'/items/select/' + ${hero.getName()}}">Select items</a>
                     </div>
                 </th:block>
             </div>
