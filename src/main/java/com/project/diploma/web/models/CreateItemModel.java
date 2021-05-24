@@ -1,8 +1,6 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.validations.UsernameAvailabilityValidation;
-import com.project.diploma.validations.UsernameValidation;
-import com.project.diploma.validations.NumberValidation;
+import com.project.diploma.validations.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @Setter
 @Getter
@@ -17,7 +16,7 @@ import javax.validation.constraints.Positive;
 public class CreateItemModel {
 
     @UsernameValidation
-    @UsernameAvailabilityValidation
+    @ItemNameAvailabilityValidation
     private String name;
 
     @NotEmpty(message = "Slot cannot be empty")
@@ -38,7 +37,9 @@ public class CreateItemModel {
     @NumberValidation
     private Integer defence;
 
-    @Positive(message = "Price cannot be negative or zero")
-    @NotNull(message = "Price cannot be null")
-    private Integer price;
+    @PositiveOrZero(message = "Price cannot be negative or zero")
+    private Integer priceInGold;
+
+    @PositiveOrZero(message = "Price cannot be negative or zero")
+    private Integer priceInMoney;
 }

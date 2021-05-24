@@ -90,7 +90,7 @@
                     <div class="col col-md-3">
                         <label for="stamina" class="text-white">Stamina</label>
                         <input type="number" th:field="*{stamina}" id="stamina" class="w-25" name="stamina"
-                               placeholder="0" min="0" max="100">
+                               placeholder="1" min="1" max="100">
                         <ul th:if="${#fields.errors('stamina')}">
                             <li th:each="error : ${#fields.errors('stamina')}" th:text="${error}"></li>
                         </ul>
@@ -98,15 +98,15 @@
                     <div class="col col-md-3">
                         <label for="strength" class="text-white">Strength</label>
                         <input type="number" id="strength" class="w-25" th:field="*{strength}" name="strength"
-                               placeholder="0" min="0" max="100">
+                               placeholder="1" min="1" max="100">
                         <ul th:if="${#fields.errors('strength')}">
                             <li th:each="error : ${#fields.errors('strength')}" th:text="${error}"></li>
                         </ul>
                     </div>
                     <div class="col col-md-3">
                         <label for="attack" class="text-white">Attack</label>
-                        <input type="number" id="attack" th:field="*{attack}" class="w-25" name="attack" placeholder="0"
-                               min="0" max="100">
+                        <input type="number" id="attack" th:field="*{attack}" class="w-25" name="attack" placeholder="1"
+                               min="1" max="100">
                         <ul th:if="${#fields.errors('attack')}">
                             <li th:each="error : ${#fields.errors('attack')}" th:text="${error}"></li>
                         </ul>
@@ -114,44 +114,99 @@
                     <div class="col col-md-3">
                         <label for="defence" class="text-white">Defence</label>
                         <input type="number" th:field="*{defence}" id="defence" class="w-25" name="defence"
-                               placeholder="0" min="0" max="100">
+                               placeholder="1" min="1" max="100">
                         <ul th:if="${#fields.errors('defence')}">
                             <li th:each="error : ${#fields.errors('defence')}" th:text="${error}"></li>
                         </ul>
                     </div>
+                    <!--                    <div class="text-center">-->
+                    <!--                        <label for="price" class="text-white">Price</label>-->
+                    <!--                        <input type="number" th:field="*{price}" id="price" class="w-25" name="price" min="1">-->
+                    <!--                        <ul th:if="${#fields.errors('price')}">-->
+                    <!--                            <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <div class="text-center">-->
+<!--                    <label for="price" class="text-white">Price</label>-->
+<!--                    <input type="number" th:field="*{price}" id="price" class="w-25" name="price" placeholder="1"-->
+<!--                           min="1">-->
+<!--                    <ul th:if="${#fields.errors('price')}">-->
+<!--                        <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col col-md-6"></div>
+                    <h2 class="text-white">Buying with gold</h2>
+                    <label for="buyGold">
+                        <input type="radio" onclick="payCheck();" id="buyGold" class="ml-lg-5" value="GOLD" name="buy">
+                    </label>
+                </div>
+                <div>
+                    <h2 class="text-white">Buying with money</h2>
+                    <label for="buyMoney">
+                        <input type="radio" onclick="payCheck();" id="buyMoney" class="ml-lg-5" value="MONEY"
+                               name="buy">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div id="Gold" style="visibility:hidden">
                     <div class="text-center">
-                        <label for="price" class="text-white">Price</label>
-                        <input type="number" th:field="*{price}" id="price" class="w-25" name="price" min="1">
-                        <ul th:if="${#fields.errors('price')}">
-                            <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
+                        <label for="priceInGold" class="text-white">Price in gold</label>
+                        <input type="number" th:field="*{priceInGold}" id="priceInGold" class="w-25" name="priceInGold" placeholder="1"
+                               min="1">
+                        <ul th:if="${#fields.errors('priceInGold')}">
+                            <li th:each="error : ${#fields.errors('priceInGold')}" th:text="${error}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="Money" style="visibility:hidden">
+                    <div class="text-center">
+                        <label for="priceInMoney" class="text-white">Price in money</label>
+                        <input type="number" th:field="*{priceInMoney}" id="priceInMoney" class="w-25" name="priceInMoney" placeholder="0"
+                               min="1">
+                        <ul th:if="${#fields.errors('priceInMoney')}">
+                            <li th:each="error : ${#fields.errors('priceInMoney')}" th:text="${error}"></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col col-md-4"></div>
-                    <div>
-                        <div class="col col-md-6 ml-lg-5">
-                            <h2 class="text-white">Buying with gold</h2>
-                            <label for="buy">
-                                <input type="radio" id="buy" class="ml-lg-5" value="GOLD" name="buy">
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="col col-md-6 ml-lg-5">
-                            <h2 class="text-white">Buying with money</h2>
-                            <label for="buy">
-                                <input type="radio" id="buy" class="ml-lg-5" value="MONEY" name="buy">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--            <div class="form-group">-->
+            <!--                <div class="text-center">-->
+            <!--                    <label for="priceGold" class="text-white">Price</label>-->
+            <!--                    <input type="number" th:field="*{priceInGold}" id="priceGold" class="w-25" name="price" placeholder="1"-->
+            <!--                           min="1">-->
+            <!--                    <ul th:if="${#fields.errors('price')}">-->
+            <!--                        <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--                <div class="text-center">-->
+            <!--                    <label for="priceMoney" class="text-white">Price</label>-->
+            <!--                    <input type="number" th:field="*{priceInMoney}" id="priceMoney" class="w-25" name="price" placeholder="0">-->
+            <!--                    <ul th:if="${#fields.errors('price')}">-->
+            <!--                        <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div class="button-holder d-flex justify-content-center">
                 <button class="btn btn-secondary text-white mb-3" type="submit">Create Item</button>
             </div>
+            <!--            <script type="text/javascript">-->
+            <!--                function payCheck() {-->
+            <!--                    if (document.getElementById('buyGold').checked) {-->
+            <!--                        document.getElementById('ifYes').style.visibility = 'visible';-->
+            <!--                        document.getElementById('ifIf').style.visibility = 'hidden';-->
+            <!--                    } else if (document.getElementById('buyMoney').checked) {-->
+            <!--                        document.getElementById('ifIf').style.visibility = 'visible';-->
+            <!--                        document.getElementById('ifYes').style.visibility = 'hidden';-->
+            <!--                    } -->
+            <!--                }-->
+            <!--            </script>-->
         </form>
     </div>
 </main>

@@ -3,9 +3,9 @@ package com.project.diploma.web.controllers;
 import com.project.diploma.data.models.Gender;
 import com.project.diploma.data.models.Hero;
 import com.project.diploma.services.models.CreateHeroServiceModel;
-import com.project.diploma.web.models.DetailsHeroModel;
 import com.project.diploma.services.services.HeroService;
 import com.project.diploma.web.models.CreateHeroModel;
+import com.project.diploma.web.models.DetailsHeroModel;
 import com.project.diploma.web.models.HeroModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,20 +61,20 @@ public class HeroController {
     }
 
     @GetMapping("/select")
-    public String selectHero(HttpSession session, Principal principal){
+    public ModelAndView selectHero(ModelAndView model, Principal principal){
         String username = principal.getName();
         long count = heroService.getCountOfHeroes(username);
-        session.setAttribute("countHeroes", count);
+        model.addObject("countHeroes", count);
         if(count != 0){
             List<Hero> heroes = heroService.getAllUserHeroes(username);
-            session.setAttribute("heroes", heroes);
+            model.addObject("heroes", heroes);
         }
-        return "heroes/select";
+        model.setViewName("/heroes/select");
+        return model;
     }
 
     @GetMapping("/opponent/{name}")
-    public String selectOpponent(@PathVariable String name, HttpSession session,
-                                 Principal principal){
+    public String selectOpponent(@PathVariable String name, HttpSession session, Principal principal){
         String username = principal.getName();
         HeroModel opponent = heroService.selectOpponent(username, name);
         session.setAttribute("opponent", opponent);

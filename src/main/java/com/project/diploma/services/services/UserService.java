@@ -15,4 +15,6 @@ public interface UserService extends UserDetailsService {
     LoggedUserFilterModel findLogUser(String username);
 
     ProfileUserModel getDetailsForUser(String username);
+
+    int takeGoldFromUser(String username);
 }

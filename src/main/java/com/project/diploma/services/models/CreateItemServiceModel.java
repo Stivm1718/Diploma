@@ -25,5 +25,7 @@ public class CreateItemServiceModel {
 
     private Integer defence;
 
-    private Integer price;
+    private Integer priceInGold;
+
+    private Integer priceInMoney;
 }

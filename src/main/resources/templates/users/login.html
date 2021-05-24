@@ -6,28 +6,28 @@
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main>
-    <h1 class="text-center">Login</h1>
+    <h1 class="text-center text-white">Login</h1>
     <hr class="hr-3"/>
     <form class="mx-auto w-15" action="/users/login" method="post" th:object="${login}">
         <div class="form-group">
             <div class="label-holder text-black d-flex justify-content-center">
-                <label for="username" class="h3 mb-2 text-black">Username</label>
+                <label for="username" class="h3 mb-2 text-white">Username</label>
             </div>
             <input type="text" class="form-control" th:field="*{username}" id="username" name="username"/>
             <div>
                 <ul>
-                    <li th:text="${session.user}"></li>
+                    <li class="text-white" th:text="${session.user}"></li>
                 </ul>
             </div>
         </div>
         <div class="form-group">
             <div class="label-holder text-black d-flex justify-content-center">
-                <label for="password" class="h3 mb-2 text-black">Password</label>
+                <label for="password" class="h3 mb-2 text-white">Password</label>
             </div>
             <input type="password" class="form-control" th:field="*{password}" id="password" name="password"/>
             <div>
                 <ul>
-                    <li th:text="${session.pass}"></li>
+                    <li class="text-white" th:text="${session.pass}"></li>
                 </ul>
             </div>
         </div>

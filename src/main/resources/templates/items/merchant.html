@@ -7,61 +7,145 @@
 <main class="container">
     <h1 class="text-center">Merchant</h1>
     <hr class="hr-3"/>
-    <table class="table bg-blur">
-        <thead>
-        <tr>
-            <th scope="col" class="font-weight-bold">Name</th>
-            <th scope="col">Slot</th>
-            <th scope="col">Picture</th>
-            <th scope="col">Stamina</th>
-            <th scope="col">Strength</th>
-            <th scope="col">Attack</th>
-            <th scope="col">Defence</th>
-            <!--            <th scope="col">Price</th>-->
-        </tr>
-        </thead>
-        <th:block th:each="item : ${items}">
-            <tbody>
+    <th:block th:if="${session.authorities.getAuthorities().size() == 2}">
+        <table class="table bg-blur">
+            <thead>
             <tr>
-                <td><span th:text="${item.getName()}"></span></td>
-                <td><span th:text="${item.getSlot()}"></span></td>
-                <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}" width="150">
-                </td>
-                <td><span th:text="${item.getStamina()}"></span></td>
-                <td><span th:text="${item.getStrength()}"></span></td>
-                <td><span th:text="${item.getAttack()}"></span></td>
-                <td><span th:text="${item.getDefence()}"></span></td>
-                <!--            <td><span th:text="${item.getPrice()}"></span></td>-->
-                <td>
-
-                    <form th:action="@{'/items/merchant/' + ${heroName}}"
-                          th:object="${itemName}"
-                          method="post">
-                        <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'" class="form-control">
-                        <button class="btn btn-info">Buy</button>
-                    </form>
-                </td>
+                <th scope="col" class="font-weight-bold">Name</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Stamina</th>
+                <th scope="col">Strength</th>
+                <th scope="col">Attack</th>
+                <th scope="col">Defence</th>
+                <!--            <th scope="col">Price</th>-->
             </tr>
-            </tbody>
-        </th:block>
-    </table>
-<!--    <button onclick="myFunction()">Try it</button>-->
+            </thead>
+            <th:block th:each="item : ${items}">
+                <tbody>
+                <tr>
+                    <td><span th:text="${item.getName()}"></span></td>
+                    <td><span th:text="${item.getSlot()}"></span></td>
+                    <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}" width="150">
+                    </td>
+                    <td><span th:text="${item.getStamina()}"></span></td>
+                    <td><span th:text="${item.getStrength()}"></span></td>
+                    <td><span th:text="${item.getAttack()}"></span></td>
+                    <td><span th:text="${item.getDefence()}"></span></td>
+                    <!--            <td><span th:text="${item.getPrice()}"></span></td>-->
+                    <td>
 
-<!--    <div id="myDIV">-->
-<!--        This is my DIV element.-->
-<!--    </div>-->
+                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                              th:object="${itemName}"
+                              method="post">
+                            <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                   class="form-control">
+                            <button class="btn btn-info">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </th:block>
+        </table>
+    </th:block>
+    <th:block th:unless="${session.authorities.getAuthorities().size() == 2}">
+        <h2 class="text-center">Buy items with gold</h2>
+        <table class="table bg-blur">
+            <thead>
+            <tr>
+                <th scope="col" class="font-weight-bold">Name</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Stamina</th>
+                <th scope="col">Strength</th>
+                <th scope="col">Attack</th>
+                <th scope="col">Defence</th>
+                <th scope="col">Price in Gold</th>
+            </tr>
+            </thead>
+            <th:block th:each="item : ${itemsWithGold}">
+                <tbody>
+                <tr>
+                    <td><span th:text="${item.getName()}"></span></td>
+                    <td><span th:text="${item.getSlot()}"></span></td>
+                    <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}" width="150">
+                    </td>
+                    <td><span th:text="${item.getStamina()}"></span></td>
+                    <td><span th:text="${item.getStrength()}"></span></td>
+                    <td><span th:text="${item.getAttack()}"></span></td>
+                    <td><span th:text="${item.getDefence()}"></span></td>
+                    <td><span th:text="${item.getPriceInGold()}"></span></td>
+                    <td>
 
-<!--    <script>-->
-<!--        function myFunction() {-->
-<!--            var x = document.getElementById("myDIV");-->
-<!--            if (x.style.display === "none") {-->
-<!--                x.style.display = "block";-->
-<!--            } else {-->
-<!--                x.style.display = "none";-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-<!--    todo Да правя логиката за потребител-->
+                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                              th:object="${itemName}"
+                              method="post">
+                            <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                   class="form-control">
+                            <button class="btn btn-info">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </th:block>
+        </table>
+        <table class="table bg-blur">
+            <thead>
+            <tr>
+                <th scope="col" class="font-weight-bold">Name</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Stamina</th>
+                <th scope="col">Strength</th>
+                <th scope="col">Attack</th>
+                <th scope="col">Defence</th>
+                <th scope="col">Price in Money</th>
+            </tr>
+            </thead>
+            <th:block th:each="item : ${itemsWithMoney}">
+                <tbody>
+                <tr>
+                    <td><span th:text="${item.getName()}"></span></td>
+                    <td><span th:text="${item.getSlot()}"></span></td>
+                    <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}" width="150">
+                    </td>
+                    <td><span th:text="${item.getStamina()}"></span></td>
+                    <td><span th:text="${item.getStrength()}"></span></td>
+                    <td><span th:text="${item.getAttack()}"></span></td>
+                    <td><span th:text="${item.getDefence()}"></span></td>
+                    <td><span th:text="${item.getPriceInMoney()}"></span></td>
+                    <td>
+
+                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                              th:object="${itemName}"
+                              method="post">
+                            <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                   class="form-control">
+                            <button class="btn btn-info">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </th:block>
+        </table>
+    </th:block>
+    <!--    <button onclick="myFunction()">Try it</button>-->
+
+    <!--    <div id="myDIV">-->
+    <!--        This is my DIV element.-->
+    <!--    </div>-->
+
+    <!--    <script>-->
+    <!--        function myFunction() {-->
+    <!--            var x = document.getElementById("myDIV");-->
+    <!--            if (x.style.display === "none") {-->
+    <!--                x.style.display = "block";-->
+    <!--            } else {-->
+    <!--                x.style.display = "none";-->
+    <!--            }-->
+    <!--        }-->
+    <!--    </script>-->
+    <!--    todo Да правя логиката за потребител-->
 </main>
 <th:block th:include="~{fragments/footer}"/>
 </body>

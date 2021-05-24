@@ -68,7 +68,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginConfirm(@ModelAttribute("login") LoginUserModel model, @RequestParam String error, HttpSession session) {
+    public String loginConfirm(@ModelAttribute("login") LoginUserModel model, HttpSession session) {
 
         session.setAttribute("user", model.getUsername().equals("") ? "Username can not be empty." : "");
 

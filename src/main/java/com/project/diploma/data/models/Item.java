@@ -38,8 +38,11 @@ public class Item extends BaseEntity {
     @Column(name = "defence", nullable = false)
     private Integer defence;
 
-    @Column(name = "price", nullable = false)
-    private Integer price;
+    @Column(name = "price_in_gold")
+    private Integer priceInGold;
+
+    @Column(name = "price_in_money")
+    private Integer priceInMoney;
 
     @ManyToMany
     @JoinTable(

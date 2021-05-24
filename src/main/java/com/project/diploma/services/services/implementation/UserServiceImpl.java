@@ -114,4 +114,10 @@ public class UserServiceImpl implements UserService {
         model.setTotalBattles(totalBattlesOfHero[0]);
         return model;
     }
+
+    @Override
+    public int takeGoldFromUser(String username) {
+        User user = userRepository.findUserByUsername(username);
+        return user.getGold();
+    }
 }

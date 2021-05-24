@@ -1,7 +1,5 @@
 package com.project.diploma.web.controllers;
 
-import com.project.diploma.data.models.Buy;
-import com.project.diploma.data.models.Slot;
 import com.project.diploma.services.models.CreateItemServiceModel;
 import com.project.diploma.services.services.ItemService;
 import com.project.diploma.web.models.*;
@@ -47,8 +45,6 @@ public class ItemController {
         }
         //todo: Да redirect-ва към същата страница
         CreateItemServiceModel item = this.mapper.map(model, CreateItemServiceModel.class);
-        //item.setSlot(Slot.valueOf(model.getSlot()));
-        //item.setBuy(Buy.valueOf(model.getBuy()));
         if (itemService.create(item)) {
             return "redirect:/home";
         } else {
@@ -62,25 +58,35 @@ public class ItemController {
     }
 
     @ModelAttribute("items")
-    public SelectItemsModel selectModel(){
+    public SelectItemsModel selectModel() {
         return new SelectItemsModel();
     }
 
     @GetMapping("/merchant/{name}")
     public ModelAndView merchant(@PathVariable String name,
                                  ModelAndView model,
+                                 HttpSession session,
                                  @ModelAttribute("itemName") ItemNameModel modelName) {
-        List<ViewItemModel> items = itemService.takeAllItemsThatAreNotThere(name);
-        model.addObject("items", items);
+        LoggedUserFilterModel roles = (LoggedUserFilterModel) session.getAttribute("authorities");
         model.addObject("heroName", name);
+        int countRoles = roles.getAuthorities().size();
+        if (countRoles == 2){
+            List<ViewItemModel> items = itemService.takeAllItemsThatAreNotThere(name);
+            model.addObject("items", items);
+        } else {
+            List<ViewItemModelWithTypePay> itemsWithGold = itemService.takeItemWithGoldForPay(name);
+            model.addObject("itemsWithGold", itemsWithGold);
+            List<ViewItemModelWithTypePay> itemsWithMoney = itemService.takeItemWithMoneyForPay(name);
+            model.addObject("itemsWithMoney", itemsWithMoney);
+        }
         model.setViewName("/items/merchant");
         return model;
     }
 
     @PostMapping("/merchant/{heroName}")
     public String merchantConfirm(@PathVariable String heroName,
-                                        HttpSession session,
-                                        @Valid @ModelAttribute("itemName") ItemNameModel modelName) throws Exception {
+                                  HttpSession session,
+                                  @Valid @ModelAttribute("itemName") ItemNameModel modelName) throws Exception {
         //todo Да направя логиката и за потребителя
         boolean isBuyItem = itemService.addItemToHero(heroName, modelName.getName());
         if (!isBuyItem) {
@@ -90,14 +96,14 @@ public class ItemController {
     }
 
     @ModelAttribute("items")
-    public SelectItemsModel getItems(){
+    public SelectItemsModel getItems() {
         return new SelectItemsModel();
     }
 
     @GetMapping("/select/{name}")
     public ModelAndView getSelectItems(@PathVariable String name,
                                        ModelAndView modelAndView,
-                                       @ModelAttribute("items") SelectItemsModel model){
+                                       @ModelAttribute("items") SelectItemsModel model) {
 
         ShowItemsHero showItemsHero = itemService.getItemsOfHero(name);
         modelAndView.addObject("select", showItemsHero);
@@ -108,7 +114,7 @@ public class ItemController {
 
     @PostMapping("/select")
     public String selectedItems(@ModelAttribute("items") SelectItemsModel model,
-                                HttpSession session) throws Exception {
+                                HttpSession session) {
         session.setAttribute("selectedItems", model);
         return "redirect:/heroes/opponent/" + model.getName();
     }

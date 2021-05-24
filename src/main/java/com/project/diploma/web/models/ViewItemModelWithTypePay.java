@@ -1,5 +1,6 @@
 package com.project.diploma.web.models;
 
+import com.project.diploma.data.models.Buy;
 import com.project.diploma.data.models.Slot;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,11 +9,13 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ViewItemModel {
+public class ViewItemModelWithTypePay {
 
     private String name;
 
     private Slot slot;
+
+    private Buy buy;
 
     private Integer stamina;
 
@@ -21,4 +24,8 @@ public class ViewItemModel {
     private Integer attack;
 
     private Integer defence;
+
+    private Integer priceInGold;
+
+    private Integer priceInMoney;
 }
