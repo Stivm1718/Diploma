@@ -1,6 +1,6 @@
 package com.project.diploma.validations;
 
-import com.project.diploma.validations.validator.NumberValidator;
+import com.project.diploma.validations.validator.MonthValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = NumberValidator.class)
-public @interface NumberValidation {
+@Constraint(validatedBy = MonthValidator.class)
+public @interface MonthValidation {
 
-    String message() default "Points could be between 1 and 100";
+    String message() default "Invalid month.";
 
     Class<?>[] groups() default {};
 

@@ -44,7 +44,8 @@ public class HeroController {
 
     @PostMapping("/create")
     public String createHero(@Valid @ModelAttribute("hero") CreateHeroModel model,
-                             BindingResult result, Principal principal) throws Exception {
+                             BindingResult result,
+                             Principal principal) throws Exception {
         if (result.hasErrors()){
             return "heroes/create";
         }

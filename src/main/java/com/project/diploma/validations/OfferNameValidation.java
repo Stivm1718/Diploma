@@ -1,6 +1,6 @@
 package com.project.diploma.validations;
 
-import com.project.diploma.validations.validator.NumberValidator;
+import com.project.diploma.validations.validator.OfferNameValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = NumberValidator.class)
-public @interface NumberValidation {
+@Constraint(validatedBy = OfferNameValidator.class)
+public @interface OfferNameValidation {
 
-    String message() default "Points could be between 1 and 100";
+    String message() default "The name must start with a capital letter and have 5 to 30 characters.";
 
     Class<?>[] groups() default {};
 

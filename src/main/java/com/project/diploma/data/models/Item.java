@@ -24,7 +24,7 @@ public class Item extends BaseEntity {
 
     @Column(name = "buy", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Buy buy;
+    private Pay pay;
 
     @Column(name = "stamina", nullable = false)
     private Integer stamina;

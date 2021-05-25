@@ -23,7 +23,6 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .formLogin().loginPage("/users/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                //.successHandler(authenticationSuccessHandler)
                 .defaultSuccessUrl("/home", true)
                 .failureForwardUrl("/users/login?error=true")
                 .and()

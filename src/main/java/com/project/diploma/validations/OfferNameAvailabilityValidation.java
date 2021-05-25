@@ -1,6 +1,6 @@
 package com.project.diploma.validations;
 
-import com.project.diploma.validations.validator.NumberValidator;
+import com.project.diploma.validations.validator.OfferNameAvailabilityValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = NumberValidator.class)
-public @interface NumberValidation {
+@Constraint(validatedBy = OfferNameAvailabilityValidator.class)
+public @interface OfferNameAvailabilityValidation {
 
-    String message() default "Points could be between 1 and 100";
+    String message() default "The name of offer is unavailable.";
 
     Class<?>[] groups() default {};
 

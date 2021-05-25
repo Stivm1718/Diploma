@@ -1,5 +1,5 @@
 package com.project.diploma.data.models;
 
-public enum Buy {
+public enum Pay {
     GOLD, MONEY
 }

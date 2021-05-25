@@ -18,7 +18,6 @@
                 <th scope="col">Strength</th>
                 <th scope="col">Attack</th>
                 <th scope="col">Defence</th>
-                <!--            <th scope="col">Price</th>-->
             </tr>
             </thead>
             <th:block th:each="item : ${items}">
@@ -32,9 +31,7 @@
                     <td><span th:text="${item.getStrength()}"></span></td>
                     <td><span th:text="${item.getAttack()}"></span></td>
                     <td><span th:text="${item.getDefence()}"></span></td>
-                    <!--            <td><span th:text="${item.getPrice()}"></span></td>-->
                     <td>
-
                         <form th:action="@{'/items/merchant/' + ${heroName}}"
                               th:object="${itemName}"
                               method="post">
@@ -49,6 +46,7 @@
         </table>
     </th:block>
     <th:block th:unless="${session.authorities.getAuthorities().size() == 2}">
+        <h2 class="text-black mt-2 text-center">Gold: [[${session.gold}]]</h2>
         <h2 class="text-center">Buy items with gold</h2>
         <table class="table bg-blur">
             <thead>
@@ -74,9 +72,10 @@
                     <td><span th:text="${item.getStrength()}"></span></td>
                     <td><span th:text="${item.getAttack()}"></span></td>
                     <td><span th:text="${item.getDefence()}"></span></td>
-                    <td><span th:text="${item.getPriceInGold()}"></span></td>
+                    <td><h5 class="align-middle">
+                        <span th:text="${item.getPriceInGold()}"></span> gold
+                    </h5></td>
                     <td>
-
                         <form th:action="@{'/items/merchant/' + ${heroName}}"
                               th:object="${itemName}"
                               method="post">
@@ -84,11 +83,14 @@
                                    class="form-control">
                             <button class="btn btn-info">Buy</button>
                         </form>
+                        <th:block th:unless="${session.text == null}">
+                            <span th:text="${session.text}"></span></th:block>
                     </td>
                 </tr>
                 </tbody>
             </th:block>
         </table>
+        <h2 class="text-center text-white">Buy items with money</h2>
         <table class="table bg-blur">
             <thead>
             <tr>
@@ -113,9 +115,10 @@
                     <td><span th:text="${item.getStrength()}"></span></td>
                     <td><span th:text="${item.getAttack()}"></span></td>
                     <td><span th:text="${item.getDefence()}"></span></td>
-                    <td><span th:text="${item.getPriceInMoney()}"></span></td>
+                    <td><h5 class="align-middle">
+                        <span th:text="${item.getPriceInMoney()}"></span> лв.
+                    </h5></td>
                     <td>
-
                         <form th:action="@{'/items/merchant/' + ${heroName}}"
                               th:object="${itemName}"
                               method="post">

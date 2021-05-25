@@ -1,6 +1,6 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.data.models.Buy;
+import com.project.diploma.data.models.Pay;
 import com.project.diploma.data.models.Slot;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class ViewItemModelWithTypePay {
 
     private Slot slot;
 
-    private Buy buy;
+    private Pay buy;
 
     private Integer stamina;
 

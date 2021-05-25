@@ -3,6 +3,7 @@ package com.project.diploma.services.services.implementation;
 import com.project.diploma.data.models.*;
 import com.project.diploma.data.repositories.HeroRepository;
 import com.project.diploma.data.repositories.ItemRepository;
+import com.project.diploma.data.repositories.UserRepository;
 import com.project.diploma.errors.HeroNotFoundException;
 import com.project.diploma.services.models.CreateItemServiceModel;
 import com.project.diploma.services.services.HeroService;
@@ -27,14 +28,16 @@ public class ItemServiceImpl implements ItemService {
     private final HeroRepository heroRepository;
     private final ValidationService validationService;
     private final HeroService heroService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ItemServiceImpl(ModelMapper mapper, ItemRepository itemRepository, HeroRepository heroRepository, ValidationService validationService, HeroService heroService) {
+    public ItemServiceImpl(ModelMapper mapper, ItemRepository itemRepository, HeroRepository heroRepository, ValidationService validationService, HeroService heroService, UserRepository userRepository) {
         this.mapper = mapper;
         this.itemRepository = itemRepository;
         this.heroRepository = heroRepository;
         this.validationService = validationService;
         this.heroService = heroService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -58,25 +61,10 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public boolean addItemToHero(String heroName, String itemName) throws Exception {
+    public void addHeroItemForAdmin(String heroName, String itemName) {
         Hero hero = heroRepository.findHeroByName(heroName);
-        User user = hero.getUser();
         Item item = itemRepository.findByName(itemName);
-
-        if (user.getAuthorities().size() == 2) {
-            insertItemAndHeroInDatabase(hero, item);
-            return true;
-        }
-//        else {
-//            if (item.getPrice() <= user.getGold()) {
-//                insertItemAndHeroInDatabase(hero, item);
-//                user.setGold(user.getGold() - item.getPrice());
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
-        return true;
+        insertItemAndHeroInDatabase(hero, item);
     }
 
     @Override
@@ -107,7 +95,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository
                 .findAll()
                 .stream()
-                .filter(i -> i.getBuy().equals(Buy.GOLD))
+                .filter(i -> i.getPay().equals(Pay.GOLD))
                 .filter(i -> !i.getHeroes().stream()
                         .map(Hero::getName)
                         .collect(Collectors.toList()).contains(heroName))
@@ -120,12 +108,32 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository
                 .findAll()
                 .stream()
-                .filter(i -> i.getBuy().equals(Buy.MONEY))
+                .filter(i -> i.getPay().equals(Pay.MONEY))
                 .filter(i -> !i.getHeroes().stream()
                         .map(Hero::getName)
                         .collect(Collectors.toList()).contains(heroName))
                 .map(u -> this.mapper.map(u, ViewItemModelWithTypePay.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Pay getWayToPay(String name) {
+        return itemRepository.findByName(name).getPay();
+    }
+
+    @Override
+    public boolean buyItemWithGold(String heroName, String itemName) {
+        Hero hero = heroRepository.findHeroByName(heroName);
+        User user = hero.getUser();
+        Item item = itemRepository.findByName(itemName);
+
+        if (item.getPriceInGold() <= user.getGold()) {
+            insertItemAndHeroInDatabase(hero, item);
+            user.setGold(user.getGold() - item.getPriceInGold());
+            userRepository.saveAndFlush(user);
+            return true;
+        }
+        return false;
     }
 
     private void insertItemAndHeroInDatabase(Hero hero, Item item) {

@@ -1,10 +1,9 @@
 package com.project.diploma.web.controllers;
 
 import com.project.diploma.services.models.RegisterUserServiceModel;
+import com.project.diploma.services.services.ItemService;
 import com.project.diploma.services.services.UserService;
-import com.project.diploma.web.models.LoginUserModel;
-import com.project.diploma.web.models.ProfileUserModel;
-import com.project.diploma.web.models.RegisterUserModel;
+import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +21,13 @@ public class UserController {
 
     private final ModelMapper mapper;
     private final UserService userService;
+    private final ItemService itemService;
 
     @Autowired
-    public UserController(ModelMapper mapper, UserService userService) {
+    public UserController(ModelMapper mapper, UserService userService, ItemService itemService) {
         this.mapper = mapper;
         this.userService = userService;
+        this.itemService = itemService;
     }
 
     @ModelAttribute("register")
@@ -40,12 +41,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String confirmRegister(@Valid @ModelAttribute("register") RegisterUserModel model, BindingResult result, HttpSession session) {
+    public String confirmRegister(@Valid @ModelAttribute("register") RegisterUserModel model,
+                                  BindingResult result) {
         if (result.hasErrors()) {
-            if (result.getAllErrors().stream()
-                    .filter(error -> error.getCode().equals("EqualsPasswordValidation")).count() > 0) {
-                session.setAttribute("registerError", "Passwords not equals.");
-            }
             return "users/register";
         }
 
@@ -68,7 +66,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginConfirm(@ModelAttribute("login") LoginUserModel model, HttpSession session) {
+    public String loginConfirm(@ModelAttribute("login") LoginUserModel model,
+                               HttpSession session) {
 
         session.setAttribute("user", model.getUsername().equals("") ? "Username can not be empty." : "");
 
@@ -87,5 +86,41 @@ public class UserController {
         modelAndView.addObject("profile", user);
         modelAndView.setViewName("/users/profile");
         return modelAndView;
+    }
+
+    @ModelAttribute("payment")
+    public BuyOfferModel buy() {
+        return new BuyOfferModel();
+    }
+
+    @GetMapping("/payment")
+    public String buyOffer(@ModelAttribute("payment") BuyOfferModel model) {
+        return "users/payment";
+    }
+
+    @PostMapping("/payment")
+    public String buyConfirm(@Valid @ModelAttribute("payment") BuyOfferModel model,
+                             BindingResult result,
+                             HttpSession session) throws Exception {
+        if (result.hasErrors()) {
+            return "users/payment";
+        }
+
+        HeroItemModel attribute = (HeroItemModel) session.getAttribute("heroItemModel");
+        if (attribute != null){
+            itemService.addHeroItemForAdmin(attribute.getNameHero(), attribute.getNameItem());
+        }
+        return "redirect:/users/success";
+//        RegisterUserServiceModel user = this.mapper.map(model, RegisterUserServiceModel.class);
+//        if (userService.register(user)) {
+//            return "redirect:/users/login";
+//        } else {
+//            return "redirect:/users/register";
+//        }
+    }
+
+    @GetMapping("/success")
+    public String successPayment(){
+        return "users/success";
     }
 }

@@ -2,9 +2,11 @@ package com.project.diploma.services.services.implementation;
 
 import com.project.diploma.data.repositories.HeroRepository;
 import com.project.diploma.data.repositories.ItemRepository;
+import com.project.diploma.data.repositories.OfferRepository;
 import com.project.diploma.data.repositories.UserRepository;
 import com.project.diploma.services.models.CreateHeroServiceModel;
 import com.project.diploma.services.models.CreateItemServiceModel;
+import com.project.diploma.services.models.CreateOfferServiceModel;
 import com.project.diploma.services.services.ValidationService;
 import com.project.diploma.services.models.RegisterUserServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,14 @@ public class ValidationServiceImpl implements ValidationService {
     private final UserRepository userRepository;
     private final HeroRepository heroRepository;
     private final ItemRepository itemRepository;
+    private final OfferRepository offerRepository;
 
     @Autowired
-    public ValidationServiceImpl(UserRepository userRepository, HeroRepository heroRepository, ItemRepository itemRepository) {
+    public ValidationServiceImpl(UserRepository userRepository, HeroRepository heroRepository, ItemRepository itemRepository, OfferRepository offerRepository) {
         this.userRepository = userRepository;
         this.heroRepository = heroRepository;
         this.itemRepository = itemRepository;
+        this.offerRepository = offerRepository;
     }
 
     @Override
@@ -39,6 +43,11 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean isValidItemName(CreateItemServiceModel model) {
         return itemRepository.existsItemByName(model.getName());
+    }
+
+    @Override
+    public boolean isValidOfferName(CreateOfferServiceModel model) {
+        return offerRepository.existsOfferByName(model.getName());
     }
 
     private boolean existUsername(String username) {

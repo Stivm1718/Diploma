@@ -1,13 +1,13 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.validations.*;
+import com.project.diploma.validations.ItemNameAvailabilityValidation;
+import com.project.diploma.validations.NumberValidation;
+import com.project.diploma.validations.UsernameValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Setter
@@ -23,7 +23,7 @@ public class CreateItemModel {
     private String slot;
 
     @NotEmpty(message = "Buy cannot be empty")
-    private String buy;
+    private String pay;
 
     @NumberValidation
     private Integer stamina;

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <div class="container">
+        <h1>Поздравления [[${session.username}]], Вие успешно купихте [[${session.heroItemModel.getNameItem()}]]</h1>
+        <hr class="my-3"/>
+        <hr class="my-3"/>
+        <h3>Ако искаш да купиш още артикули за твоя герой натисни
+            <a th:href="@{'/items/merchant/' + ${session.heroItemModel.getNameHero()}}">тук</a>
+            , а ако си жаден за победи натисни
+            <a href="/heroes/select">тук</a> и започваш да мачкаш.
+        </h3>
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

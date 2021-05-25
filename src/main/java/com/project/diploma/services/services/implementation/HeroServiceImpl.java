@@ -124,7 +124,7 @@ public class HeroServiceImpl implements HeroService {
         for (Item i : items) {
             Slot slot = i.getSlot();
             switch (slot) {
-                case GAUNTLETS:
+                case GAUNTLET:
                     List<Item> gauntlets = detail.getGauntlets();
                     gauntlets.add(i);
                     break;

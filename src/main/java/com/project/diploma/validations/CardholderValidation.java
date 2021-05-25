@@ -1,6 +1,6 @@
 package com.project.diploma.validations;
 
-import com.project.diploma.validations.validator.MoneyValidator;
+import com.project.diploma.validations.validator.CardholderValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = MoneyValidator.class)
-public @interface MoneyValidation {
+@Constraint(validatedBy = CardholderValidator.class)
+public @interface CardholderValidation {
 
-    String message() default "Тhe price cannot be less than BGN 0.1";
+    String message() default "Invalid cardholder.";
 
     Class<?>[] groups() default {};
 

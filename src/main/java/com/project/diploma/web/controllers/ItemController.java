@@ -1,7 +1,9 @@
 package com.project.diploma.web.controllers;
 
+import com.project.diploma.data.models.Pay;
 import com.project.diploma.services.models.CreateItemServiceModel;
 import com.project.diploma.services.services.ItemService;
+import com.project.diploma.services.services.UserService;
 import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,13 @@ public class ItemController {
 
     private final ModelMapper mapper;
     private final ItemService itemService;
+    private final UserService userService;
 
     @Autowired
-    public ItemController(ModelMapper mapper, ItemService itemService) {
+    public ItemController(ModelMapper mapper, ItemService itemService, UserService userService) {
         this.mapper = mapper;
         this.itemService = itemService;
+        this.userService = userService;
     }
 
     @ModelAttribute("item")
@@ -70,7 +74,7 @@ public class ItemController {
         LoggedUserFilterModel roles = (LoggedUserFilterModel) session.getAttribute("authorities");
         model.addObject("heroName", name);
         int countRoles = roles.getAuthorities().size();
-        if (countRoles == 2){
+        if (countRoles == 2) {
             List<ViewItemModel> items = itemService.takeAllItemsThatAreNotThere(name);
             model.addObject("items", items);
         } else {
@@ -87,10 +91,26 @@ public class ItemController {
     public String merchantConfirm(@PathVariable String heroName,
                                   HttpSession session,
                                   @Valid @ModelAttribute("itemName") ItemNameModel modelName) throws Exception {
-        //todo Да направя логиката и за потребителя
-        boolean isBuyItem = itemService.addItemToHero(heroName, modelName.getName());
-        if (!isBuyItem) {
-            session.setAttribute("shop", "You don't have enough gold. Go to the store and buy");
+        LoggedUserFilterModel roles = (LoggedUserFilterModel) session.getAttribute("authorities");
+        int countRoles = roles.getAuthorities().size();
+        if (countRoles == 2) {
+            itemService.addHeroItemForAdmin(heroName, modelName.getName());
+        } else {
+            Pay pay = itemService.getWayToPay(modelName.getName());
+            if (pay.name().equals("GOLD")) {
+                if (!itemService.buyItemWithGold(heroName, modelName.getName())) {
+                    session.setAttribute("text", "You don't have enough gold!");
+                } else {
+                    session.setAttribute("text", null);
+                    String username = (String) session.getAttribute("username");
+                    int gold = userService.takeGoldFromUser(username);
+                    session.setAttribute("gold", gold);
+                }
+            } else {
+                HeroItemModel heroItemModel = new HeroItemModel(heroName, modelName.getName());
+                session.setAttribute("heroItemModel", heroItemModel);
+                return "redirect:/users/payment";
+            }
         }
         return "redirect:/items/merchant/" + heroName;
     }
@@ -109,7 +129,6 @@ public class ItemController {
         modelAndView.addObject("select", showItemsHero);
         modelAndView.setViewName("/items/select");
         return modelAndView;
-        //todo да направя бек-енд-а
     }
 
     @PostMapping("/select")
