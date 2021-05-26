@@ -1,8 +1,10 @@
 package com.project.diploma.services.services.implementation;
 
+import com.project.diploma.data.models.Offer;
 import com.project.diploma.data.models.Point;
 import com.project.diploma.data.models.User;
 import com.project.diploma.data.repositories.HeroRepository;
+import com.project.diploma.data.repositories.OfferRepository;
 import com.project.diploma.data.repositories.RoleRepository;
 import com.project.diploma.data.repositories.UserRepository;
 import com.project.diploma.services.models.LoginUserServiceModel;
@@ -33,9 +35,10 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final RoleService roleService;
     private final HeroRepository heroRepository;
+    private final OfferRepository offerRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper mapper, ValidationService validationService, HashingService hashingService, RoleRepository roleRepository, RoleService roleService, HeroRepository heroRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper mapper, ValidationService validationService, HashingService hashingService, RoleRepository roleRepository, RoleService roleService, HeroRepository heroRepository, OfferRepository offerRepository) {
         this.userRepository = userRepository;
         this.mapper = mapper;
         this.validationService = validationService;
@@ -43,6 +46,7 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
         this.roleService = roleService;
         this.heroRepository = heroRepository;
+        this.offerRepository = offerRepository;
     }
 
     @Override
@@ -119,5 +123,15 @@ public class UserServiceImpl implements UserService {
     public int takeGoldFromUser(String username) {
         User user = userRepository.findUserByUsername(username);
         return user.getGold();
+    }
+
+    @Override
+    public void addGoldToUser(String username, String offerName) {
+        Offer offer = offerRepository.getOfferByName(offerName);
+
+        User user = userRepository.findUserByUsername(username);
+
+        user.setGold(user.getGold() + offer.getGold());
+        userRepository.saveAndFlush(user);
     }
 }

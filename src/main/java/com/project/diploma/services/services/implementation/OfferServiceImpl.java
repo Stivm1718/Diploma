@@ -5,9 +5,13 @@ import com.project.diploma.data.repositories.OfferRepository;
 import com.project.diploma.services.models.CreateOfferServiceModel;
 import com.project.diploma.services.services.OfferService;
 import com.project.diploma.services.services.ValidationService;
+import com.project.diploma.web.models.ViewOffer;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -25,15 +29,24 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public boolean createOffer(CreateOfferServiceModel model) {
-        if (model == null){
+        if (model == null) {
             throw new RuntimeException("Model does not exists");
         }
 
-        if (validationService.isValidOfferName(model)){
+        if (validationService.isValidOfferName(model)) {
             return false;
         }
 
         offerRepository.saveAndFlush(mapper.map(model, Offer.class));
         return true;
+    }
+
+    @Override
+    public List<ViewOffer> getAllOffers() {
+        return offerRepository
+                .findAll()
+                .stream()
+                .map(o -> mapper.map(o, ViewOffer.class))
+                .collect(Collectors.toList());
     }
 }

@@ -7,7 +7,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ItemNameModel {
+public class ViewOffer {
 
-    String name;
+    private String name;
+
+    private Integer gold;
+
+    private Integer price;
 }

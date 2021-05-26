@@ -17,4 +17,6 @@ public interface UserService extends UserDetailsService {
     ProfileUserModel getDetailsForUser(String username);
 
     int takeGoldFromUser(String username);
+
+    void addGoldToUser(String username, String offerName);
 }

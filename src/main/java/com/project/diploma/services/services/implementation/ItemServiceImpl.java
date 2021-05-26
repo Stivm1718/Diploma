@@ -136,6 +136,11 @@ public class ItemServiceImpl implements ItemService {
         return false;
     }
 
+    @Override
+    public boolean existItem(String name) {
+        return itemRepository.existsItemByName(name);
+    }
+
     private void insertItemAndHeroInDatabase(Hero hero, Item item) {
         hero.getItems().add(item);
         item.getHeroes().add(hero);

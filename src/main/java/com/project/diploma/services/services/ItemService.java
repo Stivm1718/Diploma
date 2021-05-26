@@ -2,7 +2,6 @@ package com.project.diploma.services.services;
 
 import com.project.diploma.data.models.Pay;
 import com.project.diploma.services.models.CreateItemServiceModel;
-import com.project.diploma.web.models.SelectItemsModel;
 import com.project.diploma.web.models.ShowItemsHero;
 import com.project.diploma.web.models.ViewItemModel;
 import com.project.diploma.web.models.ViewItemModelWithTypePay;
@@ -26,4 +25,6 @@ public interface ItemService {
     Pay getWayToPay(String name);
 
     boolean buyItemWithGold(String heroName, String name);
+
+    boolean existItem(String name);
 }

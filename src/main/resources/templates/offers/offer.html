@@ -25,17 +25,17 @@
             <input type="number" th:field="*{gold}" id="gold" class="form-control" name="gold"
                    placeholder="1" min="1">
             <ul th:if="${#fields.errors('gold')}">
-                <li th:each="error : ${#fields.errors('gold')}" th:text="${error}"></li>
+                <li class="text-white" th:each="error : ${#fields.errors('gold')}" th:text="${error}"></li>
             </ul>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="price" class="h4 mb-2 text-black">Price</label>
+                <label for="price" class="h4 mb-2 text-white">Price</label>
             </div>
             <input type="number" th:field="*{price}" id="price" class="form-control" name="price"
                    placeholder="1" min="1">
             <ul th:if="${#fields.errors('price')}">
-                <li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
+                <li class="text-white" th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
             </ul>
         </div>
         <div class="button-holder d-flex justify-content-center">

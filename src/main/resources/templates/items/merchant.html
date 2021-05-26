@@ -33,7 +33,7 @@
                     <td><span th:text="${item.getDefence()}"></span></td>
                     <td>
                         <form th:action="@{'/items/merchant/' + ${heroName}}"
-                              th:object="${itemName}"
+                              th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
@@ -77,7 +77,7 @@
                     </h5></td>
                     <td>
                         <form th:action="@{'/items/merchant/' + ${heroName}}"
-                              th:object="${itemName}"
+                              th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
@@ -120,9 +120,41 @@
                     </h5></td>
                     <td>
                         <form th:action="@{'/items/merchant/' + ${heroName}}"
-                              th:object="${itemName}"
+                              th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                   class="form-control">
+                            <button class="btn btn-info">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </th:block>
+        </table>
+        <h2 class="text-center text-white">Buy offer with money</h2>
+        <table class="table bg-blur">
+            <thead>
+            <tr>
+                <th scope="col" class="font-weight-bold">Name</th>
+                <th scope="col">Gold</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <th:block th:each="offer : ${offers}">
+                <tbody>
+                <tr>
+                    <td><span th:text="${offer.getName()}"></span></td>
+                    <td><h5 class="align-middle">
+                        <span th:text="${offer.getGold()}"></span> gold
+                    </h5></span></td>
+                    <td><h5 class="align-middle">
+                        <span th:text="${offer.getPrice()}"></span> лв.
+                    </h5></td>
+                    <td>
+                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                              th:object="${name}"
+                              method="post">
+                            <input hidden type="text" th:value="${offer.getName()}" th:attr="name='name'"
                                    class="form-control">
                             <button class="btn btn-info">Buy</button>
                         </form>

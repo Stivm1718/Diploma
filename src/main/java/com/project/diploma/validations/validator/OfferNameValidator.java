@@ -8,6 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class OfferNameValidator implements ConstraintValidator<OfferNameValidation, String> {
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
-        return name.matches("^[A-Z]([a-z ]{4,29})$");
+        return name.matches("^[A-Z]([a-zA-Z ]{4,29})$");
     }
 }

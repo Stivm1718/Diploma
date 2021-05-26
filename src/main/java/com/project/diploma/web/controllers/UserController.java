@@ -2,6 +2,7 @@ package com.project.diploma.web.controllers;
 
 import com.project.diploma.services.models.RegisterUserServiceModel;
 import com.project.diploma.services.services.ItemService;
+import com.project.diploma.services.services.OfferService;
 import com.project.diploma.services.services.UserService;
 import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
@@ -22,12 +23,14 @@ public class UserController {
     private final ModelMapper mapper;
     private final UserService userService;
     private final ItemService itemService;
+    private final OfferService offerService;
 
     @Autowired
-    public UserController(ModelMapper mapper, UserService userService, ItemService itemService) {
+    public UserController(ModelMapper mapper, UserService userService, ItemService itemService, OfferService offerService) {
         this.mapper = mapper;
         this.userService = userService;
         this.itemService = itemService;
+        this.offerService = offerService;
     }
 
     @ModelAttribute("register")
@@ -79,7 +82,7 @@ public class UserController {
         return "redirect:/users/login";
     }
 
-    @GetMapping("profile")
+    @GetMapping("/profile")
     public ModelAndView profile(ModelAndView modelAndView, Principal principal) {
         String username = principal.getName();
         ProfileUserModel user = userService.getDetailsForUser(username);
@@ -105,22 +108,27 @@ public class UserController {
         if (result.hasErrors()) {
             return "users/payment";
         }
+        //todo Да redirect-ва към същата страница
 
-        HeroItemModel attribute = (HeroItemModel) session.getAttribute("heroItemModel");
-        if (attribute != null){
-            itemService.addHeroItemForAdmin(attribute.getNameHero(), attribute.getNameItem());
+        HeroItemModel heroItemModel = (HeroItemModel) session.getAttribute("heroItemModel");
+        if (heroItemModel != null){
+            itemService.addHeroItemForAdmin(heroItemModel.getNameHero(), heroItemModel.getNameItem());
+            return "redirect:/users/success-added-item";
+        } else {
+            UserOfferHeroModel userOfferModel =
+                    (UserOfferHeroModel) session.getAttribute("userOfferHeroModel");
+            userService.addGoldToUser(userOfferModel.getUsername(), userOfferModel.getOfferName());
+            return "redirect:/users/success-bought-gold";
         }
-        return "redirect:/users/success";
-//        RegisterUserServiceModel user = this.mapper.map(model, RegisterUserServiceModel.class);
-//        if (userService.register(user)) {
-//            return "redirect:/users/login";
-//        } else {
-//            return "redirect:/users/register";
-//        }
     }
 
-    @GetMapping("/success")
-    public String successPayment(){
-        return "users/success";
+    @GetMapping("/success-added-item")
+    public String successAddedItem(){
+        return "users/success-added-item";
+    }
+
+    @GetMapping("/success-bought-gold")
+    public String successBoughtGold(){
+        return "users/success-bought-gold";
     }
 }
