@@ -2,6 +2,7 @@ package com.project.diploma.services.services.implementation;
 
 import com.project.diploma.data.models.*;
 import com.project.diploma.data.repositories.HeroRepository;
+import com.project.diploma.data.repositories.ItemRepository;
 import com.project.diploma.data.repositories.UserRepository;
 import com.project.diploma.errors.HeroNotFoundException;
 import com.project.diploma.services.models.CreateHeroServiceModel;
@@ -9,29 +10,38 @@ import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ValidationService;
 import com.project.diploma.web.models.DetailsHeroModel;
 import com.project.diploma.web.models.HeroModel;
+import com.project.diploma.web.models.SelectItemsModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class HeroServiceImpl implements HeroService {
 
+    private static final String ATTACK = "attack";
+    private static final String DEFENCE = "defence";
+    private static final String STAMINA = "stamina";
+    private static final String STRENGTH = "strength";
+
     private final HeroRepository heroRepository;
     private final UserRepository userRepository;
     private final ModelMapper mapper;
     private final ValidationService validationService;
+    private final ItemRepository itemRepository;
 
     @Autowired
-    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository,  ModelMapper mapper, ValidationService validationService) {
+    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ModelMapper mapper, ValidationService validationService, ItemRepository itemRepository) {
         this.heroRepository = heroRepository;
         this.userRepository = userRepository;
         this.mapper = mapper;
         this.validationService = validationService;
+        this.itemRepository = itemRepository;
     }
 
     @Override
@@ -41,7 +51,7 @@ public class HeroServiceImpl implements HeroService {
         if (user == null) {
             throw new Exception("User does not exists");
         }
-        if (validationService.isValidHeroName(model)){
+        if (validationService.isValidHeroName(model)) {
             return false;
         }
 
@@ -80,14 +90,20 @@ public class HeroServiceImpl implements HeroService {
     public HeroModel selectOpponent(String username, String heroName) {
         List<Hero> heroes = heroRepository.findAll().stream()
                 .filter(e -> !e.getUser().getUsername().equals(username))
+                .sorted(Comparator.comparingInt(Hero::getLevel).thenComparingInt(Hero::getCurrentPoints))
                 .collect(Collectors.toList());
 
+        if (heroes.size() == 0) {
+            return null;
+        }
+
         Hero hero = heroRepository.findHeroByName(heroName);
-        Hero opponent = null;
-        int level = Integer.MAX_VALUE;
-        int currentPoints = Integer.MAX_VALUE;
-        for (Hero h : heroes) {
-            int diffLevelWithCurrentHero = Math.abs(hero.getLevel() - h.getLevel());
+        Hero opponent = heroes.get(0);
+        int level = opponent.getLevel();
+        int currentPoints = opponent.getCurrentPoints();
+        for (int i = 1; i < heroes.size(); i++) {
+            Hero h = heroes.get(i);
+            int diffLevelWithCurrentHero = Math.abs(hero.getLevel() - h.getLevel()) + 1;
             int diffLevelWithOpponentHero = Math.min(diffLevelWithCurrentHero, level);
             if (diffLevelWithOpponentHero < level) {
                 level = diffLevelWithCurrentHero;
@@ -98,18 +114,23 @@ public class HeroServiceImpl implements HeroService {
                 if (diffCurrentPointsOpponentHero < currentPoints) {
                     currentPoints = diffCurrentPointsOpponentHero;
                     opponent = h;
+                } else {
+                    break;
                 }
+            } else {
+                break;
             }
         }
-        return opponent == null ? null : mapper.map(opponent, HeroModel.class);
+        return mapper.map(opponent, HeroModel.class);
     }
 
     @Override
-    public HeroModel getHero(String name) {
+    public HeroModel getMyHero(String name) {
         Hero hero = heroRepository.findHeroByName(name);
 
         return mapper.map(hero, HeroModel.class);
     }
+
 
     @Override
     public DetailsHeroModel detailsHero(String heroName) {
@@ -147,6 +168,67 @@ public class HeroServiceImpl implements HeroService {
             }
         }
         return detail;
+    }
+
+    @Override
+    public void fight(HeroModel myHero,
+                      HeroModel opponent,
+                      SelectItemsModel myItems,
+                      SelectItemsModel opponentItems) {
+        int attachMyHero = getPower(myItems, ATTACK);
+        int defenceMyHero = getPower(myItems, DEFENCE);
+        int staminaMyHero = getPower(myItems, STAMINA);
+        int strengthMyHero = getPower(myItems, STRENGTH);
+
+        int attachMyOpponent = getPower(opponentItems, ATTACK);
+        int defenceMyOpponent = getPower(opponentItems, DEFENCE);
+        int staminaMyOpponent = getPower(opponentItems, STAMINA);
+        int strengthMyOpponent = getPower(opponentItems, STRENGTH);
+
+        int damageMyHero = attachMyHero + (strengthMyHero * 4) -
+                (defenceMyOpponent + (staminaMyOpponent * 2));
+
+        int damageOpponentHero = attachMyOpponent + (strengthMyOpponent * 4) -
+                defenceMyHero + (staminaMyHero * 2);
+        //todo Да довърша резултата от битката
+    }
+
+    private int getPower(SelectItemsModel items, String power) {
+        int sum = 0;
+        if (items.getHelmet() != null) {
+            sum = getSum(power, sum, items.getHelmet());
+        }
+        if (items.getGauntlets() != null) {
+            sum = getSum(power, sum, items.getGauntlets());
+        }
+        if (items.getPads() != null) {
+            sum = getSum(power, sum, items.getPads());
+        }
+        if (items.getPauldron() != null) {
+            sum = getSum(power, sum, items.getPauldron());
+        }
+        if (items.getWeapon() != null) {
+            sum = getSum(power, sum, items.getWeapon());
+        }
+        return sum;
+    }
+
+    private int getSum(String power, int sum, String slot) {
+        switch (power) {
+            case ATTACK:
+                sum += itemRepository.findByName(slot).getAttack();
+                break;
+            case DEFENCE:
+                sum += itemRepository.findByName(slot).getDefence();
+                break;
+            case STAMINA:
+                sum += itemRepository.findByName(slot).getStamina();
+                break;
+            case STRENGTH:
+                sum += itemRepository.findByName(slot).getStrength();
+                break;
+        }
+        return sum;
     }
 
 //    @Override

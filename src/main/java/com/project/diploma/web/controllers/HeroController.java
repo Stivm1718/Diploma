@@ -4,9 +4,8 @@ import com.project.diploma.data.models.Gender;
 import com.project.diploma.data.models.Hero;
 import com.project.diploma.services.models.CreateHeroServiceModel;
 import com.project.diploma.services.services.HeroService;
-import com.project.diploma.web.models.CreateHeroModel;
-import com.project.diploma.web.models.DetailsHeroModel;
-import com.project.diploma.web.models.HeroModel;
+import com.project.diploma.services.services.ItemService;
+import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,11 +24,13 @@ public class HeroController {
 
     private final HeroService heroService;
     private final ModelMapper mapper;
+    private final ItemService itemService;
 
     @Autowired
-    public HeroController(HeroService heroService, ModelMapper mapper) {
+    public HeroController(HeroService heroService, ModelMapper mapper, ItemService itemService) {
         this.heroService = heroService;
         this.mapper = mapper;
+        this.itemService = itemService;
     }
 
     @ModelAttribute("hero")
@@ -83,9 +84,13 @@ public class HeroController {
             return "heroes/opponent";
         }
 
-        HeroModel model = heroService.getHero(name);
+        SelectItemsModel selectItemsModel = itemService.getTheBestItemsOfOpponent(opponent.getName());
+        selectItemsModel.setName(opponent.getName());
+        session.setAttribute("itemsOfOpponent", selectItemsModel);
+
+        HeroModel model = heroService.getMyHero(name);
         session.setAttribute("myHero", model);
-        return "heroes/fight";
+        return "heroes/opponent";
     }
 
     @GetMapping("/details/{name}")
@@ -96,8 +101,15 @@ public class HeroController {
         return model;
     }
 
-//    @GetMapping("/fight/{name}")
-//    public ModelAndView fight(@PathVariable String name, ModelAndView model, HttpSession session){
+    @GetMapping("/fight/{name}")
+    public ModelAndView fight(@PathVariable String name, ModelAndView model, HttpSession session){
+        HeroModel myHero = (HeroModel) session.getAttribute("myHero");
+        HeroModel opponent = (HeroModel) session.getAttribute("opponent");
+        SelectItemsModel myItems = (SelectItemsModel) session.getAttribute("selectedItems");
+        SelectItemsModel opponentItems = (SelectItemsModel) session.getAttribute("itemsOfOpponent");
+
+
+        heroService.fight(myHero, opponent, myItems, opponentItems);
 //        LoginUserModel user = (LoginUserModel) session.getAttribute("user");
 //        String result = heroService.fight(user.getHeroName(), name);
 //        HeroModel home = heroService.findNameAndGenderHero(user.getHeroName());
@@ -106,6 +118,6 @@ public class HeroController {
 //        model.addObject("guest", guest);
 //        model.addObject("result", result);
 //        model.setViewName("/hero/fight");
-//        return model;
-//    }
+        return model;
+    }
 }

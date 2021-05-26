@@ -127,11 +127,6 @@ public class ItemController {
         return "redirect:/items/merchant/" + heroName;
     }
 
-//    @ModelAttribute("items")
-//    public SelectItemsModel selectModel() {
-//        return new SelectItemsModel();
-//    }
-
     @ModelAttribute("items")
     public SelectItemsModel getItems() {
         return new SelectItemsModel();

@@ -9,10 +9,7 @@ import com.project.diploma.services.models.CreateItemServiceModel;
 import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ItemService;
 import com.project.diploma.services.services.ValidationService;
-import com.project.diploma.web.models.DetailsHeroModel;
-import com.project.diploma.web.models.ShowItemsHero;
-import com.project.diploma.web.models.ViewItemModel;
-import com.project.diploma.web.models.ViewItemModelWithTypePay;
+import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,6 +136,40 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean existItem(String name) {
         return itemRepository.existsItemByName(name);
+    }
+
+    @Override
+    public SelectItemsModel getTheBestItemsOfOpponent(String nameHero) {
+        List<Item> items = heroRepository.findHeroByName(nameHero).getItems();
+
+        String weaponName = selectTheBestWeapon(items, Slot.WEAPON);
+        String helmetName = selectTheBestWeapon(items, Slot.HELMET);
+        String pauldronName = selectTheBestWeapon(items, Slot.PAULDRON);
+        String padsName = selectTheBestWeapon(items, Slot.PADS);
+        String gauntletName = selectTheBestWeapon(items, Slot.GAUNTLET);
+
+        SelectItemsModel model = new SelectItemsModel();
+        model.setGauntlets(gauntletName);
+        model.setHelmet(helmetName);
+        model.setPads(padsName);
+        model.setPauldron(pauldronName);
+        model.setWeapon(weaponName);
+
+        return model;
+    }
+
+    private String selectTheBestWeapon(List<Item> items, Slot slot) {
+        List<Item> result = items
+                .stream()
+                .filter(i -> i.getSlot().equals(slot))
+                .sorted((a, b) -> {
+                    int powerA = a.getStamina() + a.getAttack() + a.getStrength() + a.getDefence();
+                    int powerB = b.getStamina() + b.getAttack() + b.getStrength() + b.getDefence();
+                    return powerB - powerA;
+                })
+                .collect(Collectors.toList());
+
+        return result.size() == 0 ? null : result.get(0).getName();
     }
 
     private void insertItemAndHeroInDatabase(Hero hero, Item item) {

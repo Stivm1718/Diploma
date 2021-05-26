@@ -4,6 +4,7 @@ import com.project.diploma.data.models.Hero;
 import com.project.diploma.services.models.CreateHeroServiceModel;
 import com.project.diploma.web.models.DetailsHeroModel;
 import com.project.diploma.web.models.HeroModel;
+import com.project.diploma.web.models.SelectItemsModel;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface HeroService {
 
     HeroModel selectOpponent(String username, String heroName);
 
-    HeroModel getHero(String name);
+    HeroModel getMyHero(String name);
+
+    void fight(HeroModel myHero, HeroModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 }
