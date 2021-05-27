@@ -1,7 +1,6 @@
 package com.project.diploma.validations;
 
 import com.project.diploma.validations.validator.HeroNameAvailabilityValidator;
-import com.project.diploma.validations.validator.UsernameAvailabilityValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

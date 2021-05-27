@@ -2,14 +2,16 @@ package com.project.diploma.web.controllers;
 
 import com.project.diploma.services.models.RegisterUserServiceModel;
 import com.project.diploma.services.services.ItemService;
-import com.project.diploma.services.services.OfferService;
 import com.project.diploma.services.services.UserService;
 import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -23,14 +25,12 @@ public class UserController {
     private final ModelMapper mapper;
     private final UserService userService;
     private final ItemService itemService;
-    private final OfferService offerService;
 
     @Autowired
-    public UserController(ModelMapper mapper, UserService userService, ItemService itemService, OfferService offerService) {
+    public UserController(ModelMapper mapper, UserService userService, ItemService itemService) {
         this.mapper = mapper;
         this.userService = userService;
         this.itemService = itemService;
-        this.offerService = offerService;
     }
 
     @ModelAttribute("register")
@@ -111,7 +111,7 @@ public class UserController {
         //todo Да redirect-ва към същата страница
 
         HeroItemModel heroItemModel = (HeroItemModel) session.getAttribute("heroItemModel");
-        if (heroItemModel != null){
+        if (heroItemModel != null) {
             itemService.addHeroItemForAdmin(heroItemModel.getNameHero(), heroItemModel.getNameItem());
             return "redirect:/users/success-added-item";
         } else {
@@ -123,12 +123,12 @@ public class UserController {
     }
 
     @GetMapping("/success-added-item")
-    public String successAddedItem(){
+    public String successAddedItem() {
         return "users/success-added-item";
     }
 
     @GetMapping("/success-bought-gold")
-    public String successBoughtGold(){
+    public String successBoughtGold() {
         return "users/success-bought-gold";
     }
 }

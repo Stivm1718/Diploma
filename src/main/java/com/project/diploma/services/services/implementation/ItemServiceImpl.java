@@ -4,7 +4,6 @@ import com.project.diploma.data.models.*;
 import com.project.diploma.data.repositories.HeroRepository;
 import com.project.diploma.data.repositories.ItemRepository;
 import com.project.diploma.data.repositories.UserRepository;
-import com.project.diploma.errors.HeroNotFoundException;
 import com.project.diploma.services.models.CreateItemServiceModel;
 import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ItemService;
@@ -67,10 +66,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ShowItemsHero getItemsOfHero(String heroName) {
         Hero hero = heroRepository.findHeroByName(heroName);
-
-        if (hero == null) {
-            throw new HeroNotFoundException("No such found");
-        }
 
         DetailsHeroModel details = heroService.detailsHero(heroName);
         return mapper.map(details, ShowItemsHero.class);

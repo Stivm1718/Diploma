@@ -4,7 +4,6 @@ import com.project.diploma.data.models.*;
 import com.project.diploma.data.repositories.HeroRepository;
 import com.project.diploma.data.repositories.ItemRepository;
 import com.project.diploma.data.repositories.UserRepository;
-import com.project.diploma.errors.HeroNotFoundException;
 import com.project.diploma.services.models.CreateHeroServiceModel;
 import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ValidationService;
@@ -15,8 +14,6 @@ import com.project.diploma.web.models.SelectItemsModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Comparator;
 import java.util.List;
@@ -139,10 +136,6 @@ public class HeroServiceImpl implements HeroService {
     @Override
     public DetailsHeroModel detailsHero(String heroName) {
         Hero hero = heroRepository.findHeroByName(heroName);
-
-        if (hero == null) {
-            throw new HeroNotFoundException("No such found");
-        }
 
         DetailsHeroModel detail = this.mapper.map(hero, DetailsHeroModel.class);
         List<Item> items = hero.getItems();
@@ -442,35 +435,5 @@ public class HeroServiceImpl implements HeroService {
                 break;
         }
         return sum;
-    }
-
-//    @Override
-//    public String fight(String heroName, String guest) {
-//
-//        Hero homeHero = heroRepository.findHeroByName(heroName).get();
-//        Hero guestHero = heroRepository.findHeroByName(guest).get();
-//
-//        int damageHeroHome = homeHero.getAttack() + (homeHero.getStrength() * 4) -
-//                (guestHero.getDefence() + (guestHero.getStamina() * 2));
-//
-//        int damageHeroGuest = guestHero.getAttack() + (guestHero.getStrength() * 4) -
-//                homeHero.getDefence() + (homeHero.getStamina() * 2);
-//
-//        if (damageHeroHome > damageHeroGuest) {
-//            setNewValueHero(homeHero);
-//            return homeHero.getName();
-//        } else if (damageHeroGuest > damageHeroHome){
-//            setNewValueHero(guestHero);
-//            return guestHero.getName();
-//        } else {
-//            return "draw";
-//        }
-//    }
-
-    @ExceptionHandler(HeroNotFoundException.class)
-    public ModelAndView heroException(HeroNotFoundException ex) {
-        ModelAndView model = new ModelAndView("error");
-        model.addObject("message", ex.getMessage());
-        return model;
     }
 }

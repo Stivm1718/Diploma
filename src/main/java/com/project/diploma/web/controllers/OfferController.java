@@ -43,7 +43,7 @@ public class OfferController {
         if (result.hasErrors()){
             return "offers/offer";
         }
-
+        //todo Да redirect-ва към съшата страница
         CreateOfferServiceModel serviceModel = mapper.map(model, CreateOfferServiceModel.class);
 
         if (offerService.createOffer(serviceModel)){
