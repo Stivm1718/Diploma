@@ -101,23 +101,16 @@ public class HeroController {
         return model;
     }
 
-    @GetMapping("/fight/{name}")
-    public ModelAndView fight(@PathVariable String name, ModelAndView model, HttpSession session){
+    @GetMapping("/fight")
+    public ModelAndView fight(ModelAndView model, HttpSession session){
         HeroModel myHero = (HeroModel) session.getAttribute("myHero");
         HeroModel opponent = (HeroModel) session.getAttribute("opponent");
         SelectItemsModel myItems = (SelectItemsModel) session.getAttribute("selectedItems");
         SelectItemsModel opponentItems = (SelectItemsModel) session.getAttribute("itemsOfOpponent");
 
-
-        heroService.fight(myHero, opponent, myItems, opponentItems);
-//        LoginUserModel user = (LoginUserModel) session.getAttribute("user");
-//        String result = heroService.fight(user.getHeroName(), name);
-//        HeroModel home = heroService.findNameAndGenderHero(user.getHeroName());
-//        HeroModel guest = heroService.findNameAndGenderHero(name);
-//        model.addObject("home", home);
-//        model.addObject("guest", guest);
-//        model.addObject("result", result);
-//        model.setViewName("/hero/fight");
+        BattleModel battleModel = heroService.fight(myHero, opponent, myItems, opponentItems);
+        session.setAttribute("battleResult", battleModel);
+        model.setViewName("/heroes/fight");
         return model;
     }
 }

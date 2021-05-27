@@ -2,6 +2,7 @@ package com.project.diploma.services.services;
 
 import com.project.diploma.data.models.Hero;
 import com.project.diploma.services.models.CreateHeroServiceModel;
+import com.project.diploma.web.models.BattleModel;
 import com.project.diploma.web.models.DetailsHeroModel;
 import com.project.diploma.web.models.HeroModel;
 import com.project.diploma.web.models.SelectItemsModel;
@@ -22,5 +23,5 @@ public interface HeroService {
 
     HeroModel getMyHero(String name);
 
-    void fight(HeroModel myHero, HeroModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
+    BattleModel fight(HeroModel myHero, HeroModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 }
