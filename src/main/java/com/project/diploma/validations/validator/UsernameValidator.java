@@ -8,6 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class UsernameValidator implements ConstraintValidator<UsernameValidation, String> {
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
-        return name.matches("^[a-zA-Z0-9_-]{3,25}$");
+        return name.matches("^[a-zA-Z 0-9_-]{3,25}$");
     }
 }

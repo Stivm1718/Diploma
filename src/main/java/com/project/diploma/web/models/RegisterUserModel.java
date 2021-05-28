@@ -16,6 +16,7 @@ public class RegisterUserModel {
     private String username;
 
     @EmailValidation
+    @EmailAvailabilityValidation
     private String email;
 
     @PasswordValidation

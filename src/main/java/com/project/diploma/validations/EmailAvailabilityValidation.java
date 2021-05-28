@@ -1,6 +1,6 @@
 package com.project.diploma.validations;
 
-import com.project.diploma.validations.validator.UsernameValidator;
+import com.project.diploma.validations.validator.EmailAvailabilityValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,12 +11,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = UsernameValidator.class)
-public @interface UsernameValidation {
+@Constraint(validatedBy = EmailAvailabilityValidator.class)
+public @interface EmailAvailabilityValidation {
 
-    String message() default "The length of the name must be between 3 and 25 " +
-            "characters, and can only contain lowercase and uppercase letters, numbers, " +
-            "dashes, underscores and space.";
+    String message() default "Passwords is unavailable.";
 
     Class<?>[] groups() default {};
 

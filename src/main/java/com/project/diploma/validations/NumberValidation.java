@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = NumberValidator.class)
 public @interface NumberValidation {
 
-    String message() default "Points could be between 1 and 100";
+    String message() default "Тhe number must be positive.";
 
     Class<?>[] groups() default {};
 

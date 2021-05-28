@@ -8,6 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class NumberValidator implements ConstraintValidator<NumberValidation, Integer> {
     @Override
     public boolean isValid(Integer number, ConstraintValidatorContext constraintValidatorContext) {
-        return number > 0 && number < 101;
+        return number > 0;
     }
 }
