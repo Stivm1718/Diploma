@@ -17,6 +17,8 @@ public class DetailsHeroModel {
 
     private Gender gender;
 
+    private String heroPicture;
+
     private Integer level;
 
     private Integer currentPoints;

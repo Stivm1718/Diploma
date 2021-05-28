@@ -7,10 +7,7 @@ import com.project.diploma.data.repositories.UserRepository;
 import com.project.diploma.services.models.CreateHeroServiceModel;
 import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ValidationService;
-import com.project.diploma.web.models.BattleModel;
-import com.project.diploma.web.models.DetailsHeroModel;
-import com.project.diploma.web.models.HeroModel;
-import com.project.diploma.web.models.SelectItemsModel;
+import com.project.diploma.web.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,13 +79,15 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public List<Hero> getAllUserHeroes(String username) {
+    public List<HeroPictureModel> getAllUserHeroes(String username) {
         return heroRepository.findAll().stream()
-                .filter(e -> e.getUser().getUsername().equals(username)).collect(Collectors.toList());
+                .filter(e -> e.getUser().getUsername().equals(username))
+                .map(h -> mapper.map(h, HeroPictureModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public HeroModel selectOpponent(String username, String heroName) {
+    public HeroPictureModel selectOpponent(String username, String heroName) {
         List<Hero> heroes = heroRepository.findAll().stream()
                 .filter(e -> !e.getUser().getUsername().equals(username))
                 .sorted(Comparator.comparingInt(Hero::getLevel).thenComparingInt(Hero::getCurrentPoints))
@@ -122,14 +121,14 @@ public class HeroServiceImpl implements HeroService {
                 break;
             }
         }
-        return mapper.map(opponent, HeroModel.class);
+        return mapper.map(opponent, HeroPictureModel.class);
     }
 
     @Override
-    public HeroModel getMyHero(String name) {
+    public HeroPictureModel getMyHero(String name) {
         Hero hero = heroRepository.findHeroByName(name);
 
-        return mapper.map(hero, HeroModel.class);
+        return mapper.map(hero, HeroPictureModel.class);
     }
 
 

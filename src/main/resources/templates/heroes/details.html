@@ -13,7 +13,8 @@
                 </div>
                 <br>
                 <div class="text-center bg-blur">
-                    <img th:src="@{'/img/' + ${details.getGender().name().toLowerCase()} + '.jpg'}" width="150">
+                    <img th:src="@{'/img/' + ${details.getHeroPicture()} + '.jpg'}" width="200"
+                         height="300">
                 </div>
                 <br>
                 <div class="col-md-4">

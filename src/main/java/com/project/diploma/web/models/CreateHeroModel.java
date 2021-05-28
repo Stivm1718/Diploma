@@ -19,4 +19,7 @@ public class CreateHeroModel {
 
     @NotEmpty(message = "Gender cannot be null")
     private String gender;
+
+    @NotEmpty(message = "Gender cannot be null")
+    private String heroPicture;
 }

@@ -31,10 +31,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <img th:src="@{'/img/' + ${session.myHero.getGender().name().toLowerCase()} + '.jpg'}" width="150">
+                            <img th:src="@{'/img/' + ${session.myHero.getHeroPicture()} + '.jpg'}" width="200"
+                                 height="300">
                         </div>
                         <div class="col-md-6">
-                            <img th:src="@{'/img/' + ${session.opponent.getGender().name().toLowerCase()} + '.jpg'}" width="150">
+                            <img th:src="@{'/img/' + ${session.opponent.getHeroPicture()} + '.jpg'}" width="200"
+                                 height="300">
                         </div>
                     </div>
                     <div class="row">

@@ -15,4 +15,6 @@ public class CreateHeroServiceModel {
     private String name;
 
     private Gender gender;
+
+    private String heroPicture;
 }

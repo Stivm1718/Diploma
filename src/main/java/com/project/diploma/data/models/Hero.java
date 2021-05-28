@@ -22,6 +22,9 @@ public class Hero extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(name = "hero_picture", nullable = false)
+    private String heroPicture;
+
     @Column(name = "level", nullable = false)
     private Integer level;
 

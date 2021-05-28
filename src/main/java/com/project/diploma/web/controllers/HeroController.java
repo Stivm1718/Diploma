@@ -1,7 +1,6 @@
 package com.project.diploma.web.controllers;
 
 import com.project.diploma.data.models.Gender;
-import com.project.diploma.data.models.Hero;
 import com.project.diploma.services.models.CreateHeroServiceModel;
 import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ItemService;
@@ -68,7 +67,7 @@ public class HeroController {
         long count = heroService.getCountOfHeroes(username);
         model.addObject("countHeroes", count);
         if(count != 0){
-            List<Hero> heroes = heroService.getAllUserHeroes(username);
+            List<HeroPictureModel> heroes = heroService.getAllUserHeroes(username);
             model.addObject("heroes", heroes);
         }
         model.setViewName("/heroes/select");
@@ -78,7 +77,7 @@ public class HeroController {
     @GetMapping("/opponent/{name}")
     public String selectOpponent(@PathVariable String name, HttpSession session, Principal principal){
         String username = principal.getName();
-        HeroModel opponent = heroService.selectOpponent(username, name);
+        HeroPictureModel opponent = heroService.selectOpponent(username, name);
         session.setAttribute("opponent", opponent);
         if (opponent == null){
             return "heroes/opponent";
@@ -88,7 +87,7 @@ public class HeroController {
         selectItemsModel.setName(opponent.getName());
         session.setAttribute("itemsOfOpponent", selectItemsModel);
 
-        HeroModel model = heroService.getMyHero(name);
+        HeroPictureModel model = heroService.getMyHero(name);
         session.setAttribute("myHero", model);
         return "heroes/opponent";
     }
