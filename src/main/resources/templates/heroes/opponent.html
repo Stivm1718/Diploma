@@ -43,14 +43,16 @@
                         <div class="col-md-6">
                             <img th:if="${session.selectedItems.getHelmet() == null}" class="mr-5 mb-1" width="100"
                                  height="90">
-                            <img th:unless="${session.selectedItems.getHelmet() == null}" src="/img/helmet.jpg"
+                            <img th:unless="${session.selectedItems.getHelmet() == null}"
+                                 th:src="@{'/img/' + ${session.selectedItems.getItemPictureHelmet()} + '.jpg'}"
                                  class="mr-5 mb-1" width="100"
                                  height="90">
                         </div>
                         <div class="col-md-6">
                             <img th:if="${session.itemsOfOpponent.getHelmet() == null}" class="mr-5 mb-1" width="100"
                                  height="90">
-                            <img th:unless="${session.itemsOfOpponent.getHelmet() == null}" src="/img/helmet.jpg"
+                            <img th:unless="${session.itemsOfOpponent.getHelmet() == null}"
+                                 th:src="@{'/img/' + ${session.itemsOfOpponent.getItemPictureHelmet()} + '.jpg'}"
                                  class="mr-5 mb-1" width="100"
                                  height="90">
                         </div>
@@ -59,42 +61,48 @@
                         <div class="col-md-2">
                             <img th:if="${session.selectedItems.getWeapon() == null}" class="mr-5 mb-1" width="80"
                                  height="130">
-                            <img th:unless="${session.selectedItems.getWeapon() == null}" src="/img/weapon.jpg"
+                            <img th:unless="${session.selectedItems.getWeapon() == null}"
+                                 th:src="@{'/img/' + ${session.selectedItems.getItemPictureWeapon()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80"
                                  height="130">
                         </div>
                         <div class="col-md-2">
                             <img th:if="${session.selectedItems.getPauldron() == null}" class="mr-5 mb-1" width="100"
                                  height="130">
-                            <img th:unless="${session.selectedItems.getPauldron() == null}" src="/img/pauldron.jpg"
+                            <img th:unless="${session.selectedItems.getPauldron() == null}"
+                                 th:src="@{'/img/' + ${session.selectedItems.getItemPicturePauldron()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80"
                                  height="130">
                         </div>
                         <div class="col-md-2">
                             <img th:if="${session.selectedItems.getGauntlets() == null}" class="mr-5 mb-1" width="100"
                                  height="130">
-                            <img th:unless="${session.selectedItems.getGauntlets() == null}" src="/img/gauntlet.jpg"
+                            <img th:unless="${session.selectedItems.getGauntlets() == null}"
+                                 th:src="@{'/img/' + ${session.selectedItems.getItemPictureGauntlets()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80"
                                  height="130">
                         </div>
                         <div class="col-md-2">
                             <img th:if="${session.itemsOfOpponent.getWeapon() == null}" class="mr-5 mb-1" width="80"
                                  height="130">
-                            <img th:unless="${session.itemsOfOpponent.getWeapon() == null}" src="/img/weapon.jpg"
+                            <img th:unless="${session.itemsOfOpponent.getWeapon() == null}"
+                                 th:src="@{'/img/' + ${session.itemsOfOpponent.getItemPictureWeapon()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80"
                                  height="130">
                         </div>
                         <div class="col-md-2">
                             <img th:if="${session.itemsOfOpponent.getPauldron() == null}" class="mr-5 mb-1" width="100"
                                  height="130">
-                            <img th:unless="${session.itemsOfOpponent.getPauldron() == null}" src="/img/pauldron.jpg"
+                            <img th:unless="${session.itemsOfOpponent.getPauldron() == null}"
+                                 th:src="@{'/img/' + ${session.itemsOfOpponent.getItemPicturePauldron()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80"
                                  height="130">
                         </div>
                         <div class="col-md-2">
                             <img th:if="${session.itemsOfOpponent.getGauntlets() == null}" class="mr-5 mb-1" width="100"
                                  height="130">
-                            <img th:unless="${session.itemsOfOpponent.getGauntlets() == null}" src="/img/gauntlet.jpg"
+                            <img th:unless="${session.itemsOfOpponent.getGauntlets() == null}"
+                                 th:src="@{'/img/' + ${session.itemsOfOpponent.getItemPictureGauntlets()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80"
                                  height="130">
                         </div>
@@ -103,13 +111,15 @@
                         <div class="col-md-6">
                             <img th:if="${session.selectedItems.getPads() == null}" class="mr-5 mb-1" width="80"
                                  height="130">
-                            <img th:unless="${session.selectedItems.getPads() == null}" src="/img/pads.jpg"
+                            <img th:unless="${session.selectedItems.getPads() == null}"
+                                 th:src="@{'/img/' + ${session.selectedItems.getItemPicturePads()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80" height="130">
                         </div>
                         <div class="col-md-6">
                             <img th:if="${session.itemsOfOpponent.getPads() == null}" class="mr-5 mb-1" width="80"
                                  height="130">
-                            <img th:unless="${session.itemsOfOpponent.getPads() == null}" src="/img/pads.jpg"
+                            <img th:unless="${session.itemsOfOpponent.getPads() == null}"
+                                 th:src="@{'/img/' + ${session.itemsOfOpponent.getItemPicturePads()} + '.jpg'}"
                                  class="mr-5 mb-1" width="80" height="130">
                         </div>
                     </div>

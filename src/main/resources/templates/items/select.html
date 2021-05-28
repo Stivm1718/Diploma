@@ -11,7 +11,8 @@
                 <div class="row">
                     <div class="text-center bg-blur">
                         <h2 class="align-middle">Your items:</h2>
-                        <input hidden type="text" th:value="${select.getName()}" th:attr="name='name'" class="form-control">
+                        <input hidden type="text" th:value="${select.getName()}" th:attr="name='name'"
+                               class="form-control">
                     </div>
                 </div>
                 <br>
@@ -37,7 +38,7 @@
                                 <tbody>
                                 <tr>
                                     <td><span th:text="${item.getName()}"></span></td>
-                                    <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}"
+                                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
                                              width="150">
                                     </td>
                                     <td><span th:text="${item.getStamina()}"></span></td>
@@ -77,7 +78,7 @@
                             <tbody>
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
-                                <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}"
+                                <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
                                          width="150">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
@@ -116,7 +117,7 @@
                             <tbody>
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
-                                <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}"
+                                <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
                                          width="150">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
@@ -155,7 +156,7 @@
                             <tbody>
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
-                                <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}"
+                                <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
                                          width="150">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
@@ -194,7 +195,7 @@
                             <tbody>
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
-                                <td><img th:src="@{'/img/' + ${item.getSlot().name().toLowerCase()} + '.jpg'}"
+                                <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
                                          width="150">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>

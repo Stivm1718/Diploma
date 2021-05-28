@@ -14,6 +14,8 @@ public class ViewItemModel {
 
     private Slot slot;
 
+    private String itemPicture;
+
     private Integer stamina;
 
     private Integer strength;

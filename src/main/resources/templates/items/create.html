@@ -19,35 +19,35 @@
                 </ul>
             </div>
             <div class="form-group">
-                <div class="row flex-md-row">
-                    <div class="col col-sm-1"></div>
-                    <div class="ml-lg-5">
-                        <img src="/img/weapon.jpg" class="border border-secondary" alt="weapon" width="110"
-                             height="100"/>
-                    </div>
-                    <div class="ml-lg-5">
-                        <img src="/img/helmet.jpg" class="border border-secondary" alt="helmet" width="110"
-                             height="100"/>
-                    </div>
-                    <div class="ml-lg-5">
-                        <img src="/img/pauldron.jpg" class="border border-secondary" alt="pauldron" width="110"
-                             height="100"/>
-                    </div>
-                    <div class="ml-lg-5">
-                        <img src="/img/pads.jpg" class="border border-secondary" alt="legs" width="110" height="100"/>
-                    </div>
-                    <div class="ml-lg-5">
-                        <img src="/img/gauntlet.jpg" class="border border-secondary" alt="gauntlet" width="110"
-                             height="100"/>
-                    </div>
-                </div>
+<!--                <div class="row flex-md-row">-->
+<!--                    <div class="col col-sm-1"></div>-->
+<!--                    <div class="ml-lg-5">-->
+<!--                        <img src="/img/weapon.jpg" class="border border-secondary" alt="weapon" width="110"-->
+<!--                             height="100"/>-->
+<!--                    </div>-->
+<!--                    <div class="ml-lg-5">-->
+<!--                        <img src="/img/helmet.jpg" class="border border-secondary" alt="helmet" width="110"-->
+<!--                             height="100"/>-->
+<!--                    </div>-->
+<!--                    <div class="ml-lg-5">-->
+<!--                        <img src="/img/pauldron.jpg" class="border border-secondary" alt="pauldron" width="110"-->
+<!--                             height="100"/>-->
+<!--                    </div>-->
+<!--                    <div class="ml-lg-5">-->
+<!--                        <img src="/img/pads.jpg" class="border border-secondary" alt="legs" width="110" height="100"/>-->
+<!--                    </div>-->
+<!--                    <div class="ml-lg-5">-->
+<!--                        <img src="/img/gauntlet.jpg" class="border border-secondary" alt="gauntlet" width="110"-->
+<!--                             height="100"/>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="row flex-md-row">
                     <div class="col col-sm-2"></div>
                     <div class="list-inline">
                         <div class="col col-md-6 ml-4">
                             <h5 class="text-white">WEAPON</h5>
                             <label>
-                                <input type="radio" class="ml-lg-5" value="WEAPON" name="slot">
+                                <input type="radio" onclick="selectPictureOfItem();" id="weapons" class="ml-lg-5" value="WEAPON" name="slot">
                             </label>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="col col-md-6 ml-4">
                             <h5 class="text-white">HELMET</h5>
                             <label>
-                                <input type="radio" class="ml-lg-5" value="HELMET" name="slot">
+                                <input type="radio" onclick="selectPictureOfItem();" id="helmets" class="ml-lg-5" value="HELMET" name="slot">
                             </label>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="col col-md-6 ml-4">
                             <h5 class="text-white">PAULDRON</h5>
                             <label>
-                                <input type="radio" class="ml-lg-5" value="PAULDRON" name="slot">
+                                <input type="radio" onclick="selectPictureOfItem();" id="pauldrons" class="ml-lg-5" value="PAULDRON" name="slot">
                             </label>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="col col-md-6 ml-4">
                             <h5 class="text-white">PADS</h5>
                             <label>
-                                <input type="radio" class="ml-lg-5" value="PADS" name="slot">
+                                <input type="radio" onclick="selectPictureOfItem();" id="pads" class="ml-lg-5" value="PADS" name="slot">
                             </label>
                         </div>
                     </div>
@@ -79,7 +79,157 @@
                         <div class="col col-md-6 ml-4">
                             <h5 class="text-white">GAUNTLETS</h5>
                             <label>
-                                <input type="radio" class="ml-lg-5" value="GAUNTLET" name="slot">
+                                <input type="radio" onclick="selectPictureOfItem();" id="gauntlets" class="ml-lg-5" value="GAUNTLET" name="slot">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-md-row" id="weapon" style="visibility:hidden">
+                    <div class="col col-sm-2"></div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/sword.jpg" class="border border-secondary" alt="sword" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="sword" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/bow.jpg" class="border border-secondary" alt="bow" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="bow" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/copy.jpg" class="border border-secondary" alt="copy" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="copy" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-md-row" id="helmet" style="visibility:hidden">
+                    <div class="col col-sm-2"></div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/french_helmet.jpg" class="border border-secondary" alt="french_helmet" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="french_helmet" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/dark_helmet.jpg" class="border border-secondary" alt="dark_helmet" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="dark_helmet" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/arabic_helmet.jpg" class="border border-secondary" alt="arabic_helmet" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="arabic_helmet" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-md-row" id="pauldron" style="visibility:hidden">
+                    <div class="col col-sm-2"></div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/knight_pauldron.jpg" class="border border-secondary" alt="knight_pauldron" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="knight_pauldron" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/light_pauldron.jpg" class="border border-secondary" alt="light_pauldron" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="light_pauldron" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/dark_pauldron.jpg" class="border border-secondary" alt="dark_pauldron" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="dark_pauldron" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-md-row" id="pad" style="visibility:hidden">
+                    <div class="col col-sm-2"></div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/italian_pads.jpg" class="border border-secondary" alt="italian_pads" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="italian_pads" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/ordinary_pads.jpg" class="border border-secondary" alt="ordinary_pads" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="ordinary_pads" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/shiny_pads.jpg" class="border border-secondary" alt="shiny_pads" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="shiny_pads" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-md-row" id="gauntlet" style="visibility:hidden">
+                    <div class="col col-sm-2"></div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/urban_gauntlets.jpg" class="border border-secondary" alt="urban_gauntlets" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="urban_gauntlets" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/rome_gauntlets.jpg" class="border border-secondary" alt="rome_gauntlets" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="rome_gauntlets" name="itemPicture">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-inline">
+                        <div class="col col-md-6 ml-3">
+                            <img src="/img/german_gauntlets.jpg" class="border border-secondary" alt="german_gauntlets" width="180"
+                                 height="270"/>
+                            <label>
+                                <input type="radio" class="ml-lg-5" value="german_gauntlets" name="itemPicture">
                             </label>
                         </div>
                     </div>

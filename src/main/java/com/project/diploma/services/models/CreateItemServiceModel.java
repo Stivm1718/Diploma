@@ -15,6 +15,8 @@ public class CreateItemServiceModel {
 
     private Slot slot;
 
+    private String itemPicture;
+
     private Pay pay;
 
     private Integer stamina;

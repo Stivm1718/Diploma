@@ -13,11 +13,21 @@ public class SelectItemsModel {
 
     private String gauntlets;
 
+    private String itemPictureGauntlets;
+
     private String helmet;
+
+    private String itemPictureHelmet;
 
     private String pauldron;
 
+    private String itemPicturePauldron;
+
     private String pads;
 
+    private String itemPicturePads;
+
     private String weapon;
+
+    private String itemPictureWeapon;
 }

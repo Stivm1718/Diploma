@@ -1,6 +1,5 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.data.models.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,13 +14,13 @@ public class ShowItemsHero {
 
     private String name;
 
-    private List<Item> weapons = new ArrayList<>();
+    private List<DetailsItemModel> weapons = new ArrayList<>();
 
-    private List<Item> helmets = new ArrayList<>();
+    private List<DetailsItemModel> helmets = new ArrayList<>();
 
-    private List<Item> pauldrons = new ArrayList<>();
+    private List<DetailsItemModel> pauldrons = new ArrayList<>();
 
-    private List<Item> pads = new ArrayList<>();
+    private List<DetailsItemModel> pads = new ArrayList<>();
 
-    private List<Item> gauntlets = new ArrayList<>();
+    private List<DetailsItemModel> gauntlets = new ArrayList<>();
 }

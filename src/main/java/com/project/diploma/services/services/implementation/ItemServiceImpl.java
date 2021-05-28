@@ -65,8 +65,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ShowItemsHero getItemsOfHero(String heroName) {
-        Hero hero = heroRepository.findHeroByName(heroName);
-
         DetailsHeroModel details = heroService.detailsHero(heroName);
         return mapper.map(details, ShowItemsHero.class);
     }
@@ -145,10 +143,29 @@ public class ItemServiceImpl implements ItemService {
 
         SelectItemsModel model = new SelectItemsModel();
         model.setGauntlets(gauntletName);
+        if (gauntletName != null){
+            model.setItemPictureGauntlets(itemRepository.findByName(gauntletName).getItemPicture());
+        }
+
         model.setHelmet(helmetName);
+        if (helmetName != null){
+            model.setItemPictureGauntlets(itemRepository.findByName(helmetName).getItemPicture());
+        }
+
         model.setPads(padsName);
+        if (padsName != null){
+            model.setItemPictureGauntlets(itemRepository.findByName(padsName).getItemPicture());
+        }
+
         model.setPauldron(pauldronName);
+        if (pauldronName != null){
+            model.setItemPictureGauntlets(itemRepository.findByName(pauldronName).getItemPicture());
+        }
+
         model.setWeapon(weaponName);
+        if (weaponName != null){
+            model.setItemPictureGauntlets(itemRepository.findByName(weaponName).getItemPicture());
+        }
 
         return model;
     }

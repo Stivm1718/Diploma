@@ -22,6 +22,9 @@ public class CreateItemModel {
     @NotEmpty(message = "Slot cannot be empty")
     private String slot;
 
+    @NotEmpty(message = "Slot cannot be empty")
+    private String itemPicture;
+
     @NotEmpty(message = "Buy cannot be empty")
     private String pay;
 

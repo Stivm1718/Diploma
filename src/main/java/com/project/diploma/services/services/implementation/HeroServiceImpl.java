@@ -137,28 +137,32 @@ public class HeroServiceImpl implements HeroService {
         Hero hero = heroRepository.findHeroByName(heroName);
 
         DetailsHeroModel detail = this.mapper.map(hero, DetailsHeroModel.class);
-        List<Item> items = hero.getItems();
-        for (Item i : items) {
+        List<DetailsItemModel> items = hero
+                .getItems()
+                .stream()
+                .map(i -> mapper.map(i, DetailsItemModel.class))
+                .collect(Collectors.toList());
+        for (DetailsItemModel i : items) {
             Slot slot = i.getSlot();
             switch (slot) {
                 case GAUNTLET:
-                    List<Item> gauntlets = detail.getGauntlets();
+                    List<DetailsItemModel> gauntlets = detail.getGauntlets();
                     gauntlets.add(i);
                     break;
                 case HELMET:
-                    List<Item> helmets = detail.getHelmets();
+                    List<DetailsItemModel> helmets = detail.getHelmets();
                     helmets.add(i);
                     break;
                 case PADS:
-                    List<Item> pads = detail.getPads();
+                    List<DetailsItemModel> pads = detail.getPads();
                     pads.add(i);
                     break;
                 case PAULDRON:
-                    List<Item> pauldrons = detail.getPauldrons();
+                    List<DetailsItemModel> pauldrons = detail.getPauldrons();
                     pauldrons.add(i);
                     break;
                 case WEAPON:
-                    List<Item> weapons = detail.getWeapons();
+                    List<DetailsItemModel> weapons = detail.getWeapons();
                     weapons.add(i);
                     break;
             }
