@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/users")
@@ -45,8 +46,14 @@ public class UserController {
 
     @PostMapping("/register")
     public String confirmRegister(@Valid @ModelAttribute("register") RegisterUserModel model,
-                                  BindingResult result) {
+                                  BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
+            session.setAttribute("registerError", null);
+            if (result.getAllErrors()
+                    .stream().anyMatch(error ->
+                            Objects.equals(error.getCode(), "EqualsPasswordValidation"))) {
+                session.setAttribute("registerError", "Passwords not equals.");
+            }
             return "users/register";
         }
 

@@ -5,21 +5,42 @@
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main>
-    <div class="text-center mb-3">
-        <h2 class="text-black mt-2">Welcome to the arena, [[${session.username}]]</h2>
-        <th:block th:if="${session.authorities.getAuthorities().size() == 1}">
-            <h2 class="text-black mt-2">Gold: [[${session.gold}]]</h2>
-        </th:block>
-    </div>
-        <hr class="my-3"/>
-        <div class="container">
-            <h3> Ако искаш да станеш най-силния играч с един или армия от герой, влез в
-                <a href="/heroes/create">Create Hero</a> и сбъдни мечтите си.
-            </h3>
-            <h3>Готов ли се вече за битка? Влез в <a href="/heroes/select">Select hero</a>,
-                избери си герой и да започваме.
-            </h3>
+    <th:block th:if="${session.authorities.getAuthorities().size() > 0}">
+        <div class="text-center mb-3">
+            <h2 class="text-black mt-2">Welcome to the arena, [[${session.username}]]</h2>
+            <th:block th:if="${session.authorities.getAuthorities().size() == 1}">
+                <h2 class="text-black mt-2">Gold: [[${session.gold}]]</h2>
+            </th:block>
         </div>
+        <hr class="my-3"/>
+        <th:block th:if="${randomHero == null}">
+            <div class="container">
+                <h3> Ако искаш да станеш най-силния играч с един или армия от герой, влез в
+                    <a href="/heroes/create">Create Hero</a> и сбъдни мечтите си.
+                </h3>
+            </div>
+        </th:block>
+        <th:block th:unless="${randomHero == null}">
+            <div class="container">
+                <h3> Ако искаш да станеш най-силния играч с един или армия от герой, влез в
+                    <a href="/heroes/create">Create Hero</a> и сбъдни мечтите си. Koleto
+                </h3>
+                <h3>Готов ли се вече за битка? Влез в <a href="/heroes/select">Select hero</a>,
+                    избери си герой и да започваме.
+                </h3>
+            </div>
+            <br>
+            <div class="container">
+                <div class="text-center bg-blur">
+                    <h2 class="align-middle">Name: <span th:text="${randomHero.getName()}"></span></h2>
+                </div>
+                <br>
+                <div class="text-center bg-blur">
+                    <img th:src="@{'/img/' + ${randomHero.getHeroPicture()} + '.jpg'}" width="200"
+                         height="300">
+                </div>
+            </div>
+        </th:block>
     </th:block>
 </main>
 <th:block th:include="~{fragments/footer}"/>

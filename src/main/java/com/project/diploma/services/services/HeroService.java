@@ -11,7 +11,7 @@ public interface HeroService {
 
     DetailsHeroModel detailsHero(String heroName);
 
-    long getCountOfHeroes(String username);
+    int getCountOfHeroes(String username);
 
     List<HeroPictureModel> getAllUserHeroes(String username);
 
@@ -19,5 +19,7 @@ public interface HeroService {
 
     HeroPictureModel getMyHero(String name);
 
-    BattleModel fight(HeroModel myHero, HeroModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
+    BattleModel fight(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
+
+    List<RankingModel> getSortedHeroes();
 }

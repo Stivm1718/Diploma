@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = EmailAvailabilityValidator.class)
 public @interface EmailAvailabilityValidation {
 
-    String message() default "Passwords is unavailable.";
+    String message() default "Email is unavailable.";
 
     Class<?>[] groups() default {};
 

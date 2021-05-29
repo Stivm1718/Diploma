@@ -1,5 +1,6 @@
 package com.project.diploma.services.services.implementation;
 
+import com.project.diploma.data.models.Hero;
 import com.project.diploma.data.models.Offer;
 import com.project.diploma.data.models.Point;
 import com.project.diploma.data.models.User;
@@ -13,6 +14,7 @@ import com.project.diploma.services.services.HashingService;
 import com.project.diploma.services.services.RoleService;
 import com.project.diploma.services.services.UserService;
 import com.project.diploma.services.services.ValidationService;
+import com.project.diploma.web.models.HeroPictureModel;
 import com.project.diploma.web.models.LoggedUserFilterModel;
 import com.project.diploma.web.models.ProfileUserModel;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -99,15 +103,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public ProfileUserModel getDetailsForUser(String username) {
         User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new RuntimeException("User does not exists");
-        }
+
         ProfileUserModel model = mapper.map(user, ProfileUserModel.class);
 
         final int[] totalWinsOfHero = {0};
         final int[] totalBattlesOfHero = {0};
 
-        heroRepository.findAll().stream()
+        heroRepository
+                .findAll()
+                .stream()
                 .filter(e -> e.getUser().getUsername().equals(username))
                 .forEach(e -> {
                     totalWinsOfHero[0] += e.getWins();
@@ -121,8 +125,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int takeGoldFromUser(String username) {
-        User user = userRepository.findUserByUsername(username);
-        return user.getGold();
+        return userRepository.findUserByUsername(username).getGold();
     }
 
     @Override
@@ -133,5 +136,17 @@ public class UserServiceImpl implements UserService {
 
         user.setGold(user.getGold() + offer.getGold());
         userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public HeroPictureModel getHero(String username) {
+        List<Hero> heroes = userRepository.findUserByUsername(username).getHeroes();
+
+        if (heroes.size() != 0) {
+            Random random = new Random();
+            Hero hero = heroes.get(random.nextInt(heroes.size()));
+            return mapper.map(hero, HeroPictureModel.class);
+        }
+        return null;
     }
 }

@@ -38,10 +38,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public boolean create(CreateItemServiceModel model) throws Exception {
-        if (model == null) {
-            throw new Exception("Model does not exists");
-        }
-
         if (validationService.isValidItemName(model)) {
             return false;
         }
@@ -55,20 +51,6 @@ public class ItemServiceImpl implements ItemService {
         return true;
     }
 
-
-    @Override
-    public void addHeroItemForAdmin(String heroName, String itemName) {
-        Hero hero = heroRepository.findHeroByName(heroName);
-        Item item = itemRepository.findByName(itemName);
-        insertItemAndHeroInDatabase(hero, item);
-    }
-
-    @Override
-    public ShowItemsHero getItemsOfHero(String heroName) {
-        DetailsHeroModel details = heroService.detailsHero(heroName);
-        return mapper.map(details, ShowItemsHero.class);
-    }
-
     @Override
     public List<ViewItemModel> takeAllItemsThatAreNotThere(String heroName) {
         return this.itemRepository.findAll()
@@ -78,6 +60,19 @@ public class ItemServiceImpl implements ItemService {
                         .collect(Collectors.toList()).contains(heroName))
                 .map(u -> this.mapper.map(u, ViewItemModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addHeroItemForAdmin(String heroName, String itemName) {
+        Hero hero = heroRepository.findHeroByName(heroName);
+        Item item = itemRepository.getItemByName(itemName);
+        insertItemAndHeroInDatabase(hero, item);
+    }
+
+    @Override
+    public ShowItemsHero getItemsOfHero(String heroName) {
+        DetailsHeroModel details = heroService.detailsHero(heroName);
+        return mapper.map(details, ShowItemsHero.class);
     }
 
     @Override
@@ -108,14 +103,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Pay getWayToPay(String name) {
-        return itemRepository.findByName(name).getPay();
+        return itemRepository.getItemByName(name).getPay();
     }
 
     @Override
     public boolean buyItemWithGold(String heroName, String itemName) {
         Hero hero = heroRepository.findHeroByName(heroName);
         User user = hero.getUser();
-        Item item = itemRepository.findByName(itemName);
+        Item item = itemRepository.getItemByName(itemName);
 
         if (item.getPriceInGold() <= user.getGold()) {
             insertItemAndHeroInDatabase(hero, item);
@@ -144,27 +139,32 @@ public class ItemServiceImpl implements ItemService {
         SelectItemsModel model = new SelectItemsModel();
         model.setGauntlets(gauntletName);
         if (gauntletName != null){
-            model.setItemPictureGauntlets(itemRepository.findByName(gauntletName).getItemPicture());
+            model.setItemPictureGauntlets(itemRepository
+                    .getItemByName(gauntletName).getItemPicture());
         }
 
         model.setHelmet(helmetName);
         if (helmetName != null){
-            model.setItemPictureGauntlets(itemRepository.findByName(helmetName).getItemPicture());
+            model.setItemPictureHelmet(itemRepository
+                    .getItemByName(helmetName).getItemPicture());
         }
 
         model.setPads(padsName);
         if (padsName != null){
-            model.setItemPictureGauntlets(itemRepository.findByName(padsName).getItemPicture());
+            model.setItemPicturePads(itemRepository
+                    .getItemByName(padsName).getItemPicture());
         }
 
         model.setPauldron(pauldronName);
         if (pauldronName != null){
-            model.setItemPictureGauntlets(itemRepository.findByName(pauldronName).getItemPicture());
+            model.setItemPicturePauldron(itemRepository
+                    .getItemByName(pauldronName).getItemPicture());
         }
 
         model.setWeapon(weaponName);
         if (weaponName != null){
-            model.setItemPictureGauntlets(itemRepository.findByName(weaponName).getItemPicture());
+            model.setItemPictureWeapon(itemRepository
+                    .getItemByName(weaponName).getItemPicture());
         }
 
         return model;

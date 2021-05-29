@@ -6,16 +6,18 @@
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main>
-    <div class="container">
-        <h1>Welcome to Victorious Arena</h1>
-        <hr class="my-3"/>
-        <p class="h4">The most furious arena on the web</p>
-        <p class="h4">You will find many strong enemies but only the best will survive</p>
-        <hr class="my-3"/>
-        <h3><a href="/users/login">Login</a> if you have an account or
-            <a href="/users/register">Register</a> now and meet the greatest heroes of all time.
-        </h3>
-    </div>
+    <th:block th:if="${session.username == null}">
+        <div class="container">
+            <h1>Welcome to Victorious Arena</h1>
+            <hr class="my-3"/>
+            <p class="h4">The most furious arena on the web</p>
+            <p class="h4">You will find many strong enemies but only the best will survive</p>
+            <hr class="my-3"/>
+            <h3><a href="/users/login">Login</a> if you have an account or
+                <a href="/users/register">Register</a> now and meet the greatest heroes of all time.
+            </h3>
+        </div>
+    </th:block>
 </main>
 <th:block th:include="~{fragments/footer}"/>
 </body>

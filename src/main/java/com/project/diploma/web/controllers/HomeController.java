@@ -1,6 +1,7 @@
 package com.project.diploma.web.controllers;
 
 import com.project.diploma.services.services.UserService;
+import com.project.diploma.web.models.HeroPictureModel;
 import com.project.diploma.web.models.LoggedUserFilterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,10 @@ public class HomeController {
             int gold = userService.takeGoldFromUser(username);
             session.setAttribute("gold", gold);
         }
+
+        HeroPictureModel hero = userService.getHero(model.getUsername());
+        modelAndView.addObject("randomHero", hero);
+
         modelAndView.setViewName("/home/home");
         return modelAndView;
     }

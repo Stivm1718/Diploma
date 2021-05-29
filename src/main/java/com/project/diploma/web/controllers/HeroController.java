@@ -33,12 +33,12 @@ public class HeroController {
     }
 
     @ModelAttribute("hero")
-    public CreateHeroModel model(){
+    public CreateHeroModel model() {
         return new CreateHeroModel();
     }
 
     @GetMapping("/create")
-    public String viewHeroPage(@ModelAttribute("hero") CreateHeroModel model){
+    public String viewHeroPage(@ModelAttribute("hero") CreateHeroModel model) {
         return "heroes/create";
     }
 
@@ -46,7 +46,7 @@ public class HeroController {
     public String createHero(@Valid @ModelAttribute("hero") CreateHeroModel model,
                              BindingResult result,
                              Principal principal) throws Exception {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "heroes/create";
         }
 
@@ -54,19 +54,19 @@ public class HeroController {
 
         CreateHeroServiceModel hero = mapper.map(model, CreateHeroServiceModel.class);
         hero.setGender(Gender.valueOf(model.getGender().toUpperCase()));
-        if(heroService.createHero(hero, username)){
+        if (heroService.createHero(hero, username)) {
             return "redirect:/home";
-        } else{
+        } else {
             return "redirect:/heroes/create";
         }
     }
 
     @GetMapping("/select")
-    public ModelAndView selectHero(ModelAndView model, Principal principal){
+    public ModelAndView selectHero(ModelAndView model, Principal principal) {
         String username = principal.getName();
-        long count = heroService.getCountOfHeroes(username);
+        int count = heroService.getCountOfHeroes(username);
         model.addObject("countHeroes", count);
-        if(count != 0){
+        if (count != 0) {
             List<HeroPictureModel> heroes = heroService.getAllUserHeroes(username);
             model.addObject("heroes", heroes);
         }
@@ -75,11 +75,11 @@ public class HeroController {
     }
 
     @GetMapping("/opponent/{name}")
-    public String selectOpponent(@PathVariable String name, HttpSession session, Principal principal){
+    public String selectOpponent(@PathVariable String name, HttpSession session, Principal principal) {
         String username = principal.getName();
         HeroPictureModel opponent = heroService.selectOpponent(username, name);
         session.setAttribute("opponent", opponent);
-        if (opponent == null){
+        if (opponent == null) {
             return "heroes/opponent";
         }
 
@@ -93,7 +93,7 @@ public class HeroController {
     }
 
     @GetMapping("/details/{name}")
-    public ModelAndView details(@PathVariable String name, ModelAndView model){
+    public ModelAndView details(@PathVariable String name, ModelAndView model) {
         DetailsHeroModel details = heroService.detailsHero(name);
         model.addObject("details", details);
         model.setViewName("/heroes/details");
@@ -101,15 +101,23 @@ public class HeroController {
     }
 
     @GetMapping("/fight")
-    public ModelAndView fight(ModelAndView model, HttpSession session){
-        HeroModel myHero = (HeroModel) session.getAttribute("myHero");
-        HeroModel opponent = (HeroModel) session.getAttribute("opponent");
+    public ModelAndView fight(ModelAndView model, HttpSession session) {
+        HeroPictureModel myHero = (HeroPictureModel) session.getAttribute("myHero");
+        HeroPictureModel opponent = (HeroPictureModel) session.getAttribute("opponent");
         SelectItemsModel myItems = (SelectItemsModel) session.getAttribute("selectedItems");
         SelectItemsModel opponentItems = (SelectItemsModel) session.getAttribute("itemsOfOpponent");
 
         BattleModel battleModel = heroService.fight(myHero, opponent, myItems, opponentItems);
         session.setAttribute("battleResult", battleModel);
         model.setViewName("/heroes/fight");
+        return model;
+    }
+
+    @GetMapping("/ranking")
+    public ModelAndView ranking(ModelAndView model) {
+        List<RankingModel> heroes = heroService.getSortedHeroes();
+        model.addObject("sortedHeroes", heroes);
+        model.setViewName("/heroes/ranking");
         return model;
     }
 }

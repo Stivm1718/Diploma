@@ -29,10 +29,6 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public boolean createOffer(CreateOfferServiceModel model) {
-        if (model == null) {
-            throw new RuntimeException("Model does not exists");
-        }
-
         if (validationService.isValidOfferName(model)) {
             return false;
         }

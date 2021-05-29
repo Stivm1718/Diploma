@@ -12,8 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +34,11 @@ public class HeroServiceImpl implements HeroService {
     private final ItemRepository itemRepository;
 
     @Autowired
-    public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ModelMapper mapper, ValidationService validationService, ItemRepository itemRepository) {
+    public HeroServiceImpl(HeroRepository heroRepository,
+                           UserRepository userRepository,
+                           ModelMapper mapper,
+                           ValidationService validationService,
+                           ItemRepository itemRepository) {
         this.heroRepository = heroRepository;
         this.userRepository = userRepository;
         this.mapper = mapper;
@@ -46,9 +50,6 @@ public class HeroServiceImpl implements HeroService {
     public boolean createHero(CreateHeroServiceModel model, String name) throws Exception {
         User user = userRepository.findUserByUsername(name);
 
-        if (user == null) {
-            throw new Exception("User does not exists");
-        }
         if (validationService.isValidHeroName(model)) {
             return false;
         }
@@ -72,15 +73,43 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public long getCountOfHeroes(String username) {
-        List<Hero> heroes = heroRepository.findAll();
+    public DetailsHeroModel detailsHero(String heroName) {
+        Hero hero = heroRepository.findHeroByName(heroName);
 
-        return heroes.stream().filter(e -> e.getUser().getUsername().equals(username)).count();
+        DetailsHeroModel details = this.mapper.map(hero, DetailsHeroModel.class);
+        for (Item i : hero.getItems()) {
+            Slot slot = i.getSlot();
+            switch (slot) {
+                case GAUNTLET:
+                    details.getGauntlets().add(mapper.map(i, DetailsItemModel.class));
+                    break;
+                case HELMET:
+                    details.getHelmets().add(mapper.map(i, DetailsItemModel.class));
+                    break;
+                case PADS:
+                    details.getPads().add(mapper.map(i, DetailsItemModel.class));
+                    break;
+                case PAULDRON:
+                    details.getPauldrons().add(mapper.map(i, DetailsItemModel.class));
+                    break;
+                case WEAPON:
+                    details.getWeapons().add(mapper.map(i, DetailsItemModel.class));
+                    break;
+            }
+        }
+        return details;
+    }
+
+    @Override
+    public int getCountOfHeroes(String username) {
+        return userRepository.findUserByUsername(username).getHeroes().size();
     }
 
     @Override
     public List<HeroPictureModel> getAllUserHeroes(String username) {
-        return heroRepository.findAll().stream()
+        return heroRepository
+                .findAll()
+                .stream()
                 .filter(e -> e.getUser().getUsername().equals(username))
                 .map(h -> mapper.map(h, HeroPictureModel.class))
                 .collect(Collectors.toList());
@@ -88,39 +117,21 @@ public class HeroServiceImpl implements HeroService {
 
     @Override
     public HeroPictureModel selectOpponent(String username, String heroName) {
-        List<Hero> heroes = heroRepository.findAll().stream()
-                .filter(e -> !e.getUser().getUsername().equals(username))
-                .sorted(Comparator.comparingInt(Hero::getLevel).thenComparingInt(Hero::getCurrentPoints))
+        Hero hero = heroRepository.findHeroByName(heroName);
+
+        List<Hero> heroes = heroRepository
+                .findAll()
+                .stream()
+                .filter(u -> !u.getUser().getUsername().equals(username))
+                .filter(h -> (h.getLevel() >= hero.getLevel() - 5) || (h.getLevel() <= hero.getLevel() + 5))
                 .collect(Collectors.toList());
 
         if (heroes.size() == 0) {
             return null;
         }
 
-        Hero hero = heroRepository.findHeroByName(heroName);
-        Hero opponent = heroes.get(0);
-        int level = opponent.getLevel();
-        int currentPoints = opponent.getCurrentPoints();
-        for (int i = 1; i < heroes.size(); i++) {
-            Hero h = heroes.get(i);
-            int diffLevelWithCurrentHero = Math.abs(hero.getLevel() - h.getLevel()) + 1;
-            int diffLevelWithOpponentHero = Math.min(diffLevelWithCurrentHero, level);
-            if (diffLevelWithOpponentHero < level) {
-                level = diffLevelWithCurrentHero;
-                opponent = h;
-            } else if (diffLevelWithCurrentHero == level) {
-                int diffCurrentPointsCurrentHero = Math.abs(hero.getCurrentPoints() - h.getCurrentPoints());
-                int diffCurrentPointsOpponentHero = Math.min(diffCurrentPointsCurrentHero, currentPoints);
-                if (diffCurrentPointsOpponentHero < currentPoints) {
-                    currentPoints = diffCurrentPointsOpponentHero;
-                    opponent = h;
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
+        Random random = new Random();
+        Hero opponent = heroes.get(random.nextInt(heroes.size()));
         return mapper.map(opponent, HeroPictureModel.class);
     }
 
@@ -131,48 +142,9 @@ public class HeroServiceImpl implements HeroService {
         return mapper.map(hero, HeroPictureModel.class);
     }
 
-
     @Override
-    public DetailsHeroModel detailsHero(String heroName) {
-        Hero hero = heroRepository.findHeroByName(heroName);
-
-        DetailsHeroModel detail = this.mapper.map(hero, DetailsHeroModel.class);
-        List<DetailsItemModel> items = hero
-                .getItems()
-                .stream()
-                .map(i -> mapper.map(i, DetailsItemModel.class))
-                .collect(Collectors.toList());
-        for (DetailsItemModel i : items) {
-            Slot slot = i.getSlot();
-            switch (slot) {
-                case GAUNTLET:
-                    List<DetailsItemModel> gauntlets = detail.getGauntlets();
-                    gauntlets.add(i);
-                    break;
-                case HELMET:
-                    List<DetailsItemModel> helmets = detail.getHelmets();
-                    helmets.add(i);
-                    break;
-                case PADS:
-                    List<DetailsItemModel> pads = detail.getPads();
-                    pads.add(i);
-                    break;
-                case PAULDRON:
-                    List<DetailsItemModel> pauldrons = detail.getPauldrons();
-                    pauldrons.add(i);
-                    break;
-                case WEAPON:
-                    List<DetailsItemModel> weapons = detail.getWeapons();
-                    weapons.add(i);
-                    break;
-            }
-        }
-        return detail;
-    }
-
-    @Override
-    public BattleModel fight(HeroModel myHero,
-                             HeroModel opponent,
+    public BattleModel fight(HeroPictureModel myHero,
+                             HeroPictureModel opponent,
                              SelectItemsModel myItems,
                              SelectItemsModel opponentItems) {
         int attachMyHero = getPower(myItems, ATTACK);
@@ -284,6 +256,25 @@ public class HeroServiceImpl implements HeroService {
         return model;
     }
 
+    @Override
+    public List<RankingModel> getSortedHeroes() {
+        return heroRepository
+                .findAll()
+                .stream()
+                .sorted((a, b) -> {
+                    int diff = b.getLevel() - a.getLevel();
+                    if (diff == 0){
+                        diff = b.getCurrentPoints() - a.getCurrentPoints();
+                        if (diff == 0){
+                            diff = b.getName().compareTo(a.getName());
+                        }
+                    }
+                    return diff;
+                })
+                .map(h -> mapper.map(h, RankingModel.class))
+                .collect(Collectors.toList());
+    }
+
     private void setPowersOfBattleModel(Hero hero, BattleModel model) {
         model.setAttack(hero.getLevel());
         model.setStamina(hero.getLevel());
@@ -291,16 +282,18 @@ public class HeroServiceImpl implements HeroService {
         model.setDefence(hero.getLevel());
     }
 
-    private int calculateDamageHero(int attachMyHero, int strengthMyHero, int defenceMyOpponent, int staminaMyOpponent) {
-        return attachMyHero + (strengthMyHero * 4) -
-                (defenceMyOpponent + (staminaMyOpponent * 2));
+    private int calculateDamageHero(int attack,
+                                    int strength,
+                                    int defence,
+                                    int stamina) {
+        return attack + (strength * 4) -
+                (defence + (stamina * 2));
     }
 
     private void setBattlesAndPointsOfDefeatedHero(Hero hero) {
         hero.setBattles(hero.getBattles() + 1);
         hero.setCurrentPoints(hero.getCurrentPoints() + hero.getLevel());
     }
-
 
     private void increasePointsAndGoldOfMyOpponentInWin(Hero myOpponentHero, User userOfOpponentHero) {
         if (myOpponentHero.getLevel() < 9) {
@@ -349,9 +342,9 @@ public class HeroServiceImpl implements HeroService {
             int points = 10 + hero.getLevel();
             model.setPointsEarned(points);
             hero.setCurrentPoints(hero.getCurrentPoints() + points);
-            int goldForMyUser = points / 2;
-            userOfMyHero.setGold(userOfMyHero.getGold() + goldForMyUser);
-            model.setGold(goldForMyUser);
+            int gold = points / 2;
+            userOfMyHero.setGold(userOfMyHero.getGold() + gold);
+            model.setGold(gold);
         } else {
             int points = 2 * hero.getLevel();
             model.setPointsEarned(points);
@@ -404,20 +397,17 @@ public class HeroServiceImpl implements HeroService {
 
     private int getPower(SelectItemsModel items, String power) {
         int sum = 0;
-        if (items.getHelmet() != null) {
-            sum = getSum(power, sum, items.getHelmet());
-        }
-        if (items.getGauntlets() != null) {
-            sum = getSum(power, sum, items.getGauntlets());
-        }
-        if (items.getPads() != null) {
-            sum = getSum(power, sum, items.getPads());
-        }
-        if (items.getPauldron() != null) {
-            sum = getSum(power, sum, items.getPauldron());
-        }
-        if (items.getWeapon() != null) {
-            sum = getSum(power, sum, items.getWeapon());
+        sum = checkIfItIsNotNull(power, sum, items.getHelmet());
+        sum = checkIfItIsNotNull(power, sum, items.getGauntlets());
+        sum = checkIfItIsNotNull(power, sum, items.getPads());
+        sum = checkIfItIsNotNull(power, sum, items.getPauldron());
+        sum = checkIfItIsNotNull(power, sum, items.getWeapon());
+        return sum;
+    }
+
+    private int checkIfItIsNotNull(String power, int sum, String slot) {
+        if (slot != null) {
+            sum = getSum(power, sum, slot);
         }
         return sum;
     }
@@ -425,16 +415,16 @@ public class HeroServiceImpl implements HeroService {
     private int getSum(String slot, int sum, String name) {
         switch (slot) {
             case ATTACK:
-                sum += itemRepository.findByName(name).getAttack();
+                sum += itemRepository.getItemByName(name).getAttack();
                 break;
             case DEFENCE:
-                sum += itemRepository.findByName(name).getDefence();
+                sum += itemRepository.getItemByName(name).getDefence();
                 break;
             case STAMINA:
-                sum += itemRepository.findByName(name).getStamina();
+                sum += itemRepository.getItemByName(name).getStamina();
                 break;
             case STRENGTH:
-                sum += itemRepository.findByName(name).getStrength();
+                sum += itemRepository.getItemByName(name).getStrength();
                 break;
         }
         return sum;
