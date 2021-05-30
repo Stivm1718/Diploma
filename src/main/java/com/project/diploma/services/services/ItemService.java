@@ -30,4 +30,6 @@ public interface ItemService {
     boolean existItem(String name);
 
     SelectItemsModel getTheBestItemsOfOpponent(String nameHero);
+
+    void getNamesPictureItems(SelectItemsModel model);
 }

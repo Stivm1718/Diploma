@@ -92,12 +92,26 @@ public class HeroController {
         return "heroes/opponent";
     }
 
+    @ModelAttribute("name")
+    public NameModel modelName() {
+        return new NameModel();
+    }
+
     @GetMapping("/details/{name}")
-    public ModelAndView details(@PathVariable String name, ModelAndView model) {
+    public ModelAndView details(@PathVariable String name,
+                                ModelAndView model,
+                                @ModelAttribute("name") NameModel nameModel) {
         DetailsHeroModel details = heroService.detailsHero(name);
         model.addObject("details", details);
         model.setViewName("/heroes/details");
         return model;
+    }
+
+    @PostMapping("/details/{name}")
+    public String sell(@PathVariable String name,
+                             @ModelAttribute("name") NameModel nameModel){
+        heroService.sellItem(name, nameModel.getName());
+        return "redirect:/heroes/details/" + name;
     }
 
     @GetMapping("/fight")

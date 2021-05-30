@@ -275,6 +275,26 @@ public class HeroServiceImpl implements HeroService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void sellItem(String nameHero, String nameItem) {
+        Hero hero = heroRepository.findHeroByName(nameHero);
+        Item item = itemRepository.getItemByName(nameItem);
+        User user = userRepository.findUserByUsername(hero.getUser().getUsername());
+
+        hero.getItems().remove(item);
+        item.getHeroes().remove(hero);
+
+        if (item.getPriceInGold() != null){
+            int itemGold = item.getPriceInGold() / 4;
+            int userGold = user.getGold();
+            user.setGold(userGold + itemGold);
+            userRepository.saveAndFlush(user);
+        }
+
+        heroRepository.saveAndFlush(hero);
+        itemRepository.saveAndFlush(item);
+    }
+
     private void setPowersOfBattleModel(Hero hero, BattleModel model) {
         model.setAttack(hero.getLevel());
         model.setStamina(hero.getLevel());

@@ -47,7 +47,7 @@ public class Item extends BaseEntity {
     @Column(name = "price_in_money")
     private Integer priceInMoney;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "items_heroes",
             joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),

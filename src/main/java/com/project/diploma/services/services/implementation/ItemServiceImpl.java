@@ -138,36 +138,64 @@ public class ItemServiceImpl implements ItemService {
 
         SelectItemsModel model = new SelectItemsModel();
         model.setGauntlets(gauntletName);
-        if (gauntletName != null){
-            model.setItemPictureGauntlets(itemRepository
-                    .getItemByName(gauntletName).getItemPicture());
-        }
+        getNamePictureGauntlets(model, gauntletName);
 
         model.setHelmet(helmetName);
-        if (helmetName != null){
-            model.setItemPictureHelmet(itemRepository
-                    .getItemByName(helmetName).getItemPicture());
-        }
+        getNamePictureHelmet(model, helmetName);
 
         model.setPads(padsName);
-        if (padsName != null){
-            model.setItemPicturePads(itemRepository
-                    .getItemByName(padsName).getItemPicture());
-        }
+        getNamePicturePads(model, padsName);
 
         model.setPauldron(pauldronName);
-        if (pauldronName != null){
-            model.setItemPicturePauldron(itemRepository
-                    .getItemByName(pauldronName).getItemPicture());
-        }
+        getNamePicturePauldron(model, pauldronName);
 
         model.setWeapon(weaponName);
-        if (weaponName != null){
-            model.setItemPictureWeapon(itemRepository
-                    .getItemByName(weaponName).getItemPicture());
-        }
+        getNamePictureWeapon(model, weaponName);
 
         return model;
+    }
+
+    @Override
+    public void getNamesPictureItems(SelectItemsModel model) {
+        getNamePictureHelmet(model, model.getHelmet());
+
+        getNamePictureWeapon(model, model.getWeapon());
+
+        getNamePicturePads(model, model.getPads());
+
+        getNamePicturePauldron(model, model.getPauldron());
+
+        getNamePictureGauntlets(model, model.getGauntlets());
+    }
+
+    private void getNamePictureGauntlets(SelectItemsModel model, String gauntlets) {
+        if (gauntlets != null) {
+            model.setItemPictureGauntlets(itemRepository.getItemByName(gauntlets).getItemPicture());
+        }
+    }
+
+    private void getNamePicturePauldron(SelectItemsModel model, String pauldron) {
+        if (pauldron != null) {
+            model.setItemPicturePauldron(itemRepository.getItemByName(pauldron).getItemPicture());
+        }
+    }
+
+    private void getNamePicturePads(SelectItemsModel model, String pads) {
+        if (pads != null) {
+            model.setItemPicturePads(itemRepository.getItemByName(pads).getItemPicture());
+        }
+    }
+
+    private void getNamePictureWeapon(SelectItemsModel model, String weapon) {
+        if (weapon != null) {
+            model.setItemPictureWeapon(itemRepository.getItemByName(weapon).getItemPicture());
+        }
+    }
+
+    private void getNamePictureHelmet(SelectItemsModel model, String helmet) {
+        if (helmet != null) {
+            model.setItemPictureHelmet(itemRepository.getItemByName(helmet).getItemPicture());
+        }
     }
 
     private String selectTheBestWeapon(List<Item> items, Slot slot) {

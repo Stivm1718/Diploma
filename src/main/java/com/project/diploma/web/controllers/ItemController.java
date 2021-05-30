@@ -99,6 +99,7 @@ public class ItemController {
         if (countRoles == 2) {
             itemService.addHeroItemForAdmin(heroName, nameModel.getName());
         } else {
+            session.setAttribute("myHeroName", heroName);
             if (itemService.existItem(nameModel.getName())) {
                 Pay pay = itemService.getWayToPay(nameModel.getName());
                 if (pay.name().equals("GOLD")) {
@@ -145,6 +146,7 @@ public class ItemController {
     @PostMapping("/select")
     public String selectedItems(@ModelAttribute("items") SelectItemsModel model,
                                 HttpSession session) {
+        itemService.getNamesPictureItems(model);
         session.setAttribute("selectedItems", model);
         return "redirect:/heroes/opponent/" + model.getName();
     }

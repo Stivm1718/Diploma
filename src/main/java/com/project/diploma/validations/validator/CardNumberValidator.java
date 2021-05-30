@@ -8,6 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class CardNumberValidator implements ConstraintValidator<CardNumberValidation, String> {
     @Override
     public boolean isValid(String number, ConstraintValidatorContext constraintValidatorContext) {
-        return number.matches("^[0-9]{16}$");
+        return number.matches("^[0-9 ]{19}$");
     }
 }

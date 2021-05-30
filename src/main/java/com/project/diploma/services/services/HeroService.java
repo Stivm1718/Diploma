@@ -22,4 +22,6 @@ public interface HeroService {
     BattleModel fight(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 
     List<RankingModel> getSortedHeroes();
+
+    void sellItem(String nameHero, String nameItem);
 }

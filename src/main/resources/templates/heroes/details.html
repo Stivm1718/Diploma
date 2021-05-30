@@ -47,6 +47,7 @@
                         <th scope="col">Strength</th>
                         <th scope="col">Attack</th>
                         <th scope="col">Defence</th>
+                        <th scope="col">Sell</th>
                     </tr>
                     </thead>
                     <th:block th:each="item : ${details.getGauntlets()}">
@@ -59,6 +60,15 @@
                             <td><span th:text="${item.getStrength()}"></span></td>
                             <td><span th:text="${item.getAttack()}"></span></td>
                             <td><span th:text="${item.getDefence()}"></span></td>
+                            <td>
+                                <form th:action="@{'/heroes/details/' + ${details.getName()}}"
+                                      th:object="${name}"
+                                      method="post">
+                                    <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                           class="form-control">
+                                    <button class="btn btn-info">Sell</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </th:block>
@@ -78,6 +88,7 @@
                         <th scope="col">Strength</th>
                         <th scope="col">Attack</th>
                         <th scope="col">Defence</th>
+                        <th scope="col">Sell</th>
                     </tr>
                     </thead>
                     <th:block th:each="item : ${details.getHelmets()}">
@@ -90,6 +101,15 @@
                             <td><span th:text="${item.getStrength()}"></span></td>
                             <td><span th:text="${item.getAttack()}"></span></td>
                             <td><span th:text="${item.getDefence()}"></span></td>
+                            <td>
+                                <form th:action="@{'/heroes/details/' + ${details.getName()}}"
+                                      th:object="${name}"
+                                      method="post">
+                                    <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                           class="form-control">
+                                    <button class="btn btn-info">Sell</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </th:block>
@@ -109,6 +129,7 @@
                         <th scope="col">Strength</th>
                         <th scope="col">Attack</th>
                         <th scope="col">Defence</th>
+                        <th scope="col">Sell</th>
                     </tr>
                     </thead>
                     <th:block th:each="item : ${details.getPauldrons()}">
@@ -121,6 +142,15 @@
                             <td><span th:text="${item.getStrength()}"></span></td>
                             <td><span th:text="${item.getAttack()}"></span></td>
                             <td><span th:text="${item.getDefence()}"></span></td>
+                            <td>
+                                <form th:action="@{'/heroes/details/' + ${details.getName()}}"
+                                      th:object="${name}"
+                                      method="post">
+                                    <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                           class="form-control">
+                                    <button class="btn btn-info">Sell</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </th:block>
@@ -140,6 +170,7 @@
                         <th scope="col">Strength</th>
                         <th scope="col">Attack</th>
                         <th scope="col">Defence</th>
+                        <th scope="col">Sell</th>
                     </tr>
                     </thead>
                     <th:block th:each="item : ${details.getPads()}">
@@ -152,6 +183,15 @@
                             <td><span th:text="${item.getStrength()}"></span></td>
                             <td><span th:text="${item.getAttack()}"></span></td>
                             <td><span th:text="${item.getDefence()}"></span></td>
+                            <td>
+                                <form th:action="@{'/heroes/details/' + ${details.getName()}}"
+                                      th:object="${name}"
+                                      method="post">
+                                    <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                           class="form-control">
+                                    <button class="btn btn-info">Sell</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </th:block>
@@ -171,6 +211,7 @@
                         <th scope="col">Strength</th>
                         <th scope="col">Attack</th>
                         <th scope="col">Defence</th>
+                        <th scope="col">Sell</th>
                     </tr>
                     </thead>
                     <th:block th:each="item : ${details.getWeapons()}">
@@ -183,6 +224,15 @@
                             <td><span th:text="${item.getStrength()}"></span></td>
                             <td><span th:text="${item.getAttack()}"></span></td>
                             <td><span th:text="${item.getDefence()}"></span></td>
+                            <td>
+                                <form th:action="@{'/heroes/details/' + ${details.getName()}}"
+                                      th:object="${name}"
+                                      method="post">
+                                    <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
+                                           class="form-control">
+                                    <button class="btn btn-info">Sell</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </th:block>

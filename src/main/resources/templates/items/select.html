@@ -51,11 +51,6 @@
                                                    th:value="${item.getName()}" name="gauntlets">
                                         </label>
                                     </td>
-                                    <form>
-                                        <input hidden type="text" th:value="${item.getItemPicture()}"
-                                               th:attr="name='itemPictureGauntlets'"
-                                               class="form-control">
-                                    </form>
                                 </tr>
                                 </tbody>
                             </th:block>
@@ -96,11 +91,6 @@
                                                th:value="${item.getName()}" name="helmet">
                                     </label>
                                 </td>
-                                <form>
-                                    <input hidden type="text" th:value="${item.getItemPicture()}"
-                                           th:attr="name='itemPictureHelmet'"
-                                           class="form-control">
-                                </form>
                             </tr>
                             </tbody>
                         </th:block>
@@ -140,11 +130,6 @@
                                                th:value="${item.getName()}" name="pauldron">
                                     </label>
                                 </td>
-                                <form>
-                                    <input hidden type="text" th:value="${item.getItemPicture()}"
-                                           th:attr="name='itemPicturePauldron'"
-                                           class="form-control">
-                                </form>
                             </tr>
                             </tbody>
                         </th:block>
@@ -184,11 +169,6 @@
                                                th:value="${item.getName()}" name="pads">
                                     </label>
                                 </td>
-                                <form>
-                                    <input hidden type="text" th:value="${item.getItemPicture()}"
-                                           th:attr="name='itemPicturePads'"
-                                           class="form-control">
-                                </form>
                             </tr>
                             </tbody>
                         </th:block>
@@ -226,16 +206,8 @@
                                     <label for="weapon">
                                         <input type="radio" id="weapon" class="ml-lg-5"
                                                th:value="${item.getName()}" name="weapon">
-                                        <input hidden type="text" th:value="${item.getItemPicture()}"
-                                               th:attr="name='itemPictureWeapon'"
-                                               class="form-control">
                                     </label>
                                 </td>
-                                <form>
-                                    <input hidden type="text" th:value="${item.getItemPicture()}"
-                                           th:attr="name='itemPictureWeapon'"
-                                           class="form-control">
-                                </form>
                             </tr>
                             </tbody>
                         </th:block>
