@@ -241,15 +241,20 @@
                         </th:block>
                     </table>
                 </div>
-                <div class="button-holder d-flex justify-content-center">
-                    <button class="btn btn-info text-white mb-3" type="submit">Select</button>
+                <div class="col text-center">
+                    <div class="button-holder d-flex justify-content-center">
+                        <button class="btn btn-info text-white mb-3" type="submit">Select</button>
+                    </div>
+                    <a class="btn btn-secondary" th:href="@{'/heroes/select'}">Back</a>
                 </div>
             </div>
         </div>
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
 </main>
 <th:block th:include="~{fragments/footer}"/>
 </body>
 </html>
-
-

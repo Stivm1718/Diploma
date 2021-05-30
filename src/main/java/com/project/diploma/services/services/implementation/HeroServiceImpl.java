@@ -266,7 +266,7 @@ public class HeroServiceImpl implements HeroService {
                     if (diff == 0){
                         diff = b.getCurrentPoints() - a.getCurrentPoints();
                         if (diff == 0){
-                            diff = b.getName().compareTo(a.getName());
+                            diff = a.getName().compareTo(b.getName());
                         }
                     }
                     return diff;

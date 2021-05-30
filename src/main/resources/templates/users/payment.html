@@ -31,7 +31,8 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="month" class="h4 mb-2 text-black">Month</label>
             </div>
-            <input type="number" class="form-control" th:field="*{month}" id="month" name="month"/>
+            <input type="number" class="form-control" th:field="*{month}" id="month" name="month"
+                   min="1" max="12"/>
             <ul th:if="${#fields.errors('month')}">
                 <li class="text-white" th:each="error : ${#fields.errors('month')}" th:text="${error}"></li>
             </ul>
@@ -40,7 +41,8 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="year" class="h4 mb-2 text-black">Year</label>
             </div>
-            <input type="number" class="form-control" th:field="*{year}" id="year" name="year"/>
+            <input type="number" class="form-control" th:field="*{year}" id="year" name="year"
+                   min="23" max="30"/>
             <ul th:if="${#fields.errors('year')}">
                 <li class="text-white" th:each="error : ${#fields.errors('year')}" th:text="${error}"></li>
             </ul>
@@ -49,15 +51,28 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="cvv" class="h4 mb-2 text-black">CVV</label>
             </div>
-            <input type="number" class="form-control" th:field="*{cvv}" id="cvv" name="cvv"/>
+            <input type="number" class="form-control" th:field="*{cvv}" id="cvv" name="cvv"
+                   min="100" max="999"/>
             <ul th:if="${#fields.errors('cvv')}">
                 <li class="text-white" th:each="error : ${#fields.errors('cvv')}" th:text="${error}"></li>
             </ul>
         </div>
-        <div class="button-holder d-flex justify-content-center">
-            <button class="btn btn-info text-white mb-3" type="submit">Pay</button>
+        <div class="col text-center">
+            <div class="button-holder d-flex justify-content-center">
+                <button class="btn btn-info text-white mb-3" type="submit">Pay</button>
+            </div>
+            <th:block th:if="${session.heroItemModel == null}">
+            <a class="btn btn-secondary" th:href="@{'/items/merchant/' + ${session.userOfferHeroModel.getHeroName()}}">Back</a>
+            </th:block>
+            <th:block th:unless="${session.userOfferHeroModel == null}">
+                <a class="btn btn-secondary" th:href="@{'/items/merchant/' + ${session.heroItemModel.getNameHero()}}">Back</a>
+            </th:block>
         </div>
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
 </main>
 <th:block th:include="~{fragments/footer}"/>
 </body>

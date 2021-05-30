@@ -1,14 +1,13 @@
 package com.project.diploma.web.models;
 
 import com.project.diploma.validations.ItemNameAvailabilityValidation;
-import com.project.diploma.validations.NumberValidation;
 import com.project.diploma.validations.UsernameValidation;
+import com.sun.istack.Nullable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -19,30 +18,30 @@ public class CreateItemModel {
     @ItemNameAvailabilityValidation
     private String name;
 
-    @NotEmpty(message = "Slot cannot be empty")
+    @NotNull(message = "Slot cannot be empty")
     private String slot;
 
-    @NotEmpty(message = "Slot cannot be empty")
+    @NotNull(message = "Slot cannot be empty")
     private String itemPicture;
 
-    @NotEmpty(message = "Buy cannot be empty")
+    @NotNull(message = "Buy cannot be empty")
     private String pay;
 
-    @NumberValidation
+    @NotNull(message = "The stamina cannot be null")
     private Integer stamina;
 
-    @NumberValidation
+    @NotNull(message = "The strength cannot be null")
     private Integer strength;
 
-    @NumberValidation
+    @NotNull(message = "The attack cannot be null")
     private Integer attack;
 
-    @NumberValidation
+    @NotNull(message = "The defence cannot be null")
     private Integer defence;
 
-    @PositiveOrZero(message = "Price cannot be negative or zero")
+    @Nullable
     private Integer priceInGold;
 
-    @PositiveOrZero(message = "Price cannot be negative or zero")
+    @Nullable
     private Integer priceInMoney;
 }

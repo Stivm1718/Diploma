@@ -22,9 +22,17 @@
                     <span th:text="${profile.getTotalWins()}"></span>/<span th:text="${profile.getTotalBattles()}">
                     </span>
                 </h3>
+                <br>
+                <br>
+                <br>
+                <a class="btn btn-secondary" th:href="@{'/home'}">Back</a>
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
 </main>
 <th:block th:include="~{fragments/footer}"/>
 </body>

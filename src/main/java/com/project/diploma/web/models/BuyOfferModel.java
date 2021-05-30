@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -16,12 +18,12 @@ public class BuyOfferModel {
     @CardholderValidation
     private String cardholder;
 
-    @MonthValidation
+    @NotNull(message = "The month cannot be null.")
     private Integer month;
 
-    @YearValidation
+    @NotNull(message = "The year cannot be null.")
     private Integer year;
 
-    @CVVValidation
+    @NotNull(message = "The year cannot be null.")
     private Integer cvv;
 }

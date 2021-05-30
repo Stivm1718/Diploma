@@ -1,11 +1,12 @@
 package com.project.diploma.web.models;
 
-import com.project.diploma.validations.NumberValidation;
 import com.project.diploma.validations.OfferNameAvailabilityValidation;
 import com.project.diploma.validations.OfferNameValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -16,9 +17,9 @@ public class CreateOfferModel {
     @OfferNameAvailabilityValidation
     private String name;
 
-    @NumberValidation
+    @NotNull(message = "The gold cannot be null")
     private Integer gold;
 
-    @NumberValidation
+    @NotNull(message = "The price cannot be null")
     private Integer price;
 }

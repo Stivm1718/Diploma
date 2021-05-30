@@ -48,11 +48,12 @@ public class UserController {
     public String confirmRegister(@Valid @ModelAttribute("register") RegisterUserModel model,
                                   BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
-            session.setAttribute("registerError", null);
             if (result.getAllErrors()
                     .stream().anyMatch(error ->
                             Objects.equals(error.getCode(), "EqualsPasswordValidation"))) {
                 session.setAttribute("registerError", "Passwords not equals.");
+            } else {
+                session.setAttribute("registerError", null);
             }
             return "users/register";
         }
