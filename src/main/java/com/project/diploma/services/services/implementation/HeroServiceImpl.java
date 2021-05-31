@@ -276,7 +276,7 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public void sellItem(String nameHero, String nameItem) {
+    public int sellItem(String nameHero, String nameItem) {
         Hero hero = heroRepository.findHeroByName(nameHero);
         Item item = itemRepository.getItemByName(nameItem);
         User user = userRepository.findUserByUsername(hero.getUser().getUsername());
@@ -284,15 +284,18 @@ public class HeroServiceImpl implements HeroService {
         hero.getItems().remove(item);
         item.getHeroes().remove(hero);
 
+        int gold = 0;
         if (item.getPriceInGold() != null){
             int itemGold = item.getPriceInGold() / 4;
             int userGold = user.getGold();
             user.setGold(userGold + itemGold);
+            gold = user.getGold();
             userRepository.saveAndFlush(user);
         }
 
         heroRepository.saveAndFlush(hero);
         itemRepository.saveAndFlush(item);
+        return gold;
     }
 
     private void setPowersOfBattleModel(Hero hero, BattleModel model) {

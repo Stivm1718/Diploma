@@ -129,13 +129,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addGoldToUser(String username, String offerName) {
+    public int addGoldToUser(String username, String offerName) {
         Offer offer = offerRepository.getOfferByName(offerName);
 
         User user = userRepository.findUserByUsername(username);
 
         user.setGold(user.getGold() + offer.getGold());
+
         userRepository.saveAndFlush(user);
+        return user.getGold();
     }
 
     @Override

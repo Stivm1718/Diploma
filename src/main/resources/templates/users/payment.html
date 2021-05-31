@@ -13,7 +13,7 @@
             <div class="label-holder textCol d-flex justify-content-center">
                 <label for="cardNumber" class="h4 mb-2 text-white">Card number</label>
             </div>
-            <input type="text" th:field="*{cardNumber}" onkeypress="return cardNumber(event);" class="form-control" id="cardNumber" name="cardNumber"/>
+            <input type="text" th:field="*{cardNumber}" placeholder="0000 0000 0000 0000" onkeypress="return cardNumber(event);" class="form-control" id="cardNumber" name="cardNumber"/>
             <ul th:if="${#fields.errors('cardNumber')}">
                 <li class="text-white" th:each="error : ${#fields.errors('cardNumber')}" th:text="${error}"></li>
             </ul>
@@ -29,22 +29,12 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="month" class="h4 mb-2 text-black">Month</label>
+                <label for="expirationDate" class="h4 mb-2 text-black">Expiration date</label>
             </div>
-            <input type="number" class="form-control" th:field="*{month}" id="month" name="month"
-                   min="1" max="12"/>
-            <ul th:if="${#fields.errors('month')}">
-                <li class="text-white" th:each="error : ${#fields.errors('month')}" th:text="${error}"></li>
-            </ul>
-        </div>
-        <div class="form-group">
-            <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="year" class="h4 mb-2 text-black">Year</label>
-            </div>
-            <input type="number" class="form-control" th:field="*{year}" id="year" name="year"
-                   min="23" max="30"/>
-            <ul th:if="${#fields.errors('year')}">
-                <li class="text-white" th:each="error : ${#fields.errors('year')}" th:text="${error}"></li>
+            <input maxlength='5' class="form-control" placeholder="MM/YY" id="expirationDate" name="expirationDate"
+                   type="text" onkeyup="expDate(event);">
+            <ul th:if="${#fields.errors('expirationDate')}">
+                <li class="text-white" th:each="error : ${#fields.errors('expirationDate')}" th:text="${error}"></li>
             </ul>
         </div>
         <div class="form-group">

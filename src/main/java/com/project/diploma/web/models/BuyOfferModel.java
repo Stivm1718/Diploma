@@ -18,12 +18,9 @@ public class BuyOfferModel {
     @CardholderValidation
     private String cardholder;
 
-    @NotNull(message = "The month cannot be null.")
-    private Integer month;
+    @ExpirationDateValidation
+    private String expirationDate;
 
-    @NotNull(message = "The year cannot be null.")
-    private Integer year;
-
-    @NotNull(message = "The year cannot be null.")
+    @NotNull(message = "The cvv cannot be null.")
     private Integer cvv;
 }

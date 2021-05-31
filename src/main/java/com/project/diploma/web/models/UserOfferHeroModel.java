@@ -15,6 +15,8 @@ public class UserOfferHeroModel {
 
     private String heroName;
 
+    private Integer userGold;
+
     public UserOfferHeroModel(String username, String offerName, String heroName){
         this.username = username;
         this.offerName = offerName;

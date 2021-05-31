@@ -19,7 +19,7 @@ public interface UserService extends UserDetailsService {
 
     int takeGoldFromUser(String username);
 
-    void addGoldToUser(String username, String offerName);
+    int addGoldToUser(String username, String offerName);
 
     HeroPictureModel getHero(String username);
 }

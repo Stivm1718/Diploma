@@ -1,6 +1,6 @@
 package com.project.diploma.validations;
 
-import com.project.diploma.validations.validator.NumberValidator;
+import com.project.diploma.validations.validator.ExpirationDateValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = NumberValidator.class)
-public @interface NumberValidation {
-
-    String message() default "Тhe number must be positive.";
+@Constraint(validatedBy = ExpirationDateValidator.class)
+public @interface ExpirationDateValidation {
+    String message() default "Invalid expiration date.";
 
     Class<?>[] groups() default {};
 

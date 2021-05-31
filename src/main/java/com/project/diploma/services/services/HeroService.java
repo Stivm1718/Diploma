@@ -23,5 +23,5 @@ public interface HeroService {
 
     List<RankingModel> getSortedHeroes();
 
-    void sellItem(String nameHero, String nameItem);
+    int sellItem(String nameHero, String nameItem);
 }

@@ -8,6 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class CardholderValidator implements ConstraintValidator<CardholderValidation, String> {
     @Override
     public boolean isValid(String cardholder, ConstraintValidatorContext constraintValidatorContext) {
-        return cardholder.matches("^[A-Z ]{3,}$");
+        return cardholder.matches("^[A-Za-z ]{3,}$");
     }
 }

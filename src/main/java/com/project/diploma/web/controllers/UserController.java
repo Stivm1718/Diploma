@@ -125,7 +125,8 @@ public class UserController {
         } else {
             UserOfferHeroModel userOfferModel =
                     (UserOfferHeroModel) session.getAttribute("userOfferHeroModel");
-            userService.addGoldToUser(userOfferModel.getUsername(), userOfferModel.getOfferName());
+            int gold = userService.addGoldToUser(userOfferModel.getUsername(), userOfferModel.getOfferName());
+            session.setAttribute("gold", gold);
             return "redirect:/users/success-bought-gold";
         }
     }

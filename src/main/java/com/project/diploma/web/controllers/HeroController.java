@@ -109,8 +109,10 @@ public class HeroController {
 
     @PostMapping("/details/{name}")
     public String sell(@PathVariable String name,
+                             HttpSession session,
                              @ModelAttribute("name") NameModel nameModel){
-        heroService.sellItem(name, nameModel.getName());
+        int gold = heroService.sellItem(name, nameModel.getName());
+        session.setAttribute("gold", gold);
         return "redirect:/heroes/details/" + name;
     }
 
