@@ -25,14 +25,15 @@
                 <tr>
                     <td><span th:text="${item.getName()}"></span></td>
                     <td><span th:text="${item.getSlot()}"></span></td>
-                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}" width="150">
+                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}" width="150"
+                    height="240">
                     </td>
                     <td><span th:text="${item.getStamina()}"></span></td>
                     <td><span th:text="${item.getStrength()}"></span></td>
                     <td><span th:text="${item.getAttack()}"></span></td>
                     <td><span th:text="${item.getDefence()}"></span></td>
                     <td>
-                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                        <form th:action="@{'/items/merchant/' + ${hero.getName()}}"
                               th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
@@ -66,7 +67,8 @@
                 <tr>
                     <td><span th:text="${item.getName()}"></span></td>
                     <td><span th:text="${item.getSlot()}"></span></td>
-                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}" width="150">
+                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}" width="150"
+                    height="240">
                     </td>
                     <td><span th:text="${item.getStamina()}"></span></td>
                     <td><span th:text="${item.getStrength()}"></span></td>
@@ -76,12 +78,17 @@
                         <span th:text="${item.getPriceInGold()}"></span> gold
                     </h5></td>
                     <td>
-                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                        <form th:action="@{'/items/merchant/' + ${hero.getName()}}"
                               th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
-                            <button class="btn btn-info">Buy</button>
+                            <th:block th:if="${item.getLevel() > hero.getLevel()}">
+                                <h5> <span th:text="${item.getLevel()}"></span> ниво.</h5>
+                            </th:block>
+                            <th:block th:unless="${item.getLevel() > hero.getLevel()}">
+                                <button class="btn btn-info">Buy</button>
+                            </th:block>
                         </form>
                         <th:block th:unless="${session.text == null}">
                             <span th:text="${session.text}"></span></th:block>
@@ -109,7 +116,8 @@
                 <tr>
                     <td><span th:text="${item.getName()}"></span></td>
                     <td><span th:text="${item.getSlot()}"></span></td>
-                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}" width="150">
+                    <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}" width="150"
+                    height="240">
                     </td>
                     <td><span th:text="${item.getStamina()}"></span></td>
                     <td><span th:text="${item.getStrength()}"></span></td>
@@ -119,12 +127,17 @@
                         <span th:text="${item.getPriceInMoney()}"></span> лв.
                     </h5></td>
                     <td>
-                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                        <form th:action="@{'/items/merchant/' + ${hero.getName()}}"
                               th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
-                            <button class="btn btn-info">Buy</button>
+                            <th:block th:if="${item.getLevel() > hero.getLevel()}">
+                                <h5> <span th:text="${item.getLevel()}"></span> ниво.</h5>
+                            </th:block>
+                            <th:block th:unless="${item.getLevel() > hero.getLevel()}">
+                                <button class="btn btn-info">Buy</button>
+                            </th:block>
                         </form>
                     </td>
                 </tr>
@@ -151,7 +164,7 @@
                         <span th:text="${offer.getPrice()}"></span> лв.
                     </h5></td>
                     <td>
-                        <form th:action="@{'/items/merchant/' + ${heroName}}"
+                        <form th:action="@{'/items/merchant/' + ${hero.getName()}}"
                               th:object="${name}"
                               method="post">
                             <input hidden type="text" th:value="${offer.getName()}" th:attr="name='name'"
@@ -164,7 +177,6 @@
             </th:block>
         </table>
     </th:block>
-    <br>
     <div class="col text-center">
         <a class="btn btn-secondary" th:href="@{'/heroes/select'}">Back</a>
     </div>

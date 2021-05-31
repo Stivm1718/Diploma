@@ -2,6 +2,7 @@ package com.project.diploma.web.controllers;
 
 import com.project.diploma.data.models.Pay;
 import com.project.diploma.services.models.CreateItemServiceModel;
+import com.project.diploma.services.services.HeroService;
 import com.project.diploma.services.services.ItemService;
 import com.project.diploma.services.services.OfferService;
 import com.project.diploma.services.services.UserService;
@@ -25,16 +26,18 @@ public class ItemController {
     private final ItemService itemService;
     private final UserService userService;
     private final OfferService offerService;
+    private final HeroService heroService;
 
     @Autowired
     public ItemController(ModelMapper mapper,
                           ItemService itemService,
                           UserService userService,
-                          OfferService offerService) {
+                          OfferService offerService, HeroService heroService) {
         this.mapper = mapper;
         this.itemService = itemService;
         this.userService = userService;
         this.offerService = offerService;
+        this.heroService = heroService;
     }
 
     @ModelAttribute("item")
@@ -73,7 +76,8 @@ public class ItemController {
                                  HttpSession session,
                                  @ModelAttribute("name") NameModel nameModel) {
         LoggedUserFilterModel roles = (LoggedUserFilterModel) session.getAttribute("authorities");
-        model.addObject("heroName", name);
+        HeroPictureModel hero = heroService.getMyHero(name);
+        model.addObject("hero", hero);
         int countRoles = roles.getAuthorities().size();
         if (countRoles == 2) {
             List<ViewItemModel> items = itemService.takeAllItemsThatAreNotThere(name);
@@ -145,9 +149,17 @@ public class ItemController {
 
     @PostMapping("/select")
     public String selectedItems(@ModelAttribute("items") SelectItemsModel model,
+                                BindingResult result,
                                 HttpSession session) {
+//        if (result.hasErrors()){
+//            return "items/select/" + model.getName();
+//        }
+        // todo Да довърша избирането на елементи за моя герой и да оцветя останалите бутони
         itemService.getNamesPictureItems(model);
         session.setAttribute("selectedItems", model);
-        return "redirect:/heroes/opponent/" + model.getName();
+        if (model.getGame().equals("player")) {
+            return "redirect:/heroes/player/" + model.getName();
+        }
+        return "redirect:/heroes/bot/" + model.getName();
     }
 }

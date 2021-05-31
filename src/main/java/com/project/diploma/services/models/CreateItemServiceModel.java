@@ -19,6 +19,8 @@ public class CreateItemServiceModel {
 
     private Pay pay;
 
+    private Integer level;
+
     private Integer stamina;
 
     private Integer strength;

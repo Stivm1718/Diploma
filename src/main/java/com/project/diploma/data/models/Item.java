@@ -29,6 +29,9 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Pay pay;
 
+    @Column(name = "level", nullable = false)
+    private Integer level;
+
     @Column(name = "stamina", nullable = false)
     private Integer stamina;
 

@@ -266,16 +266,26 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="label-holder textCol d-flex justify-content-center">
+                    <label for="level" class="h4 mb-2 text-white">Level</label>
+                </div>
+                <input type="number" th:field="*{level}" id="level" class="w-25" name="level"
+                       placeholder="1" min="1">
+                <ul th:if="${#fields.errors('level')}">
+                    <li th:each="error : ${#fields.errors('level')}" th:text="${error}"></li>
+                </ul>
+            </div>
+            <div class="form-group">
                 <div class="row">
                     <div class="col col-md-6"></div>
-                    <h2 class="text-white">Paying with gold</h2>
+                    <h5 class="text-white">Paying with gold</h5>
                     <label for="payWithGold">
                         <input type="radio" onclick="payCheck();" id="payWithGold" class="ml-lg-5" value="GOLD"
                                name="pay">
                     </label>
                 </div>
                 <div>
-                    <h2 class="text-white">Paying with money</h2>
+                    <h5 class="text-white">Paying with money</h5>
                     <label for="payWithMoney">
                         <input type="radio" onclick="payCheck();" id="payWithMoney" class="ml-lg-5" value="MONEY"
                                name="pay">
@@ -306,7 +316,7 @@
             </div>
             <div class="col text-center">
                 <div class="button-holder d-flex justify-content-center">
-                    <button class="btn btn-secondary text-white mb-3" type="submit">Create Item</button>
+                    <button class="btn btn-info text-white mb-3" type="submit">Create Item</button>
                 </div>
                 <a class="btn btn-secondary" th:href="@{'/home'}">Back</a>
             </div>

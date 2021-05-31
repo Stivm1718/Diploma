@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,6 +85,7 @@ public class ItemServiceImpl implements ItemService {
                 .filter(i -> !i.getHeroes().stream()
                         .map(Hero::getName)
                         .collect(Collectors.toList()).contains(heroName))
+                .sorted(Comparator.comparingInt(Item::getLevel))
                 .map(u -> this.mapper.map(u, ViewItemModelWithTypePay.class))
                 .collect(Collectors.toList());
     }
@@ -97,6 +99,7 @@ public class ItemServiceImpl implements ItemService {
                 .filter(i -> !i.getHeroes().stream()
                         .map(Hero::getName)
                         .collect(Collectors.toList()).contains(heroName))
+                .sorted(Comparator.comparingInt(Item::getLevel))
                 .map(u -> this.mapper.map(u, ViewItemModelWithTypePay.class))
                 .collect(Collectors.toList());
     }

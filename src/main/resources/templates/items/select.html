@@ -39,7 +39,7 @@
                                 <tr>
                                     <td><span th:text="${item.getName()}"></span></td>
                                     <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
-                                             width="150">
+                                             width="150" height="240">
                                     </td>
                                     <td><span th:text="${item.getStamina()}"></span></td>
                                     <td><span th:text="${item.getStrength()}"></span></td>
@@ -79,7 +79,7 @@
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
                                 <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
-                                         width="150">
+                                         width="150" height="240">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
                                 <td><span th:text="${item.getStrength()}"></span></td>
@@ -118,7 +118,7 @@
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
                                 <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
-                                         width="150">
+                                         width="150" height="240">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
                                 <td><span th:text="${item.getStrength()}"></span></td>
@@ -157,7 +157,7 @@
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
                                 <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
-                                         width="150">
+                                         width="150" height="240">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
                                 <td><span th:text="${item.getStrength()}"></span></td>
@@ -196,7 +196,7 @@
                             <tr>
                                 <td><span th:text="${item.getName()}"></span></td>
                                 <td><img th:src="@{'/img/' + ${item.getItemPicture()} + '.jpg'}"
-                                         width="150">
+                                         width="150" height="240">
                                 </td>
                                 <td><span th:text="${item.getStamina()}"></span></td>
                                 <td><span th:text="${item.getStrength()}"></span></td>
@@ -212,6 +212,29 @@
                             </tbody>
                         </th:block>
                     </table>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col col-md-4"></div>
+                        <div>
+                            <div class="col col-md-6 ml-lg-5">
+                                <h3 class="text-white">Play with player</h3>
+                                <label for="player">
+                                    <input type="radio" id="player" class="ml-lg-5"
+                                           value="player" name="game">
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col col-md-6 ml-lg-5">
+                                <h3 class="text-white">Play with bot</h3>
+                                <label for="bot">
+                                    <input type="radio" id="bot" class="ml-lg-5"
+                                           value="bot" name="game">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col text-center">
                     <div class="button-holder d-flex justify-content-center">

@@ -147,6 +147,8 @@ public class HeroServiceImpl implements HeroService {
                              HeroPictureModel opponent,
                              SelectItemsModel myItems,
                              SelectItemsModel opponentItems) {
+        BattleModel model = new BattleModel();
+
         int attachMyHero = getPower(myItems, ATTACK);
         int defenceMyHero = getPower(myItems, DEFENCE);
         int staminaMyHero = getPower(myItems, STAMINA);
@@ -155,9 +157,13 @@ public class HeroServiceImpl implements HeroService {
         Hero hero = heroRepository.findHeroByName(myHero.getName());
 
         attachMyHero += hero.getAttack();
+        model.setMyAttack(attachMyHero);
         defenceMyHero += hero.getDefence();
+        model.setMyDefence(defenceMyHero);
         staminaMyHero += hero.getStamina();
+        model.setMyStamina(staminaMyHero);
         strengthMyHero += hero.getStrength();
+        model.setMyStrength(strengthMyHero);
 
         int attachMyOpponent = getPower(opponentItems, ATTACK);
         int defenceMyOpponent = getPower(opponentItems, DEFENCE);
@@ -167,21 +173,25 @@ public class HeroServiceImpl implements HeroService {
         Hero myOpponentHero = heroRepository.findHeroByName(opponent.getName());
 
         attachMyOpponent += myOpponentHero.getAttack();
+        model.setOpponentAttack(attachMyOpponent);
         defenceMyOpponent += myOpponentHero.getDefence();
+        model.setOpponentDefence(defenceMyOpponent);
         staminaMyOpponent += myOpponentHero.getStamina();
+        model.setOpponentStamina(staminaMyOpponent);
         strengthMyOpponent += myOpponentHero.getStrength();
+        model.setOpponentStrength(strengthMyOpponent);
 
         int damageMyHero = calculateDamageHero(attachMyHero,
                 strengthMyHero,
                 defenceMyOpponent,
                 staminaMyOpponent);
+        model.setMyResult(damageMyHero);
 
         int damageOpponentHero = calculateDamageHero(attachMyOpponent,
                 strengthMyOpponent,
                 defenceMyHero,
                 staminaMyHero);
-
-        BattleModel model = new BattleModel();
+        model.setOpponentResult(damageOpponentHero);
 
         if (damageMyHero > damageOpponentHero) {
             setResultAfterBattle(model, WIN);

@@ -26,4 +26,24 @@ public class BattleModel {
     private Boolean isRaisedLevel;
 
     private Integer level;
+
+    private Integer myAttack;
+
+    private Integer myDefence;
+
+    private Integer myStrength;
+
+    private Integer myStamina;
+
+    private Integer myResult;
+
+    private Integer opponentAttack;
+
+    private Integer opponentDefence;
+
+    private Integer opponentStrength;
+
+    private Integer opponentStamina;
+
+    private Integer opponentResult;
 }

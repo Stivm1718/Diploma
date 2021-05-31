@@ -27,6 +27,9 @@ public class CreateItemModel {
     @NotNull(message = "Buy cannot be empty")
     private String pay;
 
+    @NotNull(message = "The level cannot be null")
+    private Integer level;
+
     @NotNull(message = "The stamina cannot be null")
     private Integer stamina;
 

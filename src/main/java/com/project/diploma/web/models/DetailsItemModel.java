@@ -14,6 +14,8 @@ public class DetailsItemModel {
 
     private Slot slot;
 
+    private Integer level;
+
     private String itemPicture;
 
     private Integer stamina;

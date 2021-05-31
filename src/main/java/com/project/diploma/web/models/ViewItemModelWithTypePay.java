@@ -19,6 +19,8 @@ public class ViewItemModelWithTypePay {
 
     private Pay buy;
 
+    private Integer level;
+
     private Integer stamina;
 
     private Integer strength;

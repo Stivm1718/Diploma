@@ -74,13 +74,13 @@ public class HeroController {
         return model;
     }
 
-    @GetMapping("/opponent/{name}")
+    @GetMapping("/player/{name}")
     public String selectOpponent(@PathVariable String name, HttpSession session, Principal principal) {
         String username = principal.getName();
         HeroPictureModel opponent = heroService.selectOpponent(username, name);
         session.setAttribute("opponent", opponent);
         if (opponent == null) {
-            return "heroes/opponent";
+            return "heroes/player";
         }
 
         SelectItemsModel selectItemsModel = itemService.getTheBestItemsOfOpponent(opponent.getName());
@@ -89,7 +89,7 @@ public class HeroController {
 
         HeroPictureModel model = heroService.getMyHero(name);
         session.setAttribute("myHero", model);
-        return "heroes/opponent";
+        return "heroes/player";
     }
 
     @ModelAttribute("name")

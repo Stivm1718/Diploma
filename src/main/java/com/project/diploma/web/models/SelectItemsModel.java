@@ -4,12 +4,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class SelectItemsModel {
 
     private String name;
+
+    @NotNull
+    private String game;
 
     private String gauntlets;
 

@@ -26,12 +26,12 @@
             <div class="row flex-md-row">
                 <th:block th:each="hero : ${heroes}">
                     <div class="col text-center">
-                        <img th:src="@{'/img/' + ${hero.getHeroPicture()} + '.jpg'}" width="200"
+                        <img th:src="@{'/img/' + ${hero.getHeroPicture()} + '.jpg'}" width="210"
                              height="300">
                         <h2 class="text-white"><span th:text="${hero.getName()}"></span></h2>
-                        <a class="btn btn-secondary" th:href="@{'/heroes/details/' + ${hero.getName()}}">Details</a>
-                        <a class="btn btn-secondary" th:href="@{'/items/merchant/' + ${hero.getName()}}">Merchant</a>
-                        <a class="btn btn-secondary" th:href="@{'/items/select/' + ${hero.getName()}}">Select items</a>
+                        <a class="btn btn-success" th:href="@{'/heroes/details/' + ${hero.getName()}}">Details</a>
+                        <a class="btn btn-info" th:href="@{'/items/merchant/' + ${hero.getName()}}">Merchant</a>
+                        <a class="btn btn-danger" th:href="@{'/items/select/' + ${hero.getName()}}">Select items</a>
                     </div>
                 </th:block>
             </div>

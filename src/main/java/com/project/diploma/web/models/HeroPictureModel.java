@@ -12,4 +12,6 @@ public class HeroPictureModel {
     private String name;
 
     private String heroPicture;
+
+    private Integer level;
 }

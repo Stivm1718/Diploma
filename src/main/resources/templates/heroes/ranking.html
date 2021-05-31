@@ -25,18 +25,18 @@
                     <tr>
                         <td><span th:text="${position.count}"></span></td>
                         <td><span th:text="${hero.getName()}"></span></td>
-                        <td><img th:src="@{'/img/' + ${hero.getHeroPicture()} + '.jpg'}" width="150">
+                        <td><img th:src="@{'/img/' + ${hero.getHeroPicture()} + '.jpg'}" width="150"
+                        height="240">
                         </td>
                         <td><span th:text="${hero.getLevel()}"></span></td>
                     </tr>
                     </tbody>
                 </th:block>
             </table>
+            <div class="col text-center">
+                <a class="btn btn-secondary" th:href="@{'/home'}">Back</a>
+            </div>
         </div>
-    </div>
-    <br>
-    <div class="col text-center">
-        <a class="btn btn-secondary" th:href="@{'/home'}">Back</a>
     </div>
     <br>
     <br>
