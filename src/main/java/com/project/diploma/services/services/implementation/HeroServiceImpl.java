@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class HeroServiceImpl implements HeroService {
     private static final String WIN = "win";
     private static final String DRAW = "draw";
     private static final String DEFEAT = "defeat";
+    private static final String BOT = "bot";
 
     private final HeroRepository heroRepository;
     private final UserRepository userRepository;
@@ -136,6 +138,26 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
+    public HeroPictureModel selectBot(String name) {
+        Hero hero = heroRepository.findHeroByName(name);
+
+        HeroPictureModel model = new HeroPictureModel();
+        model.setName(BOT + (int) (Math.random() * 100));
+
+        model.setHeroPicture(NameHeroes
+                .values()
+                [new Random().nextInt(NameHeroes.values().length)]
+                .toString()
+                .toLowerCase(Locale.ROOT));
+
+        int min = hero.getLevel() - 5 >= 0 ? hero.getLevel() - 5 : 1;
+        int max = hero.getLevel() + 5;
+        int level = min + (int) (Math.random() * ((max - min) + 1));
+        model.setLevel(level);
+        return model;
+    }
+
+    @Override
     public HeroPictureModel getMyHero(String name) {
         Hero hero = heroRepository.findHeroByName(name);
 
@@ -143,10 +165,66 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public BattleModel fight(HeroPictureModel myHero,
-                             HeroPictureModel opponent,
-                             SelectItemsModel myItems,
-                             SelectItemsModel opponentItems) {
+    public BotModel fightWithBot(HeroPictureModel myHero,
+                                 HeroPictureModel bot,
+                                 SelectItemsModel myItems,
+                                 SelectItemsModel itemsOfBot) {
+        BotModel model = new BotModel();
+
+        int attachMyHero = getPower(myItems, ATTACK);
+        int defenceMyHero = getPower(myItems, DEFENCE);
+        int staminaMyHero = getPower(myItems, STAMINA);
+        int strengthMyHero = getPower(myItems, STRENGTH);
+
+        Hero hero = heroRepository.findHeroByName(myHero.getName());
+
+        attachMyHero += hero.getAttack();
+        model.setMyAttack(attachMyHero);
+        defenceMyHero += hero.getDefence();
+        model.setMyDefence(defenceMyHero);
+        staminaMyHero += hero.getStamina();
+        model.setMyStamina(staminaMyHero);
+        strengthMyHero += hero.getStrength();
+        model.setMyStrength(strengthMyHero);
+
+        int attackOfBot = getPower(itemsOfBot, ATTACK);
+        int defenceOfBot = getPower(itemsOfBot, DEFENCE);
+        int staminaOfBot = getPower(itemsOfBot, STAMINA);
+        int strengthOfBot = getPower(itemsOfBot, STRENGTH);
+
+        model.setAttackOfBot(attackOfBot);
+        model.setDefenceOfBot(defenceOfBot);
+        model.setStaminaOfBot(staminaOfBot);
+        model.setStrengthOfBot(strengthOfBot);
+
+        int damageMyHero = calculateDamageHero(attachMyHero,
+                strengthMyHero,
+                defenceOfBot,
+                staminaOfBot);
+        model.setMyResult(damageMyHero);
+
+        int damageOfBot = calculateDamageHero(attackOfBot,
+                strengthOfBot,
+                defenceMyHero,
+                staminaMyHero);
+        model.setBotResult(damageOfBot);
+
+        if (damageMyHero > damageOfBot) {
+            model.setResult(WIN);
+        } else if (damageMyHero < damageOfBot) {
+            model.setResult(DEFEAT);
+        } else {
+            model.setResult(DRAW);
+        }
+
+        return model;
+    }
+
+    @Override
+    public BattleModel fightWithPlayer(HeroPictureModel myHero,
+                                       HeroPictureModel opponent,
+                                       SelectItemsModel myItems,
+                                       SelectItemsModel opponentItems) {
         BattleModel model = new BattleModel();
 
         int attachMyHero = getPower(myItems, ATTACK);
@@ -273,9 +351,9 @@ public class HeroServiceImpl implements HeroService {
                 .stream()
                 .sorted((a, b) -> {
                     int diff = b.getLevel() - a.getLevel();
-                    if (diff == 0){
+                    if (diff == 0) {
                         diff = b.getCurrentPoints() - a.getCurrentPoints();
-                        if (diff == 0){
+                        if (diff == 0) {
                             diff = a.getName().compareTo(b.getName());
                         }
                     }
@@ -295,7 +373,7 @@ public class HeroServiceImpl implements HeroService {
         item.getHeroes().remove(hero);
 
         int gold = 0;
-        if (item.getPriceInGold() != null){
+        if (item.getPriceInGold() != null) {
             int itemGold = item.getPriceInGold() / 4;
             int userGold = user.getGold();
             user.setGold(userGold + itemGold);
@@ -307,6 +385,7 @@ public class HeroServiceImpl implements HeroService {
         itemRepository.saveAndFlush(item);
         return gold;
     }
+
 
     private void setPowersOfBattleModel(Hero hero, BattleModel model) {
         model.setAttack(hero.getLevel());

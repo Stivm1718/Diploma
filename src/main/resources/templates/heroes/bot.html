@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <div class="container">
+        <div class="text-center bg-blur">
+            <h1>Battle</h1>
+            <br>
+            <div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h3 class="align-middle"><span th:text="${session.myHero.getName()}"></span></h3>
+                    </div>
+                    <div class="col-md-2">
+                        <h3 class="align-middle"><span>vs</span></h3>
+                    </div>
+                    <div class="col-md-5">
+                        <h3 class="align-middle"><span th:text="${session.bot.getName()}"></span></h3>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img th:src="@{'/img/' + ${session.myHero.getHeroPicture()} + '.jpg'}" width="210"
+                             height="300">
+                    </div>
+                    <div class="col-md-6">
+                        <img th:src="@{'/img/' + ${session.bot.getHeroPicture()} + '.jpg'}" width="210"
+                             height="300">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="align-middle">Level: <span th:text="${session.myHero.getLevel()}"></span></h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="align-middle">Level: <span th:text="${session.bot.getLevel()}"></span></h3>
+                    </div>
+                </div>
+                <br>
+                <div class="col text-center">
+                    <div class="col text-center">
+                        <a class="btn btn-danger" th:href="@{'/heroes/fight-with-bot'}">Fight</a>
+                    </div>
+                    <br>
+                    <a class="btn btn-secondary" th:href="@{'/items/select/' + ${session.myHero.getName()}}">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

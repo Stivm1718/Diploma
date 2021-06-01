@@ -13,7 +13,7 @@ public class SelectItemsModel {
 
     private String name;
 
-    @NotNull
+    @NotNull(message = "The type of player cannot be empty")
     private String game;
 
     private String gauntlets;

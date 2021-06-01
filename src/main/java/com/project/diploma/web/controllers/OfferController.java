@@ -32,16 +32,16 @@ public class OfferController {
         return new CreateOfferModel();
     }
 
-    @GetMapping("/offer")
+    @GetMapping("/create")
     public String createOffer(@ModelAttribute("offer") CreateOfferModel model){
-        return "offers/offer";
+        return "offers/create";
     }
 
-    @PostMapping("/offer")
+    @PostMapping("/create")
     public String offerConfirm(@Valid @ModelAttribute("offer") CreateOfferModel model,
                                BindingResult result) throws Exception {
         if (result.hasErrors()){
-            return "offers/offer";
+            return "offers/create";
         }
         //todo Когато създам оферта и при redirect да не ми запазва данните
         CreateOfferServiceModel serviceModel = mapper.map(model, CreateOfferServiceModel.class);
@@ -49,7 +49,7 @@ public class OfferController {
         if (offerService.createOffer(serviceModel)){
             return "redirect:/home";
         } else {
-            return "redirect:/offers/offer";
+            return "redirect:/offers/create";
         }
     }
 }

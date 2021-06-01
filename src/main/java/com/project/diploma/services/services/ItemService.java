@@ -32,4 +32,6 @@ public interface ItemService {
     SelectItemsModel getTheBestItemsOfOpponent(String nameHero);
 
     void getNamesPictureItems(SelectItemsModel model);
+
+    SelectItemsModel getItemsOfBot(String name, Integer level);
 }

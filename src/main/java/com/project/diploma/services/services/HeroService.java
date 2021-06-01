@@ -19,9 +19,13 @@ public interface HeroService {
 
     HeroPictureModel getMyHero(String name);
 
-    BattleModel fight(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
+    BattleModel fightWithPlayer(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 
     List<RankingModel> getSortedHeroes();
 
     int sellItem(String nameHero, String nameItem);
+
+    HeroPictureModel selectBot(String name);
+
+    BotModel fightWithBot(HeroPictureModel myHero, HeroPictureModel bot, SelectItemsModel myItems, SelectItemsModel itemsOfBot);
 }

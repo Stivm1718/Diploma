@@ -22,6 +22,9 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemController {
 
+    private final static String GAME_WITH_PLAYER = "player";
+    private final static String GAME_WITH_BOT = "bot";
+
     private final ModelMapper mapper;
     private final ItemService itemService;
     private final UserService userService;
@@ -149,17 +152,14 @@ public class ItemController {
 
     @PostMapping("/select")
     public String selectedItems(@ModelAttribute("items") SelectItemsModel model,
-                                BindingResult result,
                                 HttpSession session) {
-//        if (result.hasErrors()){
-//            return "items/select/" + model.getName();
-//        }
-        // todo Да довърша избирането на елементи за моя герой и да оцветя останалите бутони
         itemService.getNamesPictureItems(model);
         session.setAttribute("selectedItems", model);
-        if (model.getGame().equals("player")) {
+        if (GAME_WITH_PLAYER.equals(model.getGame())) {
             return "redirect:/heroes/player/" + model.getName();
+        } else if (GAME_WITH_BOT.equals(model.getGame())){
+            return "redirect:/heroes/bot/" + model.getName();
         }
-        return "redirect:/heroes/bot/" + model.getName();
+        return "redirect:/items/select/" + model.getName();
     }
 }

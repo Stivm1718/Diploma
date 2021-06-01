@@ -84,7 +84,7 @@
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
                             <th:block th:if="${item.getLevel() > hero.getLevel()}">
-                                <h5> <span th:text="${item.getLevel()}"></span> ниво.</h5>
+                                <h5> <span th:text="${item.getLevel()}"></span> ниво</h5>
                             </th:block>
                             <th:block th:unless="${item.getLevel() > hero.getLevel()}">
                                 <button class="btn btn-info">Buy</button>
@@ -133,7 +133,7 @@
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
                             <th:block th:if="${item.getLevel() > hero.getLevel()}">
-                                <h5> <span th:text="${item.getLevel()}"></span> ниво.</h5>
+                                <h5> <span th:text="${item.getLevel()}"></span> ниво</h5>
                             </th:block>
                             <th:block th:unless="${item.getLevel() > hero.getLevel()}">
                                 <button class="btn btn-info">Buy</button>

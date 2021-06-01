@@ -12,12 +12,12 @@ public class ExpirationDateValidator implements ConstraintValidator<ExpirationDa
         if (date.equals("")){
             return false;
         }
-        int month = Integer.parseInt(date.substring(0, 2));
-        if (month < 6){
+        int year = Integer.parseInt(date.substring(3));
+        if (year <= 21 || year >= 30){
             return false;
         } else {
-            int year = Integer.parseInt(date.substring(3));
-            return (year >= 21 && year <= 30);
+            int month = Integer.parseInt(date.substring(0, 2));
+            return (month < 6);
         }
     }
 }

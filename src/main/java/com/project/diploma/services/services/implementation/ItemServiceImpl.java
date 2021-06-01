@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -169,6 +170,71 @@ public class ItemServiceImpl implements ItemService {
         getNamePicturePauldron(model, model.getPauldron());
 
         getNamePictureGauntlets(model, model.getGauntlets());
+    }
+
+    @Override
+    public SelectItemsModel getItemsOfBot(String name, Integer level) {
+        List<Item> items = itemRepository
+                .findAll()
+                .stream()
+                .filter(i -> (i.getLevel() >= level - 5) || (i.getLevel() <= level + 5))
+                .collect(Collectors.toList());
+
+        Random random = new Random();
+        SelectItemsModel model = new SelectItemsModel();
+
+//        List<Item> weapons = items
+//                .stream()
+//                .filter(i -> i.getSlot().equals(Slot.WEAPON))
+//                .collect(Collectors.toList());
+//        weapons.add(null);
+//        Item weapon = weapons.get(random.nextInt(weapons.size()));
+        Item weapon = getRandomItem(items, random, Slot.WEAPON);
+        if (weapon != null) {
+            model.setWeapon(weapon.getName());
+            model.setItemPictureWeapon(weapon.getItemPicture());
+        }
+
+//        List<Item> helmets = items
+//                .stream()
+//                .filter(i -> i.getSlot().equals(Slot.HELMET))
+//                .collect(Collectors.toList());
+//        helmets.add(null);
+//        Item helmet = helmets.get(random.nextInt(weapons.size()));
+        Item helmet = getRandomItem(items, random, Slot.HELMET);
+        if (helmet != null) {
+            model.setHelmet(helmet.getName());
+            model.setItemPictureHelmet(helmet.getItemPicture());
+        }
+
+        Item gauntlet = getRandomItem(items, random, Slot.GAUNTLET);
+        if (gauntlet != null){
+            model.setGauntlets(gauntlet.getName());
+            model.setItemPictureGauntlets(gauntlet.getItemPicture());
+        }
+
+        Item pad = getRandomItem(items, random, Slot.PADS);
+        if (pad != null){
+            model.setPads(pad.getName());
+            model.setItemPicturePads(pad.getItemPicture());
+        }
+
+        Item pauldron = getRandomItem(items, random, Slot.PAULDRON);
+        if (pauldron != null){
+            model.setPauldron(pauldron.getName());
+            model.setItemPicturePauldron(pauldron.getItemPicture());
+        }
+
+        return model;
+    }
+
+    private Item getRandomItem(List<Item> items, Random random, Slot slot) {
+        List<Item> slots = items
+                .stream()
+                .filter(i -> i.getSlot().equals(slot))
+                .collect(Collectors.toList());
+        slots.add(null);
+        return slots.get(random.nextInt(slots.size()));
     }
 
     private void getNamePictureGauntlets(SelectItemsModel model, String gauntlets) {

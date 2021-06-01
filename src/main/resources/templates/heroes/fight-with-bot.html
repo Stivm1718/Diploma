@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <div class="container">
+        <div class="text-center bg-blur">
+            <th:block th:if="${session.battleResult.getResult().equals('draw')}">
+                <div>
+                    <h3 class="align-middle">Ти направи равен!</h3>
+                </div>
+            </th:block>
+            <th:block th:if="${session.battleResult.getResult().equals('win')}">
+                <div>
+                    <h3 class="align-middle">Ти победи!</h3>
+                </div>
+            </th:block>
+            <th:block th:if="${session.battleResult.getResult().equals('defeat')}">
+                <div>
+                    <h3 class="align-middle">Ти загуби!</h3>
+                </div>
+            </th:block>
+            <th:block th:if="${session.battleResult.getResult().equals('win')}">
+                <h3>Ако се жаден за още по битки избери си
+                    <a href="/heroes/select">герой</a>, а ако искаш почивка отиди в
+                    <a href="/home">home</a>.
+                </h3>
+            </th:block>
+            <th:block th:unless="${session.battleResult.getResult().equals('win')}">
+                <h3>Ако не си доволен от резултата натисни
+                    <a href="/heroes/select">тук</a> и продължавай, а ако искаш почивка отиди в
+                    <a href="/home">home</a>.
+                </h3>
+            </th:block>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <div class="text-center bg-blur">
+            <h1>Детайли</h1>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="align-middle"><span th:text="${session.myHero.getName()}"></span></h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="align-middle"><span th:text="${session.bot.getName()}"></span></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img th:src="@{'/img/' + ${session.myHero.getHeroPicture()} + '.jpg'}" width="210"
+                             height="300">
+                    </div>
+                    <div class="col-md-6">
+                        <img th:src="@{'/img/' + ${session.bot.getHeroPicture()} + '.jpg'}" width="210"
+                             height="300">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img th:if="${session.selectedItems.getHelmet() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.selectedItems.getHelmet() == null}"
+                             th:src="@{'/img/' + ${session.selectedItems.getItemPictureHelmet()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-6">
+                        <img th:if="${session.itemsOfBot.getHelmet() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.itemsOfBot.getHelmet() == null}"
+                             th:src="@{'/img/' + ${session.itemsOfBot.getItemPictureHelmet()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <img th:if="${session.selectedItems.getWeapon() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.selectedItems.getWeapon() == null}"
+                             th:src="@{'/img/' + ${session.selectedItems.getItemPictureWeapon()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-2">
+                        <img th:if="${session.selectedItems.getPauldron() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.selectedItems.getPauldron() == null}"
+                             th:src="@{'/img/' + ${session.selectedItems.getItemPicturePauldron()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-2">
+                        <img th:if="${session.selectedItems.getGauntlets() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.selectedItems.getGauntlets() == null}"
+                             th:src="@{'/img/' + ${session.selectedItems.getItemPictureGauntlets()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-2">
+                        <img th:if="${session.itemsOfBot.getWeapon() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.itemsOfBot.getWeapon() == null}"
+                             th:src="@{'/img/' + ${session.itemsOfBot.getItemPictureWeapon()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-2">
+                        <img th:if="${session.itemsOfBot.getPauldron() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.itemsOfBot.getPauldron() == null}"
+                             th:src="@{'/img/' + ${session.itemsOfBot.getItemPicturePauldron()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-2">
+                        <img th:if="${session.itemsOfBot.getGauntlets() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.itemsOfBot.getGauntlets() == null}"
+                             th:src="@{'/img/' + ${session.itemsOfBot.getItemPictureGauntlets()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img th:if="${session.selectedItems.getPads() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.selectedItems.getPads() == null}"
+                             th:src="@{'/img/' + ${session.selectedItems.getItemPicturePads()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                    <div class="col-md-6">
+                        <img th:if="${session.itemsOfBot.getPads() == null}" class="mr-5 mb-1" width="100"
+                             height="150">
+                        <img th:unless="${session.itemsOfBot.getPads() == null}"
+                             th:src="@{'/img/' + ${session.itemsOfBot.getItemPicturePads()} + '.jpg'}"
+                             class="mr-5 mb-1" width="100" height="150">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <table class="table bg-blur">
+            <thead>
+            <tr>
+                <th scope="col" class="font-weight-bold">Characteristics</th>
+                <th scope="col">Me</th>
+                <th scope="col">Bot</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><span>Level</span></td>
+                <td><span th:text="${session.myHero.getLevel()}"></span></td>
+                <td><span th:text="${session.bot.getLevel()}"></span></td>
+            </tr>
+            <tr>
+                <td><span>Result</span></td>
+                <td><span th:text="${session.battleResult.getMyResult()}"></span></td>
+                <td><span th:text="${session.battleResult.getBotResult()}"></span></td>
+            </tr>
+            <tr>
+                <td><span>Attack</span></td>
+                <td><span th:text="${session.battleResult.getMyAttack()}"></span></td>
+                <td><span th:text="${session.battleResult.getAttackOfBot()}"></span></td>
+            </tr>
+            <tr>
+                <td><span>Defence</span></td>
+                <td><span th:text="${session.battleResult.getMyDefence()}"></span></td>
+                <td><span th:text="${session.battleResult.getDefenceOfBot()}"></span></td>
+            </tr>
+            <tr>
+                <td><span>Stamina</span></td>
+                <td><span th:text="${session.battleResult.getMyStamina()}"></span></td>
+                <td><span th:text="${session.battleResult.getStaminaOfBot()}"></span></td>
+            </tr>
+            <tr>
+                <td><span>Strength</span></td>
+                <td><span th:text="${session.battleResult.getMyStrength()}"></span></td>
+                <td><span th:text="${session.battleResult.getStrengthOfBot()}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>
