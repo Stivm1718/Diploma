@@ -5,7 +5,7 @@
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main>
-    <th:block th:if="${session.authorities.getAuthorities().size() > 0}">
+    <th:block th:if="${session.username != null}">
         <div class="text-center mb-3">
             <h2 class="text-black mt-2">Welcome to the arena, [[${session.username}]]</h2>
             <th:block th:if="${session.authorities.getAuthorities().size() == 1}">
