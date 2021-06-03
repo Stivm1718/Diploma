@@ -214,25 +214,51 @@
                     </table>
                 </div>
                 <div class="form-group">
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col col-md-4"></div>-->
+                    <!--                        <div>-->
+                    <!--                            <div class="col col-md-6 ml-lg-5">-->
+                    <!--                                <h5 class="text-white">Play with player</h5>-->
+                    <!--                                <label>-->
+                    <!--                                    <input type="radio" class="ml-lg-5"-->
+                    <!--                                           value="player" name="game">-->
+                    <!--                                </label>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div>-->
+                    <!--                            <div class="col col-md-6 ml-lg-5">-->
+                    <!--                                <h5 class="text-white">Play with bot</h5>-->
+                    <!--                                <label>-->
+                    <!--                                    <input type="radio" class="ml-lg-5"-->
+                    <!--                                           value="bot" name="game">-->
+                    <!--                                </label>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                     <div class="row">
-                        <div class="col col-md-4"></div>
-                        <div>
-                            <div class="col col-md-6 ml-lg-5">
-                                <h3 class="text-white">Play with player</h3>
-                                <label>
-                                    <input type="radio" class="ml-lg-5"
-                                           value="player" name="game">
-                                </label>
-                            </div>
+                        <div class="col-md-4">
+                            <h5 class="text-white">Play with player</h5>
+                            <label>
+                                <input type="radio" class="ml-lg-5"
+                                       value="player" name="game">
+                            </label>
                         </div>
-                        <div>
-                            <div class="col col-md-6 ml-lg-5">
-                                <h3 class="text-white">Play with bot</h3>
-                                <label>
-                                    <input type="radio" class="ml-lg-5"
-                                           value="bot" name="game">
-                                </label>
-                            </div>
+                        <div class="col-md-4">
+                            <h5 class="text-white">Play with friend</h5>
+                            <label>
+                                <input type="radio" class="ml-lg-5"
+                                       value="friend" name="game">
+                            </label>
+                            <input type="text" th:field="*{friend}" class="form-control mx-auto w-50" id="friend" name="friend"/>
+                            <th:block th:unless="${session.invalidName == null}">
+                                <span th:text="${session.invalidName}"></span></th:block>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-white">Play with bot</h5>
+                            <label>
+                                <input type="radio" class="ml-lg-5"
+                                       value="bot" name="game">
+                            </label>
                         </div>
                     </div>
                 </div>

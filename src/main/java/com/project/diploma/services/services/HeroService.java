@@ -19,7 +19,7 @@ public interface HeroService {
 
     HeroPictureModel getMyHero(String name);
 
-    BattleModel fightWithPlayer(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
+    BattleModel fightWithPlayerOrFriend(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 
     List<RankingModel> getSortedHeroes();
 
@@ -28,4 +28,12 @@ public interface HeroService {
     HeroPictureModel selectBot(String name);
 
     BattleModel fightWithBot(HeroPictureModel myHero, HeroPictureModel bot, SelectItemsModel myItems, SelectItemsModel itemsOfBot);
+
+    boolean isExistHero(String friend);
+
+    boolean isYoursHero(String friend, String heroName);
+
+    HeroPictureModel selectFriend(String friend);
+
+    //BattleModel fightWithFriend(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 }

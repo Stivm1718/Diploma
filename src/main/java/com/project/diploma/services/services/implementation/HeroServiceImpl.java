@@ -170,9 +170,9 @@ public class HeroServiceImpl implements HeroService {
 
     @Override
     public BattleModel fightWithBot(HeroPictureModel myHero,
-                                 HeroPictureModel bot,
-                                 SelectItemsModel myItems,
-                                 SelectItemsModel itemsOfBot) {
+                                    HeroPictureModel bot,
+                                    SelectItemsModel myItems,
+                                    SelectItemsModel itemsOfBot) {
         BattleModel model = new BattleModel();
 
         int attachMyHero = getPower(myItems, ATTACK);
@@ -191,24 +191,24 @@ public class HeroServiceImpl implements HeroService {
         strengthMyHero += hero.getStrength();
         model.setMyStrength(strengthMyHero);
 
-        int attackOfBot = getPower(itemsOfBot, ATTACK);
-        int defenceOfBot = getPower(itemsOfBot, DEFENCE);
-        int staminaOfBot = getPower(itemsOfBot, STAMINA);
-        int strengthOfBot = getPower(itemsOfBot, STRENGTH);
+        int attackMyOpponent = getPower(itemsOfBot, ATTACK);
+        int defenceMyOpponent = getPower(itemsOfBot, DEFENCE);
+        int staminaMyOpponent = getPower(itemsOfBot, STAMINA);
+        int strengthMyOpponent = getPower(itemsOfBot, STRENGTH);
 
-        model.setOpponentAttack(attackOfBot);
-        model.setOpponentDefence(defenceOfBot);
-        model.setOpponentStamina(staminaOfBot);
-        model.setOpponentStrength(strengthOfBot);
+        model.setOpponentAttack(attackMyOpponent);
+        model.setOpponentDefence(defenceMyOpponent);
+        model.setOpponentStamina(staminaMyOpponent);
+        model.setOpponentStrength(strengthMyOpponent);
 
         int damageMyHero = calculateDamageHero(attachMyHero,
                 strengthMyHero,
-                defenceOfBot,
-                staminaOfBot);
+                defenceMyOpponent,
+                staminaMyOpponent);
         model.setMyResult(damageMyHero);
 
-        int damageOfBot = calculateDamageHero(attackOfBot,
-                strengthOfBot,
+        int damageOfBot = calculateDamageHero(attackMyOpponent,
+                strengthMyOpponent,
                 defenceMyHero,
                 staminaMyHero);
         model.setOpponentResult(damageOfBot);
@@ -219,39 +219,46 @@ public class HeroServiceImpl implements HeroService {
             model.setResult(WIN);
             hero.setWinsVSBot(hero.getWinsVSBot() + 1);
             increasePointsAndGoldOfMyHeroInWinByBattleWithBot(bot, model, hero, user);
-
         } else if (damageMyHero == damageOfBot) {
             model.setResult(DRAW);
-
             increasePointsAndGoldOgMyHeroInDrawByBattleWithBot(bot, model, hero, user);
         } else {
             model.setResult(DEFEAT);
-
             user.setGold(user.getGold() + hero.getLevel());
-
             model.setGold(hero.getLevel());
-
             hero.setBattlesWithBot(hero.getBattlesWithBot() + 1);
-
             hero.setCurrentPoints(hero.getCurrentPoints() + hero.getLevel());
-
             model.setPointsEarned(hero.getLevel());
-
             increaseLevelOfMyHero(hero, model);
         }
-
         userRepository.saveAndFlush(user);
         heroRepository.saveAndFlush(hero);
         return model;
     }
 
-
+    @Override
+    public boolean isExistHero(String friend) {
+        return heroRepository.existsHeroByName(friend);
+    }
 
     @Override
-    public BattleModel fightWithPlayer(HeroPictureModel myHero,
-                                       HeroPictureModel opponent,
-                                       SelectItemsModel myItems,
-                                       SelectItemsModel opponentItems) {
+    public boolean isYoursHero(String friend, String heroName) {
+        Hero friendHero = heroRepository.findHeroByName(friend);
+        Hero myHero = heroRepository.findHeroByName(heroName);
+
+        return friendHero.getUser().getUsername().equals(myHero.getUser().getUsername());
+    }
+
+    @Override
+    public HeroPictureModel selectFriend(String friend) {
+        return mapper.map(heroRepository.findHeroByName(friend), HeroPictureModel.class);
+    }
+
+    @Override
+    public BattleModel fightWithPlayerOrFriend(HeroPictureModel myHero,
+                                               HeroPictureModel opponent,
+                                               SelectItemsModel myItems,
+                                               SelectItemsModel opponentItems) {
         BattleModel model = new BattleModel();
 
         int attachMyHero = getPower(myItems, ATTACK);
@@ -298,61 +305,56 @@ public class HeroServiceImpl implements HeroService {
                 staminaMyHero);
         model.setOpponentResult(damageOpponentHero);
 
-        User userOfMyHero = hero.getUser();
-        User userOfOpponentHero = myOpponentHero.getUser();
-
-        if (damageMyHero > damageOpponentHero) {
-            setResultAfterBattle(model, WIN);
-            increasePowerOfHeroAndBattles(hero);
-
-            setPowersOfBattleModel(hero, model);
-
-            increasePointsAndGoldOfMyHeroInWin(hero, model, userOfMyHero);
-
-            increaseLevelOfMyHero(hero, model);
-
-            userOfOpponentHero.setGold(userOfOpponentHero.getGold() + myOpponentHero.getLevel());
-
-            setBattlesAndPointsOfDefeatedHero(myOpponentHero);
-
-            increaseLevelOfMyOpponentHero(myOpponentHero);
-        } else if (damageMyHero < damageOpponentHero) {
-            setResultAfterBattle(model, DEFEAT);
-
-            increasePowerOfHeroAndBattles(myOpponentHero);
-
-            increasePointsAndGoldOfMyOpponentInWin(myOpponentHero, userOfOpponentHero);
-
-            increaseLevelOfMyOpponentHero(myOpponentHero);
-
-            userOfMyHero.setGold(userOfMyHero.getGold() + hero.getLevel());
-
-            model.setGold(hero.getLevel());
-
-            setBattlesAndPointsOfDefeatedHero(hero);
-
-            model.setPointsEarned(hero.getLevel());
-
-            increaseLevelOfMyHero(hero, model);
+        if (myItems.getFriend().equals("")) {
+            User userOfMyHero = hero.getUser();
+            User userOfOpponentHero = myOpponentHero.getUser();
+            if (damageMyHero > damageOpponentHero) {
+                setResultAfterBattle(model, WIN);
+                increasePowerOfHeroAndBattles(hero);
+                setPowersOfBattleModel(hero, model);
+                increasePointsAndGoldOfMyHeroInWin(hero, model, userOfMyHero);
+                increaseLevelOfMyHero(hero, model);
+                userOfOpponentHero.setGold(userOfOpponentHero.getGold() + myOpponentHero.getLevel());
+                setBattlesAndPointsOfDefeatedHero(myOpponentHero);
+                increaseLevelOfMyOpponentHero(myOpponentHero);
+            } else if (damageMyHero < damageOpponentHero) {
+                setResultAfterBattle(model, DEFEAT);
+                increasePowerOfHeroAndBattles(myOpponentHero);
+                increasePointsAndGoldOfMyOpponentInWin(myOpponentHero, userOfOpponentHero);
+                increaseLevelOfMyOpponentHero(myOpponentHero);
+                userOfMyHero.setGold(userOfMyHero.getGold() + hero.getLevel());
+                model.setGold(hero.getLevel());
+                setBattlesAndPointsOfDefeatedHero(hero);
+                model.setPointsEarned(hero.getLevel());
+                increaseLevelOfMyHero(hero, model);
+            } else {
+                setResultAfterBattle(model, DRAW);
+                hero.setBattlesWithPlayer(hero.getBattlesWithPlayer() + 1);
+                increaseMyPointsAndGoldOfMyHeroInDraw(hero, model, userOfMyHero);
+                increaseLevelOfMyHero(hero, model);
+                myOpponentHero.setBattlesWithPlayer(myOpponentHero.getBattlesWithPlayer() + 1);
+                increasePointsAndGoldOfMyOpponentInDraw(myOpponentHero, userOfOpponentHero);
+                increaseLevelOfMyOpponentHero(myOpponentHero);
+            }
+            model.setGame("player");
+            userRepository.saveAndFlush(userOfMyHero);
+            userRepository.saveAndFlush(userOfOpponentHero);
         } else {
-            setResultAfterBattle(model, DRAW);
-
-            hero.setBattlesWithPlayer(hero.getBattlesWithPlayer() + 1);
-
-            increaseMyPointsAndGoldOfMyHeroInDraw(hero, model, userOfMyHero);
-
-            increaseLevelOfMyHero(hero, model);
-
-            myOpponentHero.setBattlesWithPlayer(myOpponentHero.getBattlesWithPlayer() + 1);
-
-            increasePointsAndGoldOfMyOpponentInDraw(myOpponentHero, userOfOpponentHero);
-
-            increaseLevelOfMyOpponentHero(myOpponentHero);
-
+            if (damageMyHero > damageOpponentHero) {
+                model.setResult(WIN);
+                hero.setWinsVSFriend(hero.getWinsVSFriend() + 1);
+                setBattleOfMyHeroAndOpponentByBattleFriend(hero, myOpponentHero, hero.getBattlesWithFriend(), myOpponentHero.getBattlesWithFriend());
+            } else if (damageMyHero < damageOpponentHero) {
+                model.setResult(DEFEAT);
+                myOpponentHero.setWinsVSFriend(hero.getWinsVSFriend() + 1);
+                setBattleOfMyHeroAndOpponentByBattleFriend(myOpponentHero, hero, hero.getBattlesWithFriend(), myOpponentHero.getBattlesWithFriend());
+            } else {
+                model.setResult(DRAW);
+                setBattleOfMyHeroAndOpponentByBattleFriend(hero, myOpponentHero, hero.getBattlesWithFriend(), myOpponentHero.getBattlesWithFriend());
+            }
+            model.setGame("friend");
         }
-        userRepository.saveAndFlush(userOfMyHero);
         heroRepository.saveAndFlush(hero);
-        userRepository.saveAndFlush(userOfOpponentHero);
         heroRepository.saveAndFlush(myOpponentHero);
         return model;
     }
@@ -397,6 +399,11 @@ public class HeroServiceImpl implements HeroService {
         heroRepository.saveAndFlush(hero);
         itemRepository.saveAndFlush(item);
         return gold;
+    }
+
+    private void setBattleOfMyHeroAndOpponentByBattleFriend(Hero hero, Hero myOpponentHero, Integer battlesWithFriend, Integer battlesWithFriend2) {
+        hero.setBattlesWithFriend(battlesWithFriend + 1);
+        myOpponentHero.setBattlesWithFriend(battlesWithFriend2 + 1);
     }
 
     private void increasePointsAndGoldOgMyHeroInDrawByBattleWithBot(HeroPictureModel bot, BattleModel model, Hero hero, User user) {

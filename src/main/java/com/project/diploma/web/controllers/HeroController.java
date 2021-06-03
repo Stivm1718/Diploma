@@ -113,6 +113,9 @@ public class HeroController {
         } else if (selectModel.getGame().equals("bot")) {
             HeroPictureModel bot = heroService.selectBot(name);
             session.setAttribute("opponent", bot);
+        } else {
+            HeroPictureModel friend = heroService.selectFriend(selectModel.getFriend());
+            session.setAttribute("opponent", friend);
         }
 
         HeroPictureModel model = heroService.getMyHero(name);
@@ -129,20 +132,22 @@ public class HeroController {
         SelectItemsModel selectModel = (SelectItemsModel) session.getAttribute("selectedItems");
         SelectItemsModel opponentItems = new SelectItemsModel();
 
-        if (selectModel.getGame().equals("player")) {
+        if (selectModel.getGame().equals("player") || selectModel.getGame().equals("friend")) {
             opponentItems = itemService.getTheBestItemsOfOpponent(opponent.getName());
             opponentItems.setName(opponent.getName());
         } else if (selectModel.getGame().equals("bot")) {
             opponentItems = itemService.getItemsOfBot(opponent.getName(), opponent.getLevel());
             opponentItems.setName(opponent.getName());
         }
+
         session.setAttribute("itemsOfOpponent", opponentItems);
 
         BattleModel battleModel = new BattleModel();
-        if (selectModel.getGame().equals("player")){
-            battleModel = heroService.fightWithPlayer(myHero, opponent, myItems, opponentItems);
+        if (selectModel.getGame().equals("player") || selectModel.getGame().equals("friend")){
+            battleModel = heroService.fightWithPlayerOrFriend(myHero, opponent, myItems, opponentItems);
         } else if (selectModel.getGame().equals("bot")) {
             battleModel = heroService.fightWithBot(myHero, opponent, myItems, opponentItems);
+            battleModel.setGame("bot");
         }
         session.setAttribute("battleResult", battleModel);
         model.setViewName("/heroes/fight");

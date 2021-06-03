@@ -153,6 +153,27 @@ public class ItemController {
     @PostMapping("/select")
     public String selectedItems(@ModelAttribute("items") SelectItemsModel model,
                                 HttpSession session) {
+        if ("friend".equals(model.getGame())) {
+            if (model.getFriend() != null) {
+                if (model.getFriend().equals("")) {
+                    session.setAttribute("invalidName", "You must enter the name of the hero.");
+                    return "redirect:/items/select/" + model.getName();
+                }
+                boolean isExist = heroService.isExistHero(model.getFriend());
+                if (!isExist) {
+                    session.setAttribute("invalidName", "The hero does not exist.");
+                    return "redirect:/items/select/" + model.getName();
+                }
+
+                boolean isYoursHero = heroService.isYoursHero(model.getFriend(), model.getName());
+                if (isYoursHero) {
+                    session.setAttribute("invalidName", "The hero is yours.");
+                    return "redirect:/items/select/" + model.getName();
+                }
+                session.setAttribute("invalidName", null);
+            }
+        }
+
         itemService.getNamesPictureItems(model);
         session.setAttribute("selectedItems", model);
         if (model.getGame() != null) {

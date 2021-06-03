@@ -16,6 +16,8 @@ public class SelectItemsModel {
     @NotNull(message = "The type of player cannot be empty")
     private String game;
 
+    private String friend;
+
     private String gauntlets;
 
     private String itemPictureGauntlets;

@@ -11,6 +11,8 @@ public class BattleModel {
 
     private String result;
 
+    private String game;
+
     private Integer stamina;
 
     private Integer defence;
