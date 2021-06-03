@@ -121,6 +121,7 @@ public class ItemController {
                 } else {
                     HeroItemModel heroItemModel = new HeroItemModel(heroName, nameModel.getName());
                     session.setAttribute("heroItemModel", heroItemModel);
+                    session.setAttribute("userOfferHeroModel", null);
                     return "redirect:/users/payment";
                 }
             } else {
@@ -129,6 +130,7 @@ public class ItemController {
                         nameModel.getName(),
                         heroName);
                 session.setAttribute("userOfferHeroModel", model);
+                session.setAttribute("heroItemModel", null);
                 return "redirect:/users/payment";
             }
         }
@@ -179,6 +181,7 @@ public class ItemController {
         if (model.getGame() != null) {
             return "redirect:/heroes/opponent/" + model.getName();
         }
+        session.setAttribute("invalidName", null);
         return "redirect:/items/select/" + model.getName();
     }
 }
