@@ -24,9 +24,17 @@ public class DetailsHeroModel {
 
     private Integer maxPoints;
 
-    private Integer battles;
+    private Integer battlesWithPlayer;
 
-    private Integer wins;
+    private Integer winsVSPlayer;
+
+    private Integer battlesWithBot;
+
+    private Integer winsVSBot;
+
+    private Integer battlesWithFriend;
+
+    private Integer winsVSFriend;
 
     private List<DetailsItemModel> weapons = new ArrayList<>();
 

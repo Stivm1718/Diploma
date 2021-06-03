@@ -27,5 +27,5 @@ public interface HeroService {
 
     HeroPictureModel selectBot(String name);
 
-    BotModel fightWithBot(HeroPictureModel myHero, HeroPictureModel bot, SelectItemsModel myItems, SelectItemsModel itemsOfBot);
+    BattleModel fightWithBot(HeroPictureModel myHero, HeroPictureModel bot, SelectItemsModel myItems, SelectItemsModel itemsOfBot);
 }

@@ -155,10 +155,8 @@ public class ItemController {
                                 HttpSession session) {
         itemService.getNamesPictureItems(model);
         session.setAttribute("selectedItems", model);
-        if (GAME_WITH_PLAYER.equals(model.getGame())) {
-            return "redirect:/heroes/player/" + model.getName();
-        } else if (GAME_WITH_BOT.equals(model.getGame())){
-            return "redirect:/heroes/bot/" + model.getName();
+        if (model.getGame() != null) {
+            return "redirect:/heroes/opponent/" + model.getName();
         }
         return "redirect:/items/select/" + model.getName();
     }

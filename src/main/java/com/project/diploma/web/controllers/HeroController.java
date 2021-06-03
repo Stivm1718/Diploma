@@ -98,60 +98,54 @@ public class HeroController {
         return "redirect:/heroes/details/" + name;
     }
 
-    @GetMapping("/player/{name}")
-    public String selectPlayer(@PathVariable String name, HttpSession session, Principal principal) {
-        String username = principal.getName();
-        HeroPictureModel opponent = heroService.selectOpponent(username, name);
-        session.setAttribute("opponent", opponent);
-        if (opponent == null) {
-            return "heroes/player";
+    @GetMapping("/opponent/{name}")
+    public String selectOpponent(@PathVariable String name,
+                                 HttpSession session,
+                                 Principal principal) {
+        SelectItemsModel selectModel = (SelectItemsModel) session.getAttribute("selectedItems");
+        if (selectModel.getGame().equals("player")) {
+            String username = principal.getName();
+            HeroPictureModel opponent = heroService.selectOpponent(username, name);
+            session.setAttribute("opponent", opponent);
+            if (opponent == null) {
+                return "heroes/opponent";
+            }
+        } else if (selectModel.getGame().equals("bot")) {
+            HeroPictureModel bot = heroService.selectBot(name);
+            session.setAttribute("opponent", bot);
         }
 
-        SelectItemsModel selectItemsModel = itemService.getTheBestItemsOfOpponent(opponent.getName());
-        selectItemsModel.setName(opponent.getName());
-        session.setAttribute("itemsOfOpponent", selectItemsModel);
-
         HeroPictureModel model = heroService.getMyHero(name);
         session.setAttribute("myHero", model);
-        return "heroes/player";
+        return "heroes/opponent";
     }
 
-    @GetMapping("/bot/{name}")
-    public String selectBot(@PathVariable String name, HttpSession session) {
-        HeroPictureModel bot = heroService.selectBot(name);
-        session.setAttribute("bot", bot);
-        SelectItemsModel selectItemsModel = itemService.getItemsOfBot(bot.getName(), bot.getLevel());
-        selectItemsModel.setName(bot.getName());
-        session.setAttribute("itemsOfBot", selectItemsModel);
-
-        HeroPictureModel model = heroService.getMyHero(name);
-        session.setAttribute("myHero", model);
-        return "heroes/bot";
-    }
-
-    @GetMapping("/fight-with-player")
+    @GetMapping("/fight")
     public ModelAndView fightWithPlayer(ModelAndView model, HttpSession session) {
         HeroPictureModel myHero = (HeroPictureModel) session.getAttribute("myHero");
         HeroPictureModel opponent = (HeroPictureModel) session.getAttribute("opponent");
         SelectItemsModel myItems = (SelectItemsModel) session.getAttribute("selectedItems");
-        SelectItemsModel opponentItems = (SelectItemsModel) session.getAttribute("itemsOfOpponent");
 
-        BattleModel battleModel = heroService.fightWithPlayer(myHero, opponent, myItems, opponentItems);
+        SelectItemsModel selectModel = (SelectItemsModel) session.getAttribute("selectedItems");
+        SelectItemsModel opponentItems = new SelectItemsModel();
+
+        if (selectModel.getGame().equals("player")) {
+            opponentItems = itemService.getTheBestItemsOfOpponent(opponent.getName());
+            opponentItems.setName(opponent.getName());
+        } else if (selectModel.getGame().equals("bot")) {
+            opponentItems = itemService.getItemsOfBot(opponent.getName(), opponent.getLevel());
+            opponentItems.setName(opponent.getName());
+        }
+        session.setAttribute("itemsOfOpponent", opponentItems);
+
+        BattleModel battleModel = new BattleModel();
+        if (selectModel.getGame().equals("player")){
+            battleModel = heroService.fightWithPlayer(myHero, opponent, myItems, opponentItems);
+        } else if (selectModel.getGame().equals("bot")) {
+            battleModel = heroService.fightWithBot(myHero, opponent, myItems, opponentItems);
+        }
         session.setAttribute("battleResult", battleModel);
-        model.setViewName("/heroes/fight-with-player");
-        return model;
-    }
-
-    @GetMapping("/fight-with-bot")
-    public ModelAndView fightWithBot(ModelAndView model, HttpSession session) {
-        HeroPictureModel myHero = (HeroPictureModel) session.getAttribute("myHero");
-        HeroPictureModel bot = (HeroPictureModel) session.getAttribute("bot");
-        SelectItemsModel myItems = (SelectItemsModel) session.getAttribute("selectedItems");
-        SelectItemsModel itemsOfBot = (SelectItemsModel) session.getAttribute("itemsOfBot");
-
-        BotModel battleModel = heroService.fightWithBot(myHero, bot, myItems, itemsOfBot);
-        session.setAttribute("battleResult", battleModel);
-        model.setViewName("/heroes/fight-with-bot");
+        model.setViewName("/heroes/fight");
         return model;
     }
 

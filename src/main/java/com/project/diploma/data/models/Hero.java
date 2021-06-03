@@ -46,11 +46,23 @@ public class Hero extends BaseEntity {
     @Column(name = "defence", nullable = false)
     private Integer defence;
 
-    @Column(name = "battles")
-    private Integer battles;
+    @Column(name = "battles_with_player")
+    private Integer battlesWithPlayer;
 
-    @Column(name = "wins")
-    private Integer wins;
+    @Column(name = "wins_vs_player")
+    private Integer winsVSPlayer;
+
+    @Column(name = "battles_with_bot")
+    private Integer battlesWithBot;
+
+    @Column(name = "wins_vs_bot")
+    private Integer winsVSBot;
+
+    @Column(name = "battles_with_friend")
+    private Integer battlesWithFriend;
+
+    @Column(name = "wins_vs_friend")
+    private Integer winsVSFriend;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

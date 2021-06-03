@@ -102,25 +102,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ProfileUserModel getDetailsForUser(String username) {
-        User user = userRepository.findUserByUsername(username);
-
-        ProfileUserModel model = mapper.map(user, ProfileUserModel.class);
-
-        final int[] totalWinsOfHero = {0};
-        final int[] totalBattlesOfHero = {0};
-
-        heroRepository
-                .findAll()
-                .stream()
-                .filter(e -> e.getUser().getUsername().equals(username))
-                .forEach(e -> {
-                    totalWinsOfHero[0] += e.getWins();
-                    totalBattlesOfHero[0] += e.getBattles();
-                });
-
-        model.setTotalWins(totalWinsOfHero[0]);
-        model.setTotalBattles(totalBattlesOfHero[0]);
-        return model;
+//        User user = userRepository.findUserByUsername(username);
+//
+//        ProfileUserModel model = mapper.map(user, ProfileUserModel.class);
+//
+//        final int[] totalWinsOfHero = {0};
+//        final int[] totalBattlesOfHero = {0};
+//
+//        heroRepository
+//                .findAll()
+//                .stream()
+//                .filter(e -> e.getUser().getUsername().equals(username))
+//                .forEach(e -> {
+//                    totalWinsOfHero[0] += e.getWins();
+//                    totalBattlesOfHero[0] += e.getBattles();
+//                });
+//
+//        model.setTotalWins(totalWinsOfHero[0]);
+//        model.setTotalBattles(totalBattlesOfHero[0]);
+        return null;
     }
 
     @Override
