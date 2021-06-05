@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
                     totalBattlesWithPlayer[0] += e.getBattlesWithPlayer();
                     totalWinsVSPlayer[0] += e.getWinsVSPlayer();
                     totalBattlesWithBot[0] += e.getBattlesWithBot();
-                    totalWinsVSBot[0] += e.getBattlesWithBot();
+                    totalWinsVSBot[0] += e.getWinsVSBot();
                     totalBattlesWithFriend[0] += e.getBattlesWithFriend();
                     totalWinsVSFriend[0] += e.getWinsVSFriend();
                 });

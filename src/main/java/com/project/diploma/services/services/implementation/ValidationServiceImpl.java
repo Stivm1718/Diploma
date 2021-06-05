@@ -1,14 +1,8 @@
 package com.project.diploma.services.services.implementation;
 
-import com.project.diploma.data.repositories.HeroRepository;
-import com.project.diploma.data.repositories.ItemRepository;
-import com.project.diploma.data.repositories.OfferRepository;
-import com.project.diploma.data.repositories.UserRepository;
-import com.project.diploma.services.models.CreateHeroServiceModel;
-import com.project.diploma.services.models.CreateItemServiceModel;
-import com.project.diploma.services.models.CreateOfferServiceModel;
+import com.project.diploma.data.repositories.*;
+import com.project.diploma.services.models.*;
 import com.project.diploma.services.services.ValidationService;
-import com.project.diploma.services.models.RegisterUserServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +13,15 @@ public class ValidationServiceImpl implements ValidationService {
     private final HeroRepository heroRepository;
     private final ItemRepository itemRepository;
     private final OfferRepository offerRepository;
+    private final AchievementRepository achievementRepository;
 
     @Autowired
-    public ValidationServiceImpl(UserRepository userRepository, HeroRepository heroRepository, ItemRepository itemRepository, OfferRepository offerRepository) {
+    public ValidationServiceImpl(UserRepository userRepository, HeroRepository heroRepository, ItemRepository itemRepository, OfferRepository offerRepository, AchievementRepository achievementRepository) {
         this.userRepository = userRepository;
         this.heroRepository = heroRepository;
         this.itemRepository = itemRepository;
         this.offerRepository = offerRepository;
+        this.achievementRepository = achievementRepository;
     }
 
     @Override
@@ -48,6 +44,11 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean isValidOfferName(CreateOfferServiceModel model) {
         return offerRepository.existsOfferByName(model.getName());
+    }
+
+    @Override
+    public boolean isValidAchievementName(CreateAchievementServiceModel model) {
+        return achievementRepository.existsByName(model.getName());
     }
 
     private boolean existUsername(String username) {
