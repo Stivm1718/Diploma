@@ -90,8 +90,9 @@
                                 <button class="btn btn-info">Buy</button>
                             </th:block>
                         </form>
-                        <th:block th:unless="${session.text == null}">
-                            <span th:text="${session.text}"></span></th:block>
+                        <th:block th:if="${item.getName().equals(selectItem)}">
+                            <span>You don't have enough gold!</span>
+                        </th:block>
                     </td>
                 </tr>
                 </tbody>

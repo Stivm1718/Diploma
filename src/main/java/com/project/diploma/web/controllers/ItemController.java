@@ -92,6 +92,11 @@ public class ItemController {
             model.addObject("itemsWithMoney", itemsWithMoney);
             List<ViewOffer> offers = offerService.getAllOffers();
             model.addObject("offers", offers);
+            String item = (String) session.getAttribute("item");
+            if (item != null){
+                model.addObject("selectItem", item);
+                session.setAttribute("item", null);
+            }
         }
         model.setViewName("/items/merchant");
         return model;
@@ -111,10 +116,9 @@ public class ItemController {
                 Pay pay = itemService.getWayToPay(nameModel.getName());
                 if (pay.name().equals("GOLD")) {
                     if (!itemService.buyItemWithGold(heroName, nameModel.getName())) {
-                        session.setAttribute("text", "You don't have enough gold!");
+                        session.setAttribute("item", nameModel.getName());
                     } else {
-                        session.setAttribute("text", null);
-                        String username = (String) session.getAttribute("username");
+                            String username = (String) session.getAttribute("username");
                         int gold = userService.takeGoldFromUser(username);
                         session.setAttribute("gold", gold);
                     }

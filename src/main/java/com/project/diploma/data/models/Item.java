@@ -4,6 +4,8 @@ import com.project.diploma.data.models.base.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -51,6 +53,7 @@ public class Item extends BaseEntity {
     private Integer priceInMoney;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "items_heroes",
             joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),

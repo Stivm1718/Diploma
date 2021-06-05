@@ -102,25 +102,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ProfileUserModel getDetailsForUser(String username) {
-//        User user = userRepository.findUserByUsername(username);
-//
-//        ProfileUserModel model = mapper.map(user, ProfileUserModel.class);
-//
-//        final int[] totalWinsOfHero = {0};
-//        final int[] totalBattlesOfHero = {0};
-//
-//        heroRepository
-//                .findAll()
-//                .stream()
-//                .filter(e -> e.getUser().getUsername().equals(username))
-//                .forEach(e -> {
-//                    totalWinsOfHero[0] += e.getWins();
-//                    totalBattlesOfHero[0] += e.getBattles();
-//                });
-//
-//        model.setTotalWins(totalWinsOfHero[0]);
-//        model.setTotalBattles(totalBattlesOfHero[0]);
-        return null;
+        User user = userRepository.findUserByUsername(username);
+
+        ProfileUserModel model = mapper.map(user, ProfileUserModel.class);
+
+        final int[] totalBattlesWithPlayer = {0};
+        final int[] totalWinsVSPlayer = {0};
+        final int[] totalBattlesWithBot = {0};
+        final int[] totalWinsVSBot = {0};
+        final int[] totalBattlesWithFriend = {0};
+        final int[] totalWinsVSFriend = {0};
+
+        heroRepository
+                .findAll()
+                .stream()
+                .filter(e -> e.getUser().getUsername().equals(username))
+                .forEach(e -> {
+                    totalBattlesWithPlayer[0] += e.getBattlesWithPlayer();
+                    totalWinsVSPlayer[0] += e.getWinsVSPlayer();
+                    totalBattlesWithBot[0] += e.getBattlesWithBot();
+                    totalWinsVSBot[0] += e.getBattlesWithBot();
+                    totalBattlesWithFriend[0] += e.getBattlesWithFriend();
+                    totalWinsVSFriend[0] += e.getWinsVSFriend();
+                });
+
+        model.setTotalBattlesWithPlayer(totalBattlesWithPlayer[0]);
+        model.setTotalWinsVSPlayer(totalWinsVSPlayer[0]);
+        model.setTotalBattlesWithBot(totalBattlesWithBot[0]);
+        model.setTotalWinsVSBot(totalWinsVSBot[0]);
+        model.setTotalBattlesWithFriend(totalBattlesWithFriend[0]);
+        model.setTotalWinsVSFriend(totalWinsVSFriend[0]);
+        return model;
     }
 
     @Override

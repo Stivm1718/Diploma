@@ -15,7 +15,15 @@ public class ProfileUserModel {
 
     private Integer gold;
 
-    private Integer totalWins;
+    private Integer totalBattlesWithPlayer;
 
-    private Integer totalBattles;
+    private Integer totalWinsVSPlayer;
+
+    private Integer totalBattlesWithBot;
+
+    private Integer totalWinsVSBot;
+
+    private Integer totalBattlesWithFriend;
+
+    private Integer totalWinsVSFriend;
 }
