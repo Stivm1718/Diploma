@@ -9,4 +9,6 @@ public interface AchievementService {
     boolean createAchievement(CreateAchievementServiceModel serviceModel);
 
     List<DetailsAchievementModel> getAchievements(String username);
+
+    void takePrizeAndAddToUser(String username, String achievementName);
 }

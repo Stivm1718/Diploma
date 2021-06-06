@@ -5,62 +5,53 @@
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main class="container">
-    <h1 class="text-center">Achievements</h1>
-    <th:block th:each="a : ${achievements}">
-        <div class="container">
-            <div class="text-center bg-blur">
-                <h3><span th:text="${a.getName()}"></span></h3>
-                <br>
-                <!--                <th:block th:if="${a.isComplete()}">-->
-                <!--                    <h3>Progress: <span th:text="${a.getTarget()}"></span>:-->
-                <!--                        <span th:text="${a.getTarget()}"></span></h3>-->
-                <!--                </th:block>-->
-                <!--                <th:block th:unless="${a.isComplete()}">-->
-                <!--                    <th:block th:if="${a.getCurrentResult() < a.getTarget()}">-->
-                <!--                        <h3>Progress: <span th:text="${a.getCurrentResult()}"></span>:-->
-                <!--                            <span th:text="${a.getTarget()}"></span></h3>-->
-                <!--                    </th:block>-->
-                <!--                    <th:block th:unless="${a.getCurrentResult() < a.getTarget()}">-->
-                <!--                        <h3>Progress: <span th:text="${a.getTarget()}"></span>:-->
-                <!--                            <span th:text="${a.getTarget()}"></span></h3>-->
-                <!--                    </th:block>-->
-                <!--                </th:block>-->
-                <th:block th:if="${a.getCurrentResult() < a.getTarget()}">
-                    <h3>Progress: <span th:text="${a.getCurrentResult()}"></span>:
-                        <span th:text="${a.getTarget()}"></span></h3>
-                </th:block>
-                <th:block th:unless="${a.getCurrentResult() < a.getTarget()}">
-                    <h3>Progress: <span th:text="${a.getTarget()}"></span>:
-                        <span th:text="${a.getTarget()}"></span></h3>
-                </th:block>
-                <br>
-                <h3>Prize: <span th:text="${a.getPrize()}"></span></h3>
-                <br>
-                <th:block th:if="${a.getCurrentResult() >= a.getTarget()}">
-                    <h3>Completed</h3>
-                    <br>
-                    <th:block th:if="${!a.isComplete()}">
-                        <h3>Button</h3>
+    <h2 class="text-center">Achievements</h2>
+    <table class="table bg-blur">
+        <thead>
+        <tr>
+            <th scope="col" class="font-weight-bold">Name</th>
+            <th scope="col">Target</th>
+            <th scope="col">Prize</th>
+            <th scope="col">Progress</th>
+        </tr>
+        </thead>
+        <th:block th:each="a : ${achievements}">
+            <tbody>
+            <tr>
+                <td><h3><span th:text="${a.getName()}"></span></h3></td>
+                <td>
+                    <th:block th:if="${a.getCurrentResult() < a.getTarget()}">
+                        <h3><span th:text="${a.getCurrentResult()}"></span>:
+                            <span th:text="${a.getTarget()}"></span></h3>
                     </th:block>
-                </th:block>
-                <!--                <th:block th:unless="${a.isComplete()}">-->
-                <!--                    <h3>Completed</h3>-->
-                <!--                    <h3>Button</h3>-->
-                <!--                    <form th:action="@{'/acheievements/details'}"-->
-                <!--                          th:object="${name}"-->
-                <!--                          method="post">-->
-                <!--                        <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"-->
-                <!--                               class="form-control">-->
-                <!--                        <th:block th:if="${item.getLevel() > hero.getLevel()}">-->
-                <!--                            <h5> <span th:text="${item.getLevel()}"></span> ниво</h5>-->
-                <!--                        </th:block>-->
-                <!--                        <th:block th:unless="${item.getLevel() > hero.getLevel()}">-->
-                <!--                            <button class="btn btn-info">Buy</button>-->
-                <!--                        </th:block>-->
-                <!--                </th:block>-->
-            </div>
-        </div>
-    </th:block>
+                    <th:block th:unless="${a.getCurrentResult() < a.getTarget()}">
+                        <h3><span th:text="${a.getTarget()}"></span> :
+                            <span th:text="${a.getTarget()}"></span></h3>
+                    </th:block>
+                </td>
+                <td><h3><span th:text="${a.getPrize()}"></span></h3></td>
+                <td>
+                    <form th:action="@{'/achievements/details'}"
+                          th:object="${name}"
+                          method="post">
+                        <input hidden type="text" th:value="${a.getName()}"
+                               th:attr="name='name'" class="form-control">
+                        <th:block th:if="${a.getCurrentResult() >= a.getTarget()}">
+                            <th:block th:if="${a.isComplete()}">
+                                <h3>Completed</h3>
+                            </th:block>
+                            <th:block th:if="${!a.isComplete()}">
+                                <button class="btn btn-info">Get</button>
+                            </th:block>
+                        </th:block>
+                        <th:block th:unless="${a.getCurrentResult() >= a.getTarget()}">
+                            <h3><span>In progress</span></h3>
+                        </th:block>
+                    </form>
+                </td>
+            </tbody>
+        </th:block>
+    </table>
     <br>
     <div class="col text-center">
         <a class="btn btn-secondary" th:href="@{'/home'}">Back</a>

@@ -4,6 +4,7 @@ import com.project.diploma.services.models.CreateAchievementServiceModel;
 import com.project.diploma.services.services.AchievementService;
 import com.project.diploma.web.models.CreateAchievementModel;
 import com.project.diploma.web.models.DetailsAchievementModel;
+import com.project.diploma.web.models.NameModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,12 +57,27 @@ public class AchievementController {
         }
     }
 
+    @ModelAttribute("name")
+    public NameModel modelName() {
+        return new NameModel();
+    }
+
     @GetMapping("/details")
-    public ModelAndView details(ModelAndView model, HttpSession session){
+    public ModelAndView details(ModelAndView model,
+                                HttpSession session,
+                                @ModelAttribute("name") NameModel nameModel){
         String username = (String) session.getAttribute("username");
         List<DetailsAchievementModel> achievements = achievementService.getAchievements(username);
         model.addObject("achievements", achievements);
         model.setViewName("/achievements/details");
         return model;
+    }
+
+    @PostMapping("/details")
+    public String detailsConfirm(HttpSession session,
+                                 @Valid @ModelAttribute("name") NameModel nameModel){
+        String username = (String) session.getAttribute("username");
+        achievementService.takePrizeAndAddToUser(username, nameModel.getName());
+        return "redirect:/achievements/details";
     }
 }

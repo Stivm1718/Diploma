@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AchievementServiceImpl implements AchievementService {
@@ -110,7 +111,46 @@ public class AchievementServiceImpl implements AchievementService {
                 models.add(model);
             }
         }
-        return models;
+        return models
+                .stream()
+                .sorted((a, b) -> {
+//                    if (a.isComplete() == !b.isComplete()) {
+//                        return -1;
+//                    } else if (!a.isComplete() == b.isComplete()) {
+//                        return 1;
+//                    } else {
+//                        int aTarget = a.getTarget() - a.getCurrentResult();
+//                        int bTarget = b.getTarget() - b.getCurrentResult();
+//                        return Integer.compare(bTarget, aTarget);
+//                    }
+                    if (a.isComplete()) {
+                        if (a.isComplete() && b.isComplete()) {
+                            int aTarget = a.getTarget() - a.getCurrentResult();
+                            int bTarget = b.getTarget() - b.getCurrentResult();
+                            return Integer.compare(bTarget, aTarget);
+                        } else {
+                            return 1;
+                        }
+                    } else if (b.isComplete()) {
+                        return -1;
+                    } else {
+                        int aTarget = a.getTarget() - a.getCurrentResult();
+                        int bTarget = b.getTarget() - b.getCurrentResult();
+                        return Integer.compare(aTarget, bTarget);
+                    }
+                }).collect(Collectors.toList());
+    }
+
+    @Override
+    public void takePrizeAndAddToUser(String username, String achievementName) {
+        Achievement achievement = achievementRepository.getAchievementByName(achievementName);
+        User user = userRepository.findUserByUsername(username);
+
+        user.setGold(user.getGold() + achievement.getPrize());
+        user.getAchievements().add(achievement);
+        achievement.getUsers().add(user);
+        userRepository.saveAndFlush(user);
+        achievementRepository.saveAndFlush(achievement);
     }
 
     private int getCurrentResult(String[] name, int currentResult,
@@ -126,11 +166,14 @@ public class AchievementServiceImpl implements AchievementService {
     private int getCurrentResultIfLengthIsFive(String[] name, int currentResult,
                                                Integer bot, Integer friend, Integer player) {
         switch (name[4]) {
-            case "bot": currentResult = bot;
+            case "bot":
+                currentResult = bot;
                 break;
-            case "friend": currentResult = friend;
+            case "friend":
+                currentResult = friend;
                 break;
-            case "player": currentResult = player;
+            case "player":
+                currentResult = player;
                 break;
         }
         return currentResult;

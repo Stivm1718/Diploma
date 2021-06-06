@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AchievementRepository extends JpaRepository<Achievement, Long> {
 
     boolean existsByName(String name);
+
+    Achievement getAchievementByName(String name);
 }
