@@ -183,24 +183,12 @@ public class ItemServiceImpl implements ItemService {
         Random random = new Random();
         SelectItemsModel model = new SelectItemsModel();
 
-//        List<Item> weapons = items
-//                .stream()
-//                .filter(i -> i.getSlot().equals(Slot.WEAPON))
-//                .collect(Collectors.toList());
-//        weapons.add(null);
-//        Item weapon = weapons.get(random.nextInt(weapons.size()));
         Item weapon = getRandomItem(items, random, Slot.WEAPON);
         if (weapon != null) {
             model.setWeapon(weapon.getName());
             model.setItemPictureWeapon(weapon.getItemPicture());
         }
 
-//        List<Item> helmets = items
-//                .stream()
-//                .filter(i -> i.getSlot().equals(Slot.HELMET))
-//                .collect(Collectors.toList());
-//        helmets.add(null);
-//        Item helmet = helmets.get(random.nextInt(weapons.size()));
         Item helmet = getRandomItem(items, random, Slot.HELMET);
         if (helmet != null) {
             model.setHelmet(helmet.getName());
@@ -226,6 +214,28 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return model;
+    }
+
+    @Override
+    public void deleteItem(String name) {
+        String itemName = name.replace("delete", "");
+        Item item = itemRepository.getItemByName(itemName);
+        List<Hero> heroes = item.getHeroes();
+        Hero hero;
+
+        for(int i = heroes.size() - 1; i >=0; i--){
+            hero = heroes.get(i);
+            hero.getItems().remove(item);
+            item.getHeroes().remove(hero);
+            heroRepository.saveAndFlush(hero);
+        }
+
+//        for(Hero hero : heroes){
+//            hero.getItems().remove(item);
+//            item.getHeroes().remove(hero);
+//            heroRepository.saveAndFlush(hero);
+//        }
+        itemRepository.delete(item);
     }
 
     private Item getRandomItem(List<Item> items, Random random, Slot slot) {

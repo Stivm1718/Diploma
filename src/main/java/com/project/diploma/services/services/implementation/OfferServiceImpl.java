@@ -45,4 +45,15 @@ public class OfferServiceImpl implements OfferService {
                 .map(o -> mapper.map(o, ViewOffer.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteOffer(String name) {
+        Offer offer = offerRepository.getOfferByName(name);
+        offerRepository.delete(offer);
+    }
+
+    @Override
+    public boolean existOffer(String name) {
+        return offerRepository.existsOfferByName(name);
+    }
 }

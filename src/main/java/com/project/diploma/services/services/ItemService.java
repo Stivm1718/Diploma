@@ -34,4 +34,6 @@ public interface ItemService {
     void getNamesPictureItems(SelectItemsModel model);
 
     SelectItemsModel getItemsOfBot(String name, Integer level);
+
+    void deleteItem(String name);
 }

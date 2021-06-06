@@ -90,14 +90,14 @@ public class ItemController {
             model.addObject("itemsWithGold", itemsWithGold);
             List<ViewItemModelWithTypePay> itemsWithMoney = itemService.takeItemWithMoneyForPay(name);
             model.addObject("itemsWithMoney", itemsWithMoney);
-            List<ViewOffer> offers = offerService.getAllOffers();
-            model.addObject("offers", offers);
             String item = (String) session.getAttribute("item");
-            if (item != null){
+            if (item != null) {
                 model.addObject("selectItem", item);
                 session.setAttribute("item", null);
             }
         }
+        List<ViewOffer> offers = offerService.getAllOffers();
+        model.addObject("offers", offers);
         model.setViewName("/items/merchant");
         return model;
     }
@@ -109,7 +109,13 @@ public class ItemController {
         LoggedUserFilterModel roles = (LoggedUserFilterModel) session.getAttribute("authorities");
         int countRoles = roles.getAuthorities().size();
         if (countRoles == 2) {
-            itemService.addHeroItemForAdmin(heroName, nameModel.getName());
+            if (itemService.existItem(nameModel.getName())){
+                itemService.addHeroItemForAdmin(heroName, nameModel.getName());
+            } else if (offerService.existOffer(nameModel.getName())){
+                offerService.deleteOffer(nameModel.getName());
+            } else {
+                itemService.deleteItem(nameModel.getName());
+            }
         } else {
             session.setAttribute("myHeroName", heroName);
             if (itemService.existItem(nameModel.getName())) {
@@ -118,7 +124,7 @@ public class ItemController {
                     if (!itemService.buyItemWithGold(heroName, nameModel.getName())) {
                         session.setAttribute("item", nameModel.getName());
                     } else {
-                            String username = (String) session.getAttribute("username");
+                        String username = (String) session.getAttribute("username");
                         int gold = userService.takeGoldFromUser(username);
                         session.setAttribute("gold", gold);
                     }

@@ -9,4 +9,8 @@ public interface OfferService {
     boolean createOffer(CreateOfferServiceModel serviceModel) throws Exception;
 
     List<ViewOffer> getAllOffers();
+
+    void deleteOffer(String name);
+
+    boolean existOffer(String name);
 }
