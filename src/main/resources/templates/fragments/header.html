@@ -27,6 +27,14 @@
                 <th:block th:unless="${session.username == null}">
                     <th:block th:if="${session.authorities.getAuthorities().size() == 2}">
                         <li class="nav-item mr-2">
+                            <h5 class="nav-link text-white active h5">Hero</h5>
+                            <ul class="dropdown">
+                                <li><a class="nav-link text-white active h5" href="/heroes/create">Create</a></li>
+                                <li><a class="nav-link text-white active h5" href="/heroes/ranking">Rankasdasdasdsing</a></li>
+                                <li><a class="nav-link text-white active h5" href="/heroes/select">Fight</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
                         </li>
                         <li class="nav-item mr-2">
