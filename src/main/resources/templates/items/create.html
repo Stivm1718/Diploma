@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row flex-md-row" id="weapon" style="visibility:hidden">
+                <div class="row flex-md-row" id="weapon" style="visibility:hidden; display: none">
                     <div class="col col-sm-2"></div>
                     <div class="list-inline">
                         <div class="col col-md-6 ml-3">
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row flex-md-row" id="helmet" style="visibility:hidden">
+                <div class="row flex-md-row" id="helmet" style="visibility:hidden; display: none">
                     <div class="col col-sm-2"></div>
                     <div class="list-inline">
                         <div class="col col-md-6 ml-3">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row flex-md-row" id="pauldron" style="visibility:hidden">
+                <div class="row flex-md-row" id="pauldron" style="visibility:hidden; display: none">
                     <div class="col col-sm-2"></div>
                     <div class="list-inline">
                         <div class="col col-md-6 ml-3">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row flex-md-row" id="pad" style="visibility:hidden">
+                <div class="row flex-md-row" id="pad" style="visibility:hidden; display: none">
                     <div class="col col-sm-2"></div>
                     <div class="list-inline">
                         <div class="col col-md-6 ml-3">
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row flex-md-row" id="gauntlet" style="visibility:hidden">
+                <div class="row flex-md-row" id="gauntlet" style="visibility:hidden; display: none">
                     <div class="col col-sm-2"></div>
                     <div class="list-inline">
                         <div class="col col-md-6 ml-3">
@@ -250,7 +250,7 @@
                     <div class="col col-md-3">
                         <label for="attack" class="text-white">Attack</label>
                         <input type="number" id="attack" th:field="*{attack}" class="w-25" name="attack"
-                               placeholder="1" min="1" >
+                               placeholder="1" min="1">
                         <ul th:if="${#fields.errors('attack')}">
                             <li th:each="error : ${#fields.errors('attack')}" th:text="${error}"></li>
                         </ul>
@@ -277,40 +277,45 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col col-md-6"></div>
-                    <h5 class="text-white">Paying with gold</h5>
-                    <label for="payWithGold">
-                        <input type="radio" onclick="payCheck();" id="payWithGold" class="ml-lg-5" value="GOLD"
-                               name="pay">
-                    </label>
-                </div>
-                <div>
-                    <h5 class="text-white">Paying with money</h5>
-                    <label for="payWithMoney">
-                        <input type="radio" onclick="payCheck();" id="payWithMoney" class="ml-lg-5" value="MONEY"
-                               name="pay">
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div id="Gold" style="visibility:hidden">
-                    <div class="text-center">
-                        <label for="priceInGold" class="text-white">Price in gold</label>
-                        <input type="number" th:field="*{priceInGold}" id="priceInGold" class="w-25"
-                               name="priceInGold" placeholder="1" min="1">
-                        <ul th:if="${#fields.errors('priceInGold')}">
-                            <li th:each="error : ${#fields.errors('priceInGold')}" th:text="${error}"></li>
-                        </ul>
+                    <div class="col-md-6">
+                        <h5 class="text-white">Paying with gold</h5>
+                        <label for="payWithGold">
+                            <input type="radio" onclick="payCheck();" id="payWithGold" class="ml-lg-5" value="GOLD"
+                                   name="pay">
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-white">Paying with money</h5>
+                        <label for="payWithMoney">
+                            <input type="radio" onclick="payCheck();" id="payWithMoney" class="ml-lg-5" value="MONEY"
+                                   name="pay">
+                        </label>
                     </div>
                 </div>
-                <div id="Money" style="visibility:hidden">
-                    <div class="text-center">
-                        <label for="priceInMoney" class="text-white">Price in money</label>
-                        <input type="number" th:field="*{priceInMoney}" id="priceInMoney" class="w-25"
-                               name="priceInMoney" placeholder="1" min="1">
-                        <ul th:if="${#fields.errors('priceInMoney')}">
-                            <li th:each="error : ${#fields.errors('priceInMoney')}" th:text="${error}"></li>
-                        </ul>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="Gold" style="visibility:hidden; display: none">
+                            <div class="text-right">
+                                <label for="priceInGold" class="text-white">Price in gold</label>
+                                <input type="number" th:field="*{priceInGold}" id="priceInGold" class="w-25"
+                                       name="priceInGold" placeholder="1" min="1">
+                                <ul th:if="${#fields.errors('priceInGold')}">
+                                    <li th:each="error : ${#fields.errors('priceInGold')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="Money" style="visibility:hidden; display: none;">
+                            <div class="text-right">
+                                <label for="priceInMoney" class="text-white">Price in money</label>
+                                <input type="number" th:field="*{priceInMoney}" id="priceInMoney" class="w-25"
+                                       name="priceInMoney" placeholder="1" min="1">
+                                <ul th:if="${#fields.errors('priceInMoney')}">
+                                    <li th:each="error : ${#fields.errors('priceInMoney')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
