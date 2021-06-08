@@ -7,7 +7,7 @@
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container">
-        <h1 class="text-center text-white">Create achievement</h1>
+        <h1 class="text-center">Create Achievement</h1>
         <hr class="hr-3"/>
         <form class="mx-auto w-100 bg-blur" action="/achievements/create" method="post" th:object="${achievement}">
             <div class="form-group">
@@ -16,7 +16,7 @@
                 </div>
                 <input type="text" th:field="*{name}" class="form-control mx-auto w-25" id="name" name="name"/>
                 <ul th:if="${#fields.errors('name')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">
@@ -26,7 +26,7 @@
                 <input type="number" th:field="*{target}" id="target" class="w-25" name="target"
                        placeholder="1" min="1">
                 <ul th:if="${#fields.errors('target')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('target')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('target')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
                 <input type="number" th:field="*{prize}" id="prize" class="w-25" name="prize"
                        placeholder="1" min="1">
                 <ul th:if="${#fields.errors('prize')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('prize')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('prize')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="col text-center">

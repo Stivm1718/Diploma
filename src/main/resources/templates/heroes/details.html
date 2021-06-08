@@ -17,19 +17,33 @@
                          height="300">
                 </div>
                 <br>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h3 class="align-middle">Level:
                         <span th:text="${details.getLevel()}"></span></h3>
                 </div>
+                <div class="col-md-6">
+                    <h3 class="align-middle">Points to next level:
+                        <span th:text="${details.getCurrentPoints()}"></span> /
+                        <span th:text="${details.getMaxPoints()}"></span></h3>
+                </div>
+                <br>
                 <div class="col-md-4">
-                    <h3 class="align-middle">Wins/Battles:
-                        <span th:text="${details.getBattlesWithPlayer}"></span>/
-                        <span th:text="${details.getWinsVSPlayer()}"></span></h3>
+                    <h3 class="align-middle">Wins/Battles VS Player:
+                        <br>
+                        <span th:text="${details.getWinsVSPlayer()}"></span> /
+                        <span th:text="${details.getBattlesWithPlayer()}"></span></h3>
                 </div>
                 <div class="col-md-4">
-                    <h3 class="align-middle">Points to next level:
-                        <span th:text="${details.getCurrentPoints()}"></span>/
-                        <span th:text="${details.getMaxPoints()}"></span></h3>
+                    <h3 class="align-middle">Wins/Battles VS Bot:
+                        <br>
+                        <span th:text="${details.getWinsVSBot()}"></span> /
+                        <span th:text="${details.getBattlesWithBot()}"></span></h3>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="align-middle">Wins/Battles VS Friend:
+                        <br>
+                        <span th:text="${details.getWinsVSFriend()}"></span> /
+                        <span th:text="${details.getBattlesWithFriend()}"></span></h3>
                 </div>
             </div>
             <br>

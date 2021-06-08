@@ -16,73 +16,82 @@
             </th:block>
             <th:block th:if="${session.battleResult.getResult().equals('draw')}">
                 <div>
-                    <h3 class="align-middle">Ти направи равен!</h3>
+                    <h3 class="align-middle">The battle ended in a draw!</h3>
                 </div>
             </th:block>
-            <th:block th:unless="${session.battleResult.getResult().equals('draw')}">
+            <th:block th:if="${session.battleResult.getResult().equals('win')}">
                 <div>
-                    <h3 class="align-middle">Ти <span th:text="${session.battleResult.getResult()}"></span>!</h3>
+                    <h3 class="align-middle">You won the battle!</h3>
                 </div>
             </th:block>
+            <th:block th:if="${session.battleResult.getResult().equals('defeat')}">
+                <div>
+                    <h3 class="align-middle">You fell from the battle!</h3>
+                </div>
+            </th:block>
+            <br>
             <th:block th:unless="${session.battleResult.getGame().equals('friend')}">
                 <div>
-                    <h3 class="align-middle">Ти получаваш</h3>
+                    <h3 class="align-middle">Prize</h3>
+                    <br>
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="align-middle">
-                                <span th:text="${session.battleResult.getPointsEarned()}"></span> точки</h3>
+                                <span th:text="${session.battleResult.getPointsEarned()}"></span> points</h3>
                         </div>
                         <div class="col-md-6">
                             <h3 class="align-middle">
-                                <span th:text="${session.battleResult.getGold()}"></span> злато</h3>
+                                <span th:text="${session.battleResult.getGold()}"></span> gold</h3>
                         </div>
                     </div>
                 </div>
             </th:block>
+            <br>
             <th:block th:if="${(session.battleResult.getResult().equals('win')) &&
             ((session.selectedItems.getGame().equals('player')))}">
                 <div>
-                    <h3 class="align-middle">Освен това ти получаваш</h3>
+                    <h3 class="align-middle">Аdditional Prize</h3>
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="align-middle">
                                 <span th:text="${session.battleResult.getAttack()}"></span>
-                                точки атака на героя</h3>
+                                attack points for the hero</h3>
                         </div>
                         <div class="col-md-6">
                             <h3 class="align-middle">
                                 <span th:text="${session.battleResult.getDefence()}"></span>
-                                точки защита на героя</h3>
+                                defence points for the hero</h3>
                         </div>
                     </div>
                 </div>
+                <br>
                 <div>
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="align-middle">
                                 <span th:text="${session.battleResult.getStamina()}"></span>
-                                точки издръжливост на героя</h3>
+                                stamina points for the hero</h3>
                         </div>
                         <div class="col-md-6">
                             <h3 class="align-middle">
                                 <span th:text="${session.battleResult.getStrength()}"></span>
-                                точки сила на героя</h3>
+                                strength points for the hero</h3>
                         </div>
                     </div>
                 </div>
             </th:block>
-            <th:block th:if="${session.battleResult.getResult().equals('win')}">
-                <h3>Ако се жаден за още по битки избери си
-                    <a href="/heroes/select">герой</a>, а ако искаш почивка отиди в
-                    <a href="/home">home</a>.
-                </h3>
-            </th:block>
-            <th:block th:unless="${session.battleResult.getResult().equals('win')}">
-                <h3>Ако не си доволен от резултата натисни
-                    <a href="/heroes/select">тук</a> и продължавай, а ако искаш почивка отиди в
-                    <a href="/home">home</a>.
-                </h3>
-            </th:block>
+<!--            <th:block th:if="${session.battleResult.getResult().equals('win')}">-->
+<!--                <h3>Ако се жаден за още по битки избери си-->
+<!--                    <a href="/heroes/select">герой</a>, а ако искаш почивка отиди в-->
+<!--                    <a href="/home">home</a>.-->
+<!--                </h3>-->
+<!--            </th:block>-->
+<!--            <th:block th:unless="${session.battleResult.getResult().equals('win')}">-->
+<!--                <h3>Ако не си доволен от резултата натисни-->
+<!--                    <a href="/heroes/select">тук</a> и продължавай, а ако искаш почивка отиди в-->
+<!--                    <a href="/home">home</a>.-->
+<!--                </h3>-->
+<!--            </th:block>-->
         </div>
     </div>
     <br>
@@ -229,6 +238,11 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <br>
+    <div class="col text-center">
+        <a class="btn btn-success" href="/home">Home</a>
+        <a class="btn btn-danger" href="/heroes/select">New Battle</a>
     </div>
     <br>
     <br>

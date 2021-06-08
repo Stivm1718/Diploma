@@ -29,25 +29,26 @@
                         <li class="nav-item mr-2">
                             <h5 class="nav-link text-white active h5">Hero</h5>
                             <ul class="dropdown">
-                                <li><a class="nav-link text-white active h5" href="/heroes/create">Create</a></li>
-                                <li><a class="nav-link text-white active h5" href="/heroes/ranking">Rankasdasdasdsing</a></li>
+                                <li><a class="nav-link text-white active h5" href="/heroes/create">Create Hero</a></li>
+                                <li><a class="nav-link text-white active h5" href="/heroes/ranking">Ranking</a></li>
                                 <li><a class="nav-link text-white active h5" href="/heroes/select">Fight</a></li>
                             </ul>
-                        </li>
-                        <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
                         </li>
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/items/create">Create Item</a>
                         </li>
                         <li class="nav-item mr-2">
+                            <h5 class="nav-link text-white active h5">Achievement</h5>
+                            <ul class="dropdown">
+                                <li><a class="nav-link text-white active h5" href="/achievements/create">Create Achievement</a></li>
+                                <li><a class="nav-link text-white active h5" href="/achievements/details">Details</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/offers/create">Create Offer</a>
                         </li>
                         <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/achievements/create">Create Achievement</a>
-                        </li>
-                        <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/heroes/ranking">Ranking</a>
+                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
                         </li>
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/logout">Logout</a>
@@ -55,10 +56,18 @@
                     </th:block>
                     <th:block th:unless="${session.authorities.getAuthorities().size() == 2}">
                         <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
+                            <h5 class="nav-link text-white active h5">Hero</h5>
+                            <ul class="dropdown">
+                                <li><a class="nav-link text-white active h5" href="/heroes/create">Create Hero</a></li>
+                                <li><a class="nav-link text-white active h5" href="/heroes/ranking">Ranking</a></li>
+                                <li><a class="nav-link text-white active h5" href="/heroes/select">Fight</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/heroes/ranking">Ranking</a>
+                            <a class="nav-link text-white active h5" href="/achievements/details">Achievement</a>
+                        </li>
+                        <li class="nav-item mr-2">
+                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
                         </li>
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/logout">Logout</a>

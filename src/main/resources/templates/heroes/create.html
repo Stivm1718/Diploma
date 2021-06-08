@@ -6,7 +6,7 @@
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container">
-        <h1 class="text-center">Create hero</h1>
+        <h1 class="text-center">Create Hero</h1>
         <form class="mx-auto w-100 bg-blur" action="/heroes/create" method="post" th:object="${hero}">
             <div class="form-group">
                 <div class="label-holder textCol d-flex justify-content-center">
@@ -14,7 +14,7 @@
                 </div>
                 <input type="text" th:field="*{name}" class="form-control mx-auto w-25" id="name" name="name"/>
                 <ul th:if="${#fields.errors('name')}">
-                    <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
+                    <li class="text-center" th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">

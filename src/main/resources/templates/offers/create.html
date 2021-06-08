@@ -16,7 +16,7 @@
                 </div>
                 <input type="text" th:field="*{name}" class="form-control mx-auto w-25" id="name" name="name"/>
                 <ul th:if="${#fields.errors('name')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">
@@ -26,7 +26,7 @@
                 <input type="number" th:field="*{gold}" id="gold" class="w-25" name="gold"
                        placeholder="1" min="1">
                 <ul th:if="${#fields.errors('gold')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('gold')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('gold')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
                 <input type="number" th:field="*{price}" id="price" class="w-25" name="price"
                        placeholder="1" min="1">
                 <ul th:if="${#fields.errors('price')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="col text-center">

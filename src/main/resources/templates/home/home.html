@@ -15,18 +15,16 @@
         <hr class="my-3"/>
         <th:block th:if="${randomHero == null}">
             <div class="container">
-                <h3> Ако искаш да станеш най-силния играч с един или армия от герой, влез в
-                    <a href="/heroes/create">Create Hero</a> и сбъдни мечтите си.
+                <h3 class="text-center"> If you want to become the strongest player with one or an army of heroes,
+                    then you are in the right place, but first go in 'Create Hero'
+                    and create a hero, and then make your dreams come true.
                 </h3>
             </div>
         </th:block>
         <th:block th:unless="${randomHero == null}">
             <div class="container">
-                <h3> Ако искаш да станеш най-силния играч с един или армия от герой, влез в
-                    <a href="/heroes/create">Create Hero</a> и сбъдни мечтите си. Koleto
-                </h3>
-                <h3>Готов ли се вече за битка? Влез в <a href="/heroes/select">Select hero</a>,
-                    избери си герой и да започваме.
+                <h3 class="text-center"> Are you ready to fight the strongest wars of the Middle Ages? If the answer is yes,
+                    then go in 'Fight' and measure your strength with them.
                 </h3>
             </div>
             <br>
@@ -41,10 +39,6 @@
                 </div>
             </div>
         </th:block>
-        <div class="text-center mb-3">
-            <h3 class="text-white"> Вземи постиженията си на <a href="/achievements/details">Achievement</a>.
-            </h3>
-        </div>
     </th:block>
     <br>
     <br>
