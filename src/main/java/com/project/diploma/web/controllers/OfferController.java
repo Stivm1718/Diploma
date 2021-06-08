@@ -43,7 +43,6 @@ public class OfferController {
         if (result.hasErrors()){
             return "offers/create";
         }
-        //todo Когато създам оферта и при redirect да не ми запазва данните
         CreateOfferServiceModel serviceModel = mapper.map(model, CreateOfferServiceModel.class);
 
         if (offerService.createOffer(serviceModel)){

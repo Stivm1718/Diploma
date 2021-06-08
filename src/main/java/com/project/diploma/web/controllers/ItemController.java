@@ -35,7 +35,8 @@ public class ItemController {
     public ItemController(ModelMapper mapper,
                           ItemService itemService,
                           UserService userService,
-                          OfferService offerService, HeroService heroService) {
+                          OfferService offerService,
+                          HeroService heroService) {
         this.mapper = mapper;
         this.itemService = itemService;
         this.userService = userService;
@@ -59,7 +60,6 @@ public class ItemController {
         if (result.hasErrors()) {
             return "items/create";
         }
-        //todo: Да redirect-ва към същата страница
         CreateItemServiceModel item = this.mapper.map(model, CreateItemServiceModel.class);
         if (itemService.create(item)) {
             return "redirect:/home";

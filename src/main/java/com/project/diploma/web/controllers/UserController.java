@@ -116,28 +116,23 @@ public class UserController {
         if (result.hasErrors()) {
             return "users/payment";
         }
-        //todo Да redirect-ва към същата страница
 
         HeroItemModel heroItemModel = (HeroItemModel) session.getAttribute("heroItemModel");
         if (heroItemModel != null) {
             itemService.addHeroItemForAdmin(heroItemModel.getNameHero(), heroItemModel.getNameItem());
-            return "redirect:/users/success-added-item";
+            session.setAttribute("offer", "item");
         } else {
             UserOfferHeroModel userOfferModel =
                     (UserOfferHeroModel) session.getAttribute("userOfferHeroModel");
             int gold = userService.addGoldToUser(userOfferModel.getUsername(), userOfferModel.getOfferName());
             session.setAttribute("gold", gold);
-            return "redirect:/users/success-bought-gold";
+            session.setAttribute("offer", "offer");
         }
+        return "redirect:/users/purchase";
     }
 
-    @GetMapping("/success-added-item")
-    public String successAddedItem() {
-        return "users/success-added-item";
-    }
-
-    @GetMapping("/success-bought-gold")
-    public String successBoughtGold() {
-        return "users/success-bought-gold";
+    @GetMapping("/purchase")
+    public String purchase() {
+        return "users/purchase";
     }
 }

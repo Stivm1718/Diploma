@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <div class="container">
+        <br>
+        <th:block th:if="${session.offer.equals('item')}">
+            <h1 class="text-center">Congratulations [[${session.username}]], you have
+                successfully bought '[[${session.heroItemModel.getNameItem()}]]' item.</h1>
+        </th:block>
+        <th:block th:unless="${session.offer.equals('item')}">
+            <h1 class="text-center">Congratulations [[${session.username}]], you have
+                successfully bought the '[[${session.userOfferHeroModel.getOfferName()}]]' offer.</h1>
+        </th:block>
+        <hr class="my-3"/>
+        <br>
+        <br>
+        <th:block th:if="${session.offer.equals('item')}">
+            <h3 class="text-center">If you want to buy more items for your hero, click "Go to merchant".
+                If you have already bought the best, then press "Go to battle" and let the fighting
+                spirit be with you.
+            </h3>
+        </th:block>
+        <th:block th:unless="${session.offer.equals('item')}">
+            <h3 class="text-center">If you want to buy more offers or items for your hero,
+                click "Go to merchant". If you have already bought the best, then press "Go to Battle"
+                and let the fighting spirit be with you.
+            </h3>
+        </th:block>
+    </div>
+    <br>
+    <div class="col text-center">
+        <th:block th:if="${session.offer.equals('item')}">
+            <a class="btn btn-success" th:href="@{'/items/merchant/' + ${session.heroItemModel.getNameHero()}}">
+                Go to merchant</a>
+        </th:block>
+        <th:block th:unless="${session.offer.equals('item')}">
+            <a class="btn btn-success" th:href="@{'/items/merchant/' + ${session.userOfferHeroModel.getHeroName()}}">
+                Go to merchant</a>
+        </th:block>
+        <a class="btn btn-danger" href="/heroes/select">Go to battle</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

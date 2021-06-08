@@ -34,6 +34,4 @@ public interface HeroService {
     boolean isYoursHero(String friend, String heroName);
 
     HeroPictureModel selectFriend(String friend);
-
-    //BattleModel fightWithFriend(HeroPictureModel myHero, HeroPictureModel opponent, SelectItemsModel myItems, SelectItemsModel opponentItems);
 }

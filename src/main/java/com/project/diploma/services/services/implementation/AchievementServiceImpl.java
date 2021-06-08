@@ -114,15 +114,6 @@ public class AchievementServiceImpl implements AchievementService {
         return models
                 .stream()
                 .sorted((a, b) -> {
-//                    if (a.isComplete() == !b.isComplete()) {
-//                        return -1;
-//                    } else if (!a.isComplete() == b.isComplete()) {
-//                        return 1;
-//                    } else {
-//                        int aTarget = a.getTarget() - a.getCurrentResult();
-//                        int bTarget = b.getTarget() - b.getCurrentResult();
-//                        return Integer.compare(bTarget, aTarget);
-//                    }
                     if (a.isComplete()) {
                         if (a.isComplete() && b.isComplete()) {
                             int aTarget = a.getTarget() - a.getCurrentResult();

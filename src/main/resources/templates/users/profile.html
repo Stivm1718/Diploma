@@ -10,31 +10,29 @@
             <div class="bg-blur">
                 <h1 class="text-white">Profile</h1>
                 <br>
-                <h2>Username</h2>
-                <h3><span th:text="${profile.getUsername()}"></span></h3>
+                <h2>Username: <span th:text="${profile.getUsername()}"></span></h2>
                 <br>
-                <h2>Email</h2>
-                <h3><span th:text="${profile.getEmail()}"></span></h3>
+                <h2>Email: <span th:text="${profile.getEmail()}"></span></h2>
                 <br>
-                <h3>Gold: <span th:text="${profile.getGold()}"></span></h3>
+                <h2>Gold: <span th:text="${profile.getGold()}"></span></h2>
                 <br>
-                <h3 class="align-middle">Wins/Battles with player:
+                <h2 class="align-middle">Wins/Battles with player:
                     <span th:text="${profile.getTotalWinsVSPlayer()}"></span>/<span
                             th:text="${profile.getTotalBattlesWithPlayer()}">
                     </span>
-                </h3>
+                </h2>
                 <br>
-                <h3 class="align-middle">Wins/Battles with bot:
+                <h2 class="align-middle">Wins/Battles with bot:
                     <span th:text="${profile.getTotalWinsVSBot()}"></span>/<span
                             th:text="${profile.getTotalBattlesWithBot()}">
                     </span>
-                </h3>
+                </h2>
                 <br>
-                <h3 class="align-middle">Wins/Battles with friend:
+                <h2 class="align-middle">Wins/Battles with friend:
                     <span th:text="${profile.getTotalWinsVSFriend()}"></span>/<span
                             th:text="${profile.getTotalBattlesWithFriend()}">
                     </span>
-                </h3>
+                </h2>
                 <br>
                 <br>
                 <a class="btn btn-secondary" th:href="@{'/home'}">Back</a>

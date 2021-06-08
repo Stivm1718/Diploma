@@ -8,6 +8,7 @@
     <h1 class="text-center">Merchant</h1>
     <hr class="hr-3"/>
     <th:block th:if="${session.authorities.getAuthorities().size() == 2}">
+        <h2 class="text-center">Buy items</h2>
         <table class="table bg-blur">
             <thead>
             <tr>
@@ -159,7 +160,12 @@
             </th:block>
         </table>
     </th:block>
-    <h2 class="text-center text-white">Buy offer with money</h2>
+    <th:block th:if="${session.authorities.getAuthorities().size() == 2}">
+        <h2 class="text-center text-white">Buy offer</h2>
+    </th:block>
+    <th:block th:unless="${session.authorities.getAuthorities().size() == 2}">
+        <h2 class="text-center text-white">Buy offer with money</h2>
+    </th:block>
     <table class="table bg-blur">
         <thead>
         <tr>
@@ -180,7 +186,6 @@
                     <span th:text="${offer.getPrice()}"></span> лв.
                 </h5></td>
                 <td>
-
                     <form th:action="@{'/items/merchant/' + ${hero.getName()}}"
                           th:object="${name}"
                           method="post">

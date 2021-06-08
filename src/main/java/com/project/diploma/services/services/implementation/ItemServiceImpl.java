@@ -229,12 +229,6 @@ public class ItemServiceImpl implements ItemService {
             item.getHeroes().remove(hero);
             heroRepository.saveAndFlush(hero);
         }
-
-//        for(Hero hero : heroes){
-//            hero.getItems().remove(item);
-//            item.getHeroes().remove(hero);
-//            heroRepository.saveAndFlush(hero);
-//        }
         itemRepository.delete(item);
     }
 

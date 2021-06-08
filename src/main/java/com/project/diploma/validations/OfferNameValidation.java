@@ -14,7 +14,8 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = OfferNameValidator.class)
 public @interface OfferNameValidation {
 
-    String message() default "The name must start with a capital letter and have 5 to 30 characters, spaces or digits.";
+    String message() default "The name must start with a capital letter and have 5 to 30 characters, " +
+            "spaces or digits.";
 
     Class<?>[] groups() default {};
 

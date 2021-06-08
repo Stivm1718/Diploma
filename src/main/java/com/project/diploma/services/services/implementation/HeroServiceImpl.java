@@ -387,8 +387,10 @@ public class HeroServiceImpl implements HeroService {
         hero.getItems().remove(item);
         item.getHeroes().remove(hero);
 
-        int gold = 0;
-        if (item.getPriceInGold() != null) {
+        int gold;
+        if (item.getPriceInGold() == null){
+            gold = user.getGold();
+        } else {
             int itemGold = item.getPriceInGold() / 4;
             int userGold = user.getGold();
             user.setGold(userGold + itemGold);

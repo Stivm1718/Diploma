@@ -7,7 +7,7 @@
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container">
-        <h1 class="text-center text-white">Pay offer</h1>
+        <h1 class="text-center">Pay Offer</h1>
         <hr class="hr-3"/>
         <form class="mx-auto w-15 bg-blur" action="/users/payment" method="post" th:object="${payment}">
             <div class="form-group">
@@ -17,7 +17,7 @@
                 <input type="text" th:field="*{cardNumber}" placeholder="0000 0000 0000 0000"
                        onkeypress="return cardNumber(event);" class="form-control mx-auto w-25" id="cardNumber" name="cardNumber"/>
                 <ul th:if="${#fields.errors('cardNumber')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('cardNumber')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('cardNumber')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">
@@ -26,7 +26,7 @@
                 </div>
                 <input type="text" class="form-control mx-auto w-25" th:field="*{cardholder}" id="cardholder" name="cardholder"/>
                 <ul th:if="${#fields.errors('cardholder')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('cardholder')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('cardholder')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
                 <input maxlength='5' class="form-control mx-auto w-25" placeholder="MM/YY" id="expirationDate" name="expirationDate"
                        type="text" onkeyup="expDate(event);">
                 <ul th:if="${#fields.errors('expirationDate')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('expirationDate')}"
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('expirationDate')}"
                         th:text="${error}"></li>
                 </ul>
             </div>
@@ -47,7 +47,7 @@
                 <input type="number" class="form-control mx-auto w-25" th:field="*{cvv}" id="cvv" name="cvv"
                        min="100" max="999"/>
                 <ul th:if="${#fields.errors('cvv')}">
-                    <li class="text-white" th:each="error : ${#fields.errors('cvv')}" th:text="${error}"></li>
+                    <li class="text-white text-center" th:each="error : ${#fields.errors('cvv')}" th:text="${error}"></li>
                 </ul>
             </div>
             <div class="col text-center">
