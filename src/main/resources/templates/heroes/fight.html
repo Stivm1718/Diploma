@@ -9,8 +9,8 @@
         <div class="text-center bg-blur">
             <th:block th:if="${session.battleResult.getIsRaisedLevel() == true}">
                 <div>
-                    <h3 class="align-middle">Поздравления, достигна
-                        <span th:text="${session.battleResult.getLevel()}"></span> ниво!!!
+                    <h3 class="align-middle">Congratulations, reached level
+                        <span th:text="${session.battleResult.getLevel()}"></span>!!!
                     </h3>
                 </div>
             </th:block>
@@ -26,7 +26,7 @@
             </th:block>
             <th:block th:if="${session.battleResult.getResult().equals('defeat')}">
                 <div>
-                    <h3 class="align-middle">You fell from the battle!</h3>
+                    <h3 class="align-middle">You defeat in the battle!</h3>
                 </div>
             </th:block>
             <br>
