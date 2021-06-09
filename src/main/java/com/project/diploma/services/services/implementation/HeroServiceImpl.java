@@ -347,7 +347,7 @@ public class HeroServiceImpl implements HeroService {
             } else if (damageMyHero < damageOpponentHero) {
                 model.setResult(DEFEAT);
                 myOpponentHero.setWinsVSFriend(hero.getWinsVSFriend() + 1);
-                setBattleOfMyHeroAndOpponentByBattleFriend(myOpponentHero, hero, hero.getBattlesWithFriend(), myOpponentHero.getBattlesWithFriend());
+                setBattleOfMyHeroAndOpponentByBattleFriend(hero, myOpponentHero, hero.getBattlesWithFriend(), myOpponentHero.getBattlesWithFriend());
             } else {
                 model.setResult(DRAW);
                 setBattleOfMyHeroAndOpponentByBattleFriend(hero, myOpponentHero, hero.getBattlesWithFriend(), myOpponentHero.getBattlesWithFriend());

@@ -3,6 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="~{fragments/head}"/>
+<script type="text/javascript" src="/js/window.js"></script>
 <th:block th:unless="${session.username == null}">
     <meta http-equiv = "refresh" content = "0, url = http://localhost:8080/home" />
 </th:block>

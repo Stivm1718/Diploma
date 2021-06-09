@@ -2,6 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="~{fragments/head}"/>
+<script type="text/javascript" src="/js/window.js"></script>
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main class="container">
@@ -23,7 +24,7 @@
                 <td><h3><span th:text="${a.getName()}"></span></h3></td>
                 <td>
                     <th:block th:if="${a.getCurrentResult() < a.getTarget()}">
-                        <h3><span th:text="${a.getCurrentResult()}"></span>:
+                        <h3><span th:text="${a.getCurrentResult()}"></span> :
                             <span th:text="${a.getTarget()}"></span></h3>
                     </th:block>
                     <th:block th:unless="${a.getCurrentResult() < a.getTarget()}">
