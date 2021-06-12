@@ -13,6 +13,9 @@
                 <h2>There is no hero to fight. Try later.</h2>
             </div>
         </div>
+        <div class="col text-center">
+            <a class="btn btn-secondary" th:href="@{'/items/select/' + ${session.heroN}}">Back</a>
+        </div>
     </th:block>
     <th:block th:unless="${session.opponent == null}">
         <div class="container">

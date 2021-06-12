@@ -98,7 +98,7 @@
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
                             <th:block th:if="${item.getLevel() > hero.getLevel()}">
-                                <h5><span th:text="${item.getLevel()}"></span> ниво</h5>
+                                <h5><span th:text="${item.getLevel()}"></span> level</h5>
                             </th:block>
                             <th:block th:unless="${item.getLevel() > hero.getLevel()}">
                                 <button class="btn btn-info">Buy</button>
@@ -140,7 +140,7 @@
                     <td><span th:text="${item.getAttack()}"></span></td>
                     <td><span th:text="${item.getDefence()}"></span></td>
                     <td><h5 class="align-middle">
-                        <span th:text="${item.getPriceInMoney()}"></span> лв.
+                        <span th:text="${item.getPriceInMoney()}"></span> lv.
                     </h5></td>
                     <td>
                         <form th:action="@{'/items/merchant/' + ${hero.getName()}}"
@@ -149,7 +149,7 @@
                             <input hidden type="text" th:value="${item.getName()}" th:attr="name='name'"
                                    class="form-control">
                             <th:block th:if="${item.getLevel() > hero.getLevel()}">
-                                <h5><span th:text="${item.getLevel()}"></span> ниво</h5>
+                                <h5><span th:text="${item.getLevel()}"></span> level</h5>
                             </th:block>
                             <th:block th:unless="${item.getLevel() > hero.getLevel()}">
                                 <button class="btn btn-info">Buy</button>
@@ -184,7 +184,7 @@
                     <span th:text="${offer.getGold()}"></span> gold
                 </h5></span></td>
                 <td><h5 class="align-middle">
-                    <span th:text="${offer.getPrice()}"></span> лв.
+                    <span th:text="${offer.getPrice()}"></span> lv.
                 </h5></td>
                 <td>
                     <form th:action="@{'/items/merchant/' + ${hero.getName()}}"

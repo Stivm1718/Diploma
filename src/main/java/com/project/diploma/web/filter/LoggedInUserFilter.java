@@ -18,13 +18,16 @@ public class LoggedInUserFilter implements Filter {
     private final UserService userService;
 
     @Autowired
-    public LoggedInUserFilter(AuthenticatedUserService authenticatedUserService, UserService userService) {
+    public LoggedInUserFilter(AuthenticatedUserService authenticatedUserService,
+                              UserService userService) {
         this.authenticatedUserService = authenticatedUserService;
         this.userService = userService;
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
         String username = authenticatedUserService.getUsername();
 
         if (username.equals("anonymousUser")) {

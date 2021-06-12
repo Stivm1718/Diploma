@@ -191,7 +191,6 @@ public class ItemController {
         if (model.getGame() != null) {
             return "redirect:/heroes/opponent/" + model.getName();
         }
-        session.setAttribute("invalidName", null);
         return "redirect:/items/select/" + model.getName();
     }
 }

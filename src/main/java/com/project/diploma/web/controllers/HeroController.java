@@ -62,7 +62,10 @@ public class HeroController {
     }
 
     @GetMapping("/select")
-    public ModelAndView selectHero(ModelAndView model, Principal principal) {
+    public ModelAndView selectHero(ModelAndView model,
+                                   Principal principal,
+                                   HttpSession session) {
+        session.setAttribute("invalidName", null);
         String username = principal.getName();
         int count = heroService.getCountOfHeroes(username);
         model.addObject("countHeroes", count);
@@ -108,6 +111,7 @@ public class HeroController {
             HeroPictureModel opponent = heroService.selectOpponent(username, name);
             session.setAttribute("opponent", opponent);
             if (opponent == null) {
+                session.setAttribute("heroN", name);
                 return "heroes/opponent";
             }
         } else if (selectModel.getGame().equals("bot")) {
@@ -117,7 +121,7 @@ public class HeroController {
             HeroPictureModel friend = heroService.selectFriend(selectModel.getFriend());
             session.setAttribute("opponent", friend);
         }
-
+        session.setAttribute("heroN", name);
         HeroPictureModel model = heroService.getMyHero(name);
         session.setAttribute("myHero", model);
         return "heroes/opponent";
@@ -143,7 +147,7 @@ public class HeroController {
         session.setAttribute("itemsOfOpponent", opponentItems);
 
         BattleModel battleModel = new BattleModel();
-        if (selectModel.getGame().equals("player") || selectModel.getGame().equals("friend")){
+        if (selectModel.getGame().equals("player") || selectModel.getGame().equals("friend")) {
             battleModel = heroService.fightWithPlayerOrFriend(myHero, opponent, myItems, opponentItems);
         } else if (selectModel.getGame().equals("bot")) {
             battleModel = heroService.fightWithBot(myHero, opponent, myItems, opponentItems);
