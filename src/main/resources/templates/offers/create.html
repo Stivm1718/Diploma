@@ -25,7 +25,7 @@
                     <label for="gold" class="h4 mb-2">Gold</label>
                 </div>
                 <input type="number" th:field="*{gold}" id="gold" class="w-25" name="gold"
-                       placeholder="1" min="1">
+                       placeholder="1" min="1" max="2147483647">
                 <ul th:if="${#fields.errors('gold')}">
                     <li class="text-white text-center" th:each="error : ${#fields.errors('gold')}" th:text="${error}"></li>
                 </ul>
@@ -35,7 +35,7 @@
                     <label for="price" class="h4 mb-2 text-white">Price</label>
                 </div>
                 <input type="number" th:field="*{price}" id="price" class="w-25" name="price"
-                       placeholder="1" min="1">
+                       placeholder="1" min="1" max="2147483647">
                 <ul th:if="${#fields.errors('price')}">
                     <li class="text-white text-center" th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
                 </ul>
